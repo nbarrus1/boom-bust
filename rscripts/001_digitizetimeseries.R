@@ -8,7 +8,9 @@ rm(list = ls())
 #load library metaDigitise
 
 library(metaDigitise)
-
+library(purrr)
+library(here)
+library(magrittr)
 #the function metaDigitise is an interactive function that allows you to 1) digitize,
 #and extract data, 2) import data that has already been digitized, or 3) edit alread
 #digitized data.
@@ -30,12 +32,25 @@ library(metaDigitise)
 #prompts in the r environment should be enough to figure out what is needed. more info
 #is given in the r documentation.
 
-lit_data_ls <- metaDigitise(dir = "C:/Users/bryzb/OneDrive/Documents/Nate/FIU/Dissertation/boom-bust/TimeSeriesPictures_Literature/TimeSeriesFigures/",
+lit_data_ls<- metaDigitise(dir = here("TimeSeriesPictures_Literature/TimeSeriesFigures/"),
                      summary = FALSE)
 #look at the created list
-lit_data_ls
+lit_data_ls$scatterplot$`040_Witmanetal_EcologicalMonographs_2003_Fig9.jpg`
+
+
 
 #------------------------
 ####Data wrangling: Prep the list data to get in useable format###
 #------------------------
 
+
+
+scatterplots <- bind_rows(lit_data_ls$scatterplot, .id = "Figure")
+barplots <- bind_rows(lit_data_ls$mean_error, .id = "Figure") 
+
+write_csv(barplots, here("output","barplot_raw.csv"))
+barplot_to_scatter <- read_csv(here("output","bar_plot_to_scatter.csv"))
+
+
+all_timeseries <- scatterplots |> 
+  bind_rows(barplot_to_scatter)
