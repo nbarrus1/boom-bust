@@ -12,6 +12,7 @@ library(tidyverse)
 library(purrr)
 library(here)
 library(magrittr)
+library(readxl)
 
 theme_set(theme_bw())
 
@@ -53,6 +54,7 @@ str(lit_data_ls,max.level = 1)
 
 str(lit_data_ls[[1]], list.len = 4)
 str(lit_data_ls[[2]], list.len = 4)
+
 
 #at the second level is a list of the data extracted from each plot
 #one problem i for see having is that in the barplots the "id" are years
@@ -120,13 +122,35 @@ scatter.tib <- scatter.ls |>
   group_by(plot,group) |> 
   nest(.key = "ls") 
 
+# read in and comibe the data from tables
 
+table.tib <- read_excel(here("data","BoomBust_DatafromTables.xlsx")) |> 
+  group_by(plot,group) |> 
+  nest(.key = "ls")
 #combine the reorganized bar graph data to the scatter plots
 
 lit_data_tib <- scatter.tib |> 
-  bind_rows(box.tib)
+  bind_rows(box.tib) |> 
+  bind_rows(table.tib) |> 
+  unnest(cols = ls)
+
+
+unique(lit_data_tib$y_variable)
+
+lit_data_tib |> 
+  ungroup() |> 
+  filter(y_variable  == "Density (n/m2)") |> 
+  select(plot) |> 
+  unique()
+  
+  
+
+
 
 #fucntion for plotting
+
+
+
 
 plot_timeseries <- function(df) {
   df |> 
