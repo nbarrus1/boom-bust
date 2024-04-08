@@ -40,6 +40,7 @@ theme_set(theme_bw())
 lit_data_ls<- metaDigitise(dir = here("TimeSeriesPictures_Literature/TimeSeriesFigures/"),
                      summary = FALSE)
 
+
 #------------------------
 ####Data wrangling: Prep the list data to get in useable format###
 #------------------------
@@ -139,7 +140,7 @@ unique(lit_data_tib$y_variable)
 
 lit_data_tib |> 
   ungroup() |> 
-  filter(y_variable  == "Density (g/m2)") |> 
+  filter(y_variable  == "Density (n/0.25m^2") |> 
   select(plot) |> 
   unique()
   
