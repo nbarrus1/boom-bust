@@ -139,7 +139,7 @@ unique(lit_data_tib$y_variable)
 
 lit_data_tib |> 
   ungroup() |> 
-  filter(y_variable  == "Density (n/m2)") |> 
+  filter(y_variable  == "Density (g/m2)") |> 
   select(plot) |> 
   unique()
   
