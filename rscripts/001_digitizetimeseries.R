@@ -112,16 +112,48 @@ box.tib <-box.ls |>
 
 
 str(box.tib$ls[1])
-####scatter plot nested by group and plot
 
-scatter.tib <- scatter.ls |>
+
+####scatter plot nested by group and plot####
+
+
+#obtain vector of plot names for the haubrock papers that use cumulative abundance
+haubrock <-  scatter.ls |>
   set_names(names(scatter.ls)) |> 
   enframe(name = "plot",value = "ls") |> 
   mutate(ls = map(ls,as.data.frame)) |> 
   unnest(ls) |> 
   select(-pch,-col) |> 
   group_by(plot,group) |> 
-  nest(.key = "ls") 
+  filter(y_variable == "Cumulative Abundance") |> 
+  select(plot) |> 
+  unique()
+
+#create a function to convert cumulative abundance to abundance
+convert.to.abunance <- function(df) {
+  df |> rename(cumabund = y) |> 
+    mutate(behind = lag(cumabund),
+           y_variable = "N",
+           y_variable_old = "Cumulative Abundance",
+           behind = if_else(is.na(behind),true = 0,false = behind),
+           y = cumabund-behind) |> 
+    select(-behind)
+}
+
+
+scatter.tib <- scatter.ls |>
+  set_names(names(scatter.ls)) |> 
+  enframe(name = "plot",value = "ls") |> 
+  mutate(ls = map(ls,as.data.frame),
+         #convert cumulative abundance to abundance (see haubrock data)
+         ls = if_else(plot %in% haubrock$plot,
+                      true = map(ls,convert.to.abunance),
+                      false = ls)) |> 
+  unnest(ls) |> 
+  select(-pch,-col) |> 
+  group_by(plot,group) |> 
+  nest(.key = "ls")
+
 
 # read in and comibe the data from tables
 
@@ -133,18 +165,11 @@ table.tib <- read_excel(here("data","BoomBust_DatafromTables.xlsx")) |>
 lit_data_tib <- scatter.tib |> 
   bind_rows(box.tib) |> 
   bind_rows(table.tib) |> 
-  unnest(cols = ls)
+  filter(plot %in% haubrock$plot)#|> 
+  #unnest(cols = ls) #|> 
+  #separate_wider_delim(y_variable,names = c("measure","scale"),delim = " ",
+  #                     too_few = "align_start", too_many = "merge")
 
-
-unique(lit_data_tib$y_variable)
-
-lit_data_tib |> 
-  ungroup() |> 
-  filter(y_variable  == "Density (n/0.25m^2") |> 
-  select(plot) |> 
-  unique()
-  
-  
 
 
 
