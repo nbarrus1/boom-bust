@@ -165,12 +165,14 @@ table.tib <- read_excel(here("data","BoomBust_DatafromTables.xlsx")) |>
 lit_data_tib <- scatter.tib |> 
   bind_rows(box.tib) |> 
   bind_rows(table.tib) |> 
-  filter(plot %in% haubrock$plot)#|> 
-  #unnest(cols = ls) #|> 
-  #separate_wider_delim(y_variable,names = c("measure","scale"),delim = " ",
-  #                     too_few = "align_start", too_many = "merge")
+  unnest(cols = ls) |> 
+  separate_wider_delim(y_variable,names = c("measure","scale"),delim = " ",
+                       too_few = "align_start", too_many = "merge") |> 
+  group_by(plot,group,measure) |> 
+  nest(.key = "ls")
 
 
+table(lit_data_tib$measure)
 
 
 #fucntion for plotting
