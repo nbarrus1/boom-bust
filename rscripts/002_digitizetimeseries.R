@@ -1,7 +1,7 @@
-###This script is dedicated to digitizing and extracting the data from the time-series
-###obtained from my literature search
+###This script is dedicated to digitizing and extracting and processing the data from the time-series
+###obtained from the literature search
 
-#remove everything
+#remove everything in environment
 
 rm(list = ls())
 
@@ -36,6 +36,7 @@ theme_set(theme_bw())
 #this is how you can go back and edit or redo the digitization of plots. following the 
 #prompts in the r environment should be enough to figure out what is needed. more info
 #is given in the r documentation.
+
 
 lit_data_ls<- metaDigitise(dir = here("TimeSeriesPictures_Literature/TimeSeriesFigures/"),
                      summary = FALSE)
@@ -121,6 +122,24 @@ str(box.tib$ls[1])
 #------------------------------------------------
 ####Data wrangling of scatter plots####
 #-----------------------------------------------
+
+#kraemer plot
+
+Kraemer <- scatter.ls |> 
+  set_names(names(scatter.ls)) |> 
+  enframe(name = "plot", value = "ls") |> 
+  filter(str_detect(plot,"354_Kraemer")) |> 
+  unnest(ls) |> 
+  mutate(x = round(x),
+         x_variable = "Year",
+         y = y*(0.49*26)) |> 
+  group_by(plot, id, x,group, col,pch, y_variable,x_variable) |> 
+  summarise(y = sum(y),
+            n = n(),
+            y = y/(26*0.49*n)) |> 
+  ungroup() |> 
+  group_by(plot,group) |> 
+  nest(.key = "ls")
 
 #walsh plot
 Walsh <- scatter.ls |>
@@ -311,6 +330,7 @@ scatter.tib <- scatter.ls |>
   filter(!plot %in% brokenaxis$plot) |>
   filter(!plot %in% Cecere$plot) |> 
   filter(!str_detect(plot,"Pavey")) |> 
+  filter(!str_detect(plot,"Kraemer")) |> 
   #add the full version of the broken axis plots
   bind_rows(brokenaxis.corrected,
             Cecere,
@@ -323,7 +343,11 @@ scatter.tib <- scatter.ls |>
                       true = map(ls,fix.x),
                       false = ls)) |> 
   filter(!str_detect(plot,"156_Walsh")) |> 
-  bind_rows(Walsh)
+  bind_rows(Walsh) |> 
+  bind_rows(Kraemer)
+
+
+
 
 # read in and comibe the data from tables
 
@@ -341,9 +365,20 @@ lit_data_tib <- scatter.tib |>
                        too_few = "align_start", too_many = "merge") |> 
   mutate(y = if_else(y < 0, true = 0, false = y)) |> 
   group_by(plot,group,measure,x_variable) |> 
-  nest(.key = "ls") |> 
-  mutate(measure = if_else(measure == "Annual", true = "Annual Maximum Density", false = measure))
+  nest(.key = "ls")
 
+lit_data_tib <- lit_data_tib |> 
+  mutate(measure = if_else(measure == "Annual", true = "Annual Maximum Density", false = measure),
+         kraemer_table = lit_data_tib |> 
+           filter(str_detect(plot,"353_Kraemeretal_NortheasternNaturalist_2007_Table2")) |> 
+           pull(ls)) |> 
+  filter(!(str_detect(plot,"353_Kraemeretal_NortheasternNaturalist_2007_Table2"))) |> 
+  mutate(ls = if_else(str_detect(plot,"354_Kraemer"), true = map2(.x = ls, .y = kraemer_table, .f = bind_rows),
+                      false = ls)) |> 
+  select(-kraemer_table)
+
+
+save(lit_data_tib,file = here("output","literatrure_timeseries.Rdata"))
 
 
 
@@ -362,14 +397,23 @@ plot_timeseries <- function(df) {
       axis.ticks.length = unit(.25, "cm"),
       axis.title.y = element_text(vjust = 2) 
       #plot.margin = unit(c(0,0,0,0), "cm")
-    )
+    )+
+    labs(x = unique(df$x_variable), y = unique(df$measure))
 }
 
 
 
-lit_data_plots <- lit_data_tib |> 
-  mutate(timeseries = map(ls, .f = plot_timeseries))
+lit_data_plots <- lit_data_tib |>
+  unnest(cols = ls) |> 
+  group_by(plot,group) |> 
+  nest(.key = "ls") |> 
+  mutate(timeseries = map(ls, .f = plot_timeseries)) |> 
+  select(-ls)
 
-lit_data_plots$timeseries[142]
-365
 
+lit_data_plots |> 
+  filter(str_detect(plot,"354_Kraemer")) |> 
+  pull(timeseries)
+
+
+save(lit_data_plots,file = here("output","literatrure_timeseries_plots.Rdata"))
