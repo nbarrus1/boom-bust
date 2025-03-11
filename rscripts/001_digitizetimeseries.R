@@ -41,6 +41,7 @@ lit_data_ls<- metaDigitise(dir = here("TimeSeriesPictures_Literature/TimeSeriesF
                      summary = FALSE)
 
 
+
 #------------------------
 ####Data wrangling: Prep the list data to get in useable format###
 #------------------------
@@ -73,6 +74,10 @@ str(lit_data_ls[[2]], list.len = 4)
 
 box.ls <- lit_data_ls[[1]]
 scatter.ls <- lit_data_ls[[2]]
+
+#----------------------------------------------------
+#####data wrangling for box plots####
+#-----------------------------------------------------
 
 #make them into a tibble with each plot as a figure
 
@@ -113,8 +118,26 @@ box.tib <-box.ls |>
 
 str(box.tib$ls[1])
 
+#------------------------------------------------
+####Data wrangling of scatter plots####
+#-----------------------------------------------
 
-####scatter plot nested by group and plot####
+#walsh plot
+Walsh <- scatter.ls |>
+  set_names(names(scatter.ls)) |> 
+  enframe(name = "plot",value = "ls")  |> 
+  filter(str_detect(plot,"156_Walsh")) |> 
+  unnest(ls) |> 
+  mutate(x = round(x)) |> 
+  select(-group,-pch,-col) |> 
+  pivot_wider(values_from = y, names_from = id) |> 
+  mutate(bythotrephes = bythotrephes - (Cisco + `yellow perch` + `White bass` + leptodora),
+         bythotrephes = if_else(bythotrephes < 0, true = 0, false = bythotrephes),
+         group = 1) |> 
+  select(plot,group, x, y_variable, x_variable,bythotrephes) |> 
+  rename(y = bythotrephes) |> 
+  group_by(plot,group) |> 
+  nest(.key = "ls")
 
 
 #obtain vector of plot names for the haubrock papers that use cumulative abundance
@@ -126,8 +149,101 @@ haubrock <-  scatter.ls |>
   select(-pch,-col) |> 
   group_by(plot,group) |> 
   filter(y_variable == "Cumulative Abundance") |> 
+  ungroup() |> 
   select(plot) |> 
-  unique()
+  distinct()
+
+
+#obtain vector of plot with year or time vectors as x axis
+
+yearortime <-  scatter.ls |>
+  set_names(names(scatter.ls)) |> 
+  enframe(name = "plot",value = "ls") |> 
+  mutate(ls = map(ls,as.data.frame)) |> 
+  unnest(ls) |> 
+  select(-pch,-col) |> 
+  group_by(plot,group) |> 
+  filter(x_variable == "Year" | x_variable == "Time") |> 
+  ungroup() |> 
+  select(plot) |> 
+  distinct()
+
+#obtain vector of plot names that have broken axis
+brokenaxis <-  scatter.ls |>
+  set_names(names(scatter.ls)) |> 
+  enframe(name = "plot",value = "ls") |> 
+  mutate(ls = map(ls,as.data.frame)) |> 
+  filter(str_detect(plot,"Kauppietal_BiologicalInvasions_2015_Fig3A")|
+         str_detect(plot,"Kauppietal_BiologicalInvasions_2015_Fig3B")|
+         str_detect(plot,"Morrisetal_JournalofAridEnvironments_2013_Fig5Density-JER")) |> 
+  select(plot) |> 
+  distinct()
+
+#bind the two digitized versions (different scales) of the plots together
+brokenaxis.corrected <- scatter.ls |>
+  set_names(names(scatter.ls)) |> 
+  enframe(name = "plot",value = "ls") |> 
+  mutate(ls = map(ls,as.data.frame)) |> 
+  filter(str_detect(plot,"Kauppietal_BiologicalInvasions_2015_Fig3A")|
+           str_detect(plot,"Kauppietal_BiologicalInvasions_2015_Fig3B")|
+           str_detect(plot,"Morrisetal_JournalofAridEnvironments_2013_Fig5Density-JER")) |> 
+  mutate(full.plot = case_when(str_detect(plot,"Kauppietal_BiologicalInvasions_2015_Fig3A")~
+                                 "339_Kauppietal_BiologicalInvasions_2015_Fig3A_full",
+                               str_detect(plot,"Kauppietal_BiologicalInvasions_2015_Fig3B")~
+                                 "340_Kauppietal_BiologicalInvasions_2015_Fig3A_full",
+                               str_detect(plot,"Morrisetal_JournalofAridEnvironments_2013_Fig5Density-JER")~
+                                 "341_Morrisetal_JournalofAridEnvironments_2013_Fig5Density-JER_full"),
+         df = c(rep("df1", times = 3),rep("df2", times = 3))) |> 
+  select(-plot) |> 
+  pivot_wider(names_from=df, values_from = ls) |> 
+  mutate(ls = map2(.x = df1, .y = df2, .f = bind_rows)) |> 
+  select(-df1,-df2) |> 
+  rename(plot = full.plot)
+
+#fix the cecere plot so it is mon-year not mon with year as grouping
+
+Cecere <- scatter.ls |>
+  set_names(names(scatter.ls)) |> 
+  enframe(name = "plot",value = "ls") |> 
+  mutate(ls = map(ls,as.data.frame)) |> 
+  filter(str_detect(plot,"Cecere")) |> 
+  unnest(cols = ls) |> 
+  mutate(month = round(x),
+         id = as.double(as.character(id)),
+         x = id + ((month-1)/12),
+         id = as.factor(NA_character_),
+         x_variable = "Mon-Year",
+         group = 1) |> 
+  group_by(plot) |> 
+  nest(.key = "ls")
+
+
+#fix the pavey plot so it is in mon-year not session id as grouping
+
+Pavey <- scatter.ls |>
+  set_names(names(scatter.ls)) |> 
+  enframe(name = "plot",value = "ls") |> 
+  mutate(ls = map(ls,as.data.frame)) |> 
+  filter(str_detect(plot,"Pavey")) |> 
+  unnest(cols = ls) |> 
+  mutate(x.session = round(x),
+         x = case_when(x.session == 1 ~ (2007 + (9/12)),
+                       x.session == 2 ~ (2008 + (3/12)),
+                       x.session == 3 ~ (2008 + (6/12)),
+                       x.session == 4 ~ (2008 + (10/12)),
+                       x.session == 5 ~ (2009 + (2/12)),
+                       x.session == 6 ~ (2009 + (5/12)),
+                       x.session == 7 ~ (2009 + (8/12)),
+                       x.session == 8 ~ (2010 + (1/12)),
+                       x.session == 9 ~ (2010 + (4/12)),
+                       x.session == 10 ~ (2010 + (11/12)),
+                       x.session == 11 ~ (2011 + (4/12))),
+         x_variable = "Mon-Year") |> 
+  select(-x.session)|> 
+  group_by(plot) |> 
+  nest(.key = "ls")
+
+Pavey
 
 #create a function to convert cumulative abundance to abundance
 convert.to.abunance <- function(df) {
@@ -140,6 +256,48 @@ convert.to.abunance <- function(df) {
     select(-behind)
 }
 
+##create a function to add na and fix year sequences 
+#not this only will work with year or time not mon-year
+
+
+fix.x <- function (df) {
+  temp <- df |> 
+    mutate(x.round = round(x),
+           x.floor = floor(x),
+           x.ceiling = ceiling(x),
+           x.seq = 1:length(x.round) + (min(x.round)-1))
+  
+  temp2 <- tibble(x.temp = full_seq(temp$x.round,1),
+                  y = rep(NA_real_, times = length(x.temp)),
+                  id = rep(unique(temp$id), times = length(x.temp)),
+                  y_variable = rep(unique(temp$y_variable), times = length(x.temp)),
+                  x_variable = rep(unique(temp$x_variable), times = length(x.temp)),
+                  x = rep(NA_real_, times = length(x.temp)),
+                  cumabund = rep(NA_real_, times = length(x.temp)),
+                  y_variable_old = rep(NA_character_, times = length(x.temp)),
+                  month = rep(NA_integer_, times = length(x.temp)))
+  
+  
+  
+  if (nrow(temp)==length(full_seq(temp$x.round,1))|
+      nrow(temp)==length(full_seq(temp$x.ceiling,1))|
+      nrow(temp)==length(full_seq(temp$x.floor,1))) {
+    temp |> 
+      mutate(x = x.seq) 
+  } else {
+    temp2 <- temp2 |> 
+    filter(! x.temp %in% temp$x.round) |> 
+    rename(x.round = x.temp)
+  
+  temp |> 
+    bind_rows(temp2) |> 
+    arrange(x.round) |> 
+    mutate(x = x.round) 
+  }
+  }
+
+
+###Apply all functions and fixes to the scatter plot data
 
 scatter.tib <- scatter.ls |>
   set_names(names(scatter.ls)) |> 
@@ -149,17 +307,30 @@ scatter.tib <- scatter.ls |>
          ls = if_else(plot %in% haubrock$plot,
                       true = map(ls,convert.to.abunance),
                       false = ls)) |> 
+  #remove the seperate digitized versions of the broken axis plots
+  filter(!plot %in% brokenaxis$plot) |>
+  filter(!plot %in% Cecere$plot) |> 
+  filter(!str_detect(plot,"Pavey")) |> 
+  #add the full version of the broken axis plots
+  bind_rows(brokenaxis.corrected,
+            Cecere,
+            Pavey) |>
   unnest(ls) |> 
   select(-pch,-col) |> 
   group_by(plot,group) |> 
-  nest(.key = "ls")
-
+  nest(.key = "ls") |> 
+  mutate(ls = if_else(plot %in% yearortime$plot,
+                      true = map(ls,fix.x),
+                      false = ls)) |> 
+  filter(!str_detect(plot,"156_Walsh")) |> 
+  bind_rows(Walsh)
 
 # read in and comibe the data from tables
 
 table.tib <- read_excel(here("data","BoomBust_DatafromTables.xlsx")) |> 
   group_by(plot,group) |> 
   nest(.key = "ls")
+
 #combine the reorganized bar graph data to the scatter plots
 
 lit_data_tib <- scatter.tib |> 
@@ -168,14 +339,15 @@ lit_data_tib <- scatter.tib |>
   unnest(cols = ls) |> 
   separate_wider_delim(y_variable,names = c("measure","scale"),delim = " ",
                        too_few = "align_start", too_many = "merge") |> 
-  group_by(plot,group,measure) |> 
-  nest(.key = "ls")
+  mutate(y = if_else(y < 0, true = 0, false = y)) |> 
+  group_by(plot,group,measure,x_variable) |> 
+  nest(.key = "ls") |> 
+  mutate(measure = if_else(measure == "Annual", true = "Annual Maximum Density", false = measure))
 
 
-table(lit_data_tib$measure)
 
 
-#fucntion for plotting
+#function for plotting
 
 
 
@@ -188,8 +360,8 @@ plot_timeseries <- function(df) {
     theme_bw(base_size = 12) + 
     theme(
       axis.ticks.length = unit(.25, "cm"),
-      axis.title.y = element_text(vjust = 2), 
-      plot.margin = unit(c(0,0,0,0), "cm")
+      axis.title.y = element_text(vjust = 2) 
+      #plot.margin = unit(c(0,0,0,0), "cm")
     )
 }
 
@@ -198,4 +370,6 @@ plot_timeseries <- function(df) {
 lit_data_plots <- lit_data_tib |> 
   mutate(timeseries = map(ls, .f = plot_timeseries))
 
-lit_data_plots$timeseries
+lit_data_plots$timeseries[142]
+365
+
