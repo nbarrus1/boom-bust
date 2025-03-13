@@ -38,9 +38,8 @@ theme_set(theme_bw())
 #is given in the r documentation.
 
 
-
 lit_data_ls<- metaDigitise(dir = here("TimeSeriesPictures_Literature/TimeSeriesFigures/"),
-                     summary = FALSE)
+                           summary = FALSE)
 
 
 
@@ -113,7 +112,7 @@ box.tib <-box.ls |>
   group_by(plot) |> 
   mutate(group = match(paste(id),unique(paste(id))),
          x = if_else(is.na(month), true = as.double(x),
-                               false = as.double(x)+((month-1)/12))) |> 
+                     false = as.double(x)+((month-1)/12))) |> 
   group_by(plot,group) |> 
   nest(.key = "ls")
 
@@ -123,39 +122,6 @@ str(box.tib$ls[1])
 #------------------------------------------------
 ####Data wrangling of scatter plots####
 #-----------------------------------------------
-
-# Witte
-
-Witte <- scatter.ls |> 
-  set_names(names(scatter.ls)) |> 
-  enframe(name = "plot", value = "ls") |> 
-  filter(str_detect(plot,"Witte")) |> 
-  unnest(ls) |> 
-  mutate(x = round(x)) |> 
-  group_by(plot,id,group, col,pch, y_variable, x_variable, x) |> 
-  summarise(y = mean(y))|>
-  complete(x = full_seq(x,1)) |> 
-  ungroup() |> 
-  group_by(plot,group) |> 
-  nest(.key = "ls") 
-
-
-#Ferreira
-
-Ferriera <- scatter.ls |> 
-  set_names(names(scatter.ls)) |> 
-  enframe(name = "plot", value = "ls") |> 
-  filter(str_detect(plot,"Ferreira")) |> 
-  mutate(ls = map(.x = ls, .f = function(df) {
-    df |> 
-      mutate(x = round(x)) |> 
-      group_by(id,group, col,pch, y_variable, x_variable, x) |>
-      summarise(y = mean(y)) |> 
-      complete(x = full_seq(x,1))
-  }))
-  
-
-
 
 #kraemer plot
 
@@ -208,20 +174,6 @@ haubrock <-  scatter.ls |>
   pull(plot)
 
 
-#obtain vector of plot with year or time vectors as x axis
-
-yearortime <-  scatter.ls |>
-  set_names(names(scatter.ls)) |> 
-  enframe(name = "plot",value = "ls") |> 
-  mutate(ls = map(ls,as.data.frame)) |> 
-  unnest(ls) |> 
-  select(-pch,-col) |> 
-  group_by(plot,group) |> 
-  filter(x_variable == "Year" | x_variable == "Time") |> 
-  ungroup() |> 
-  select(plot) |> 
-  distinct() |> 
-  pull(plot)
 
 #obtain vector of plot names that have broken axis
 brokenaxis <-  scatter.ls |>
@@ -229,9 +181,9 @@ brokenaxis <-  scatter.ls |>
   enframe(name = "plot",value = "ls") |> 
   mutate(ls = map(ls,as.data.frame)) |> 
   filter(str_detect(plot,"Kauppietal_BiologicalInvasions_2015_Fig3A")|
-         str_detect(plot,"Kauppietal_BiologicalInvasions_2015_Fig3B")|
-         str_detect(plot,"Morrisetal_JournalofAridEnvironments_2013_Fig5Density-JER")|
-         str_detect(plot,"Breedetal_WildlifeResearch_2016_Fig1")) |> 
+           str_detect(plot,"Kauppietal_BiologicalInvasions_2015_Fig3B")|
+           str_detect(plot,"Morrisetal_JournalofAridEnvironments_2013_Fig5Density-JER")|
+           str_detect(plot,"Breedetal_WildlifeResearch_2016_Fig1")) |> 
   select(plot) |> 
   distinct() |> 
   pull(plot)
@@ -317,11 +269,12 @@ convert.to.abunance <- function(df) {
     select(-behind)
 }
 
+
 ##create a function to add na and fix year sequences 
 #not this only will work with year or time not mon-year
+#k
 
-
-fix.x <- function (df) {
+fix.x.aagard <- function (df) {
   temp <- df |> 
     mutate(x.round = round(x),
            x.floor = floor(x),
@@ -347,106 +300,19 @@ fix.x <- function (df) {
       mutate(x = x.seq) 
   } else {
     temp2 <- temp2 |> 
-    filter(! x.temp %in% temp$x.round) |> 
-    rename(x.round = x.temp)
-  
-  temp |> 
-    bind_rows(temp2) |> 
-    arrange(x.round) |> 
-    mutate(x = x.round) 
+      filter(! x.temp %in% temp$x.round) |> 
+      rename(x.round = x.temp)
+    
+    temp |> 
+      bind_rows(temp2) |> 
+      arrange(x.round) |> 
+      mutate(x = x.round) 
   }
-  }
+}
 
 
-#Breed 
-
-Breed <- expand_grid(x.int = seq(floor(min(brokenaxis.corrected |> 
-                                       filter(str_detect(plot, "Breed")) |>  
-                                       unnest(ls) |> 
-                                       filter(group ==1) |>
-                                       group_by(group) |> 
-                                       pull(x))),
-                           floor(max(brokenaxis.corrected |> 
-                                       filter(str_detect(plot, "Breed")) |>  
-                                       unnest(ls) |> 
-                                       filter(group ==1) |>
-                                       group_by(group) |> 
-                                       pull(x)))),
-                    group = 1:4,
-                    plot = brokenaxis.corrected |> 
-                      filter(str_detect(plot,"Breed")) |> pull(plot)) |>
-  left_join(brokenaxis.corrected |> 
-              filter(str_detect(plot, "Breed")) |>  
-              unnest(ls) |> 
-              mutate(x.int = floor(x)), by = c("x.int","group","plot")) |>
-  mutate(id = case_when(group == 1 ~ unique(brokenaxis.corrected |> 
-                                        filter(str_detect(plot,"Breed")) |> 
-                                        unnest(ls) |> 
-                                        pull(id))[1],
-                        group == 2 ~unique(brokenaxis.corrected |> 
-                                             filter(str_detect(plot,"Breed")) |> 
-                                             unnest(ls) |> 
-                                             pull(id))[2],
-                        group == 3 ~unique(brokenaxis.corrected |> 
-                                             filter(str_detect(plot,"Breed")) |> 
-                                             unnest(ls) |> 
-                                             pull(id))[3],
-                        group == 4 ~unique(brokenaxis.corrected |> 
-                                             filter(str_detect(plot,"Breed")) |> 
-                                             unnest(ls) |> 
-                                             pull(id))[4]),
-         pch = case_when(group == 1 ~ unique(brokenaxis.corrected |> 
-                                              filter(str_detect(plot,"Breed")) |> 
-                                              unnest(ls) |> 
-                                              pull(pch))[1],
-                        group == 2 ~unique(brokenaxis.corrected |> 
-                                             filter(str_detect(plot,"Breed")) |> 
-                                             unnest(ls) |> 
-                                             pull(pch))[1],
-                        group == 3 ~unique(brokenaxis.corrected |> 
-                                             filter(str_detect(plot,"Breed")) |> 
-                                             unnest(ls) |> 
-                                             pull(pch))[1],
-                        group == 4 ~unique(brokenaxis.corrected |> 
-                                             filter(str_detect(plot,"Breed")) |> 
-                                             unnest(ls) |> 
-                                             pull(pch))[2]),
-         col = case_when(group == 1 ~ unique(brokenaxis.corrected |> 
-                                               filter(str_detect(plot,"Breed")) |> 
-                                               unnest(ls) |> 
-                                               pull(col))[1],
-                         group == 2 ~unique(brokenaxis.corrected |> 
-                                              filter(str_detect(plot,"Breed")) |> 
-                                              unnest(ls) |> 
-                                              pull(col))[2],
-                         group == 3 ~unique(brokenaxis.corrected |> 
-                                              filter(str_detect(plot,"Breed")) |> 
-                                              unnest(ls) |> 
-                                              pull(col))[3],
-                         group == 4 ~unique(brokenaxis.corrected |> 
-                                              filter(str_detect(plot,"Breed")) |> 
-                                              unnest(ls) |> 
-                                              pull(col))[1]),
-         x = if_else(is.na(x), true = x.int, false = x),
-         y_variable = "Trap_Success (Percent)",
-         x_variable = "Mon-Year") |> 
-  select(-x.int) |> 
-  group_by(plot, group) |> 
-  nest(.key = "ls")
 
 
-##morris 
-
-Morris <- brokenaxis.corrected |> 
-  filter(str_detect(plot, "Morris")) |> 
-  unnest(ls) |> 
-  mutate(x = round(x)) |> 
-  group_by(plot, id,group, col,pch, y_variable,x_variable,x)|>
-  summarise(y = mean(y)) |> 
-  complete(x = full_seq(x,1)) |> 
-  ungroup() |> 
-  group_by(plot, group) |> 
-  nest(.key = "ls")
 
 
 ###Apply all functions and fixes to the scatter plot data
@@ -465,22 +331,13 @@ scatter.tib <- scatter.ls |>
   filter(!str_detect(plot,"Pavey")) |> 
   filter(!str_detect(plot,"Kraemer")) |> 
   #add the full version of the broken axis plots
-  bind_rows(brokenaxis.corrected |> filter(!(str_detect(plot,"Breed")|str_detect(plot,"Morris"))),
+  bind_rows(brokenaxis.corrected,
             Cecere,
             Pavey) |>
   unnest(ls) |> 
   select(-pch,-col) |> 
   group_by(plot,group) |> 
-  nest(.key = "ls") |> 
-  mutate(ls = if_else(plot %in% yearortime,
-                      true = map(ls,fix.x),
-                      false = ls)) |> 
-  filter(!str_detect(plot,"156_Walsh")) |> 
-  bind_rows(Walsh) |> 
-  bind_rows(Kraemer) |> 
-  bind_rows(Breed) |> 
-  bind_rows(Witte) |> 
-  bind_rows(Morris)
+  nest(.key = "ls")
 
 
 
@@ -491,6 +348,37 @@ table.tib <- read_excel(here("data","BoomBust_DatafromTables.xlsx")) |>
   group_by(plot,group) |> 
   nest(.key = "ls")
 
+
+###data wrangling functions to add NAs to nonsample years, to take maximum density for data at the month scale, and 
+##to take mean if more than one sample was taken at the same time period,
+
+
+
+fill.seq <- function(df,x) {
+  
+  if (x =="Year"|x=="Time") {
+    
+    df |> mutate(x = round(x)) |> 
+      group_by(id, scale, x) |>
+      summarise(y = mean(y)) |> 
+      complete(x = full_seq(x,1))
+    
+  } else if(x=="Mon-Year") {
+    
+    df |> mutate(x = round(x)) |> 
+      group_by(id, scale, x) |>
+      summarise(y = max(y)) |> 
+      complete(x = full_seq(x,1))
+    
+    
+  }
+  
+  
+}
+
+
+
+
 #combine the reorganized bar graph data to the scatter plots
 
 lit_data_tib <- scatter.tib |> 
@@ -500,8 +388,10 @@ lit_data_tib <- scatter.tib |>
   separate_wider_delim(y_variable,names = c("measure","scale"),delim = " ",
                        too_few = "align_start", too_many = "merge") |> 
   mutate(y = if_else(y < 0, true = 0, false = y)) |> 
-  group_by(plot,group,measure,x_variable) |> 
-  nest(.key = "ls")
+  group_by(plot,group,x_variable,measure) |> 
+  nest(.key = "ls") |> 
+  mutate(ls.test = if_else(str_detect(plot,"Aagaard"), true = map(.x = ls, .f = fix.x.aagard),
+                                                       false = map2(.x = ls,.y = x_variable, .f = fill.seq)))
 
 lit_data_tib <- lit_data_tib |> 
   mutate(measure = if_else(measure == "Annual", true = "Annual Maximum Density", false = measure),
@@ -540,7 +430,7 @@ plot_timeseries <- function(df) {
 
 
 lit_data_plots <- lit_data_tib |>
-  unnest(cols = ls) |> 
+  unnest(cols = ls.test) |> 
   group_by(plot,group) |> 
   nest(.key = "ls") |> 
   mutate(timeseries = map(ls, .f = plot_timeseries)) |> 
