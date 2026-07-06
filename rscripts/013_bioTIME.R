@@ -12,13 +12,16 @@ library(worrms)
 library(mregions2)
 library(countrycode)
 library(countries)
+library(Rtools())
 library(here)
 
 #load in biotime2 data
 
-bioTIME_raw <- read_csv(file = here("data","biotime_v2_rawdata_2025.csv"))
+large_data_directory <- "C:/Users/nbarr/OneDrive/Pictures/Documents/Career/Journal Publications/Manuscripts/Dissertation/Large_Data_Files/CH_1-Boom-Bust"
 
-bioTIME_meta <- read_csv(file = here("data","biotime_v2_metadata_2025.csv")) |> 
+bioTIME_raw <- read_csv(file = paste(large_data_directory,"Input/bioTIME_2.0/biotime_v2_rawdata_2025.csv",sep = "/"))
+
+bioTIME_meta <- read_csv(file = paste(large_data_directory,"Input/bioTIME_2.0/biotime_v2_metadata_2025.csv",sep = "/")) |> 
   select(STUDY_ID,REALM,CLIMATE,CEN_LATITUDE,CEN_LONGITUDE,DATA_POINTS,START_YEAR,END_YEAR)
 
 colnames(bioTIME_meta)
@@ -143,7 +146,7 @@ saveRDS(bioTIME_points, file = here("output","bioTIME_status.rds"))
 #####load in CRIIS checklist for cross-referencing
 #--------------------------------------------------------
 
-CRIIS.checklist <- read_csv(here("data","GRIIS - Country Compendium V1_0.csv")) |> 
+CRIIS.checklist <- read_csv(paste(large_data_directory,"Input/CRIIS/GRIIS - Country Compendium V1_0.csv",sep = "/")) |> 
   mutate(CRIIS.check = 1,
          CRIIS_status = "non-native") |> 
   select(country,species,CRIIS.check,CRIIS_status)
@@ -242,7 +245,7 @@ bioTIME_points <- readRDS(here("output","bioTIME_status_01.rds")) |>
 
 saveRDS(bioTIME_points, file = here("output","bioTIME_status_02.rds"))
 
-rm(list = setdiff(ls(),"bioTIME"))
+rm(list = setdiff(ls(),c("bioTIME","large_data_directory")))
 gc()
 
 #------------------------------------------------------------------
@@ -338,15 +341,15 @@ wms_distribution <- wms_distribution |>
 #  
 #  if(i%%10==0) {
 #    saveRDS(wms_distribution_mgrid,
-#            here("output","wrms_marine_regions_list.rds"))
+#            paste(large_data_directory,"Output/wrms_marine_regions_list.rds", sep = "/"))
 #  }
   
 #}
 
 #saveRDS(wms_distribution_mgrid,
-#        here("output","wrms_marine_regions_list.rds"))
+#        paste(large_data_directory,"Output/wrms_marine_regions_list.rds", sep = "/"))
 
-wrms_distribution_mgrid <- readRDS(here("output","wrms_marine_regions_list.rds")) |> 
+wrms_distribution_mgrid <- readRDS(paste(large_data_directory,"Output/wrms_marine_regions_list.rds", sep = "/")) |> 
   filter(!map_lgl(geometry,is.null))|>
   mutate(geometry = map(geometry, ~ st_as_sf(.x))) |>
   unnest(geometry) |> 
@@ -362,7 +365,7 @@ wms_specieslist_final <- wms_specieslist |>
   select(spp,x,status) |> 
   distinct()
 
-rm(list = setdiff(ls(), "wms_specieslist_final"))
+rm(list = setdiff(ls(), c("wms_specieslist_final","large_data_directory")))
 gc()
 
 ###set up for loop for assigning status
@@ -445,7 +448,7 @@ bioTIME_points <- readRDS(here("output","bioTIME_status_02.rds")) |>
 
 saveRDS(bioTIME_points,here("output","bioTIME_status_03.rds"))
 
-rm(list = setdiff(ls(),"bioTIME_points"))
+rm(list = setdiff(ls(),c("bioTIME_points","large_data_directory")))
 gc()
 
 
@@ -482,15 +485,15 @@ query_all <- paste0(
 )
 
 bird_ranges <- st_read(
-  here("data", "BOTW_2025.gpkg"),
+  paste(large_data_directory, "Input/birdLife/BOTW_2025.gpkg", sep = "/"),
   query = query_all,
   quiet = TRUE
 ) |>
   st_make_valid()
 
-saveRDS(bird_ranges, here("data", "BirdLifeRanges_BiotimeSubset.rds"))
+saveRDS(bird_ranges, paste(large_data_directory, "Input/birdLife/BirdLifeRanges_BiotimeSubset.rds",sep ="/"))
 
-bird_ranges <- readRDS(here("data", "BirdLifeRanges_BiotimeSubset.rds"))
+bird_ranges <- readRDS(paste(large_data_directory, "Input/birdLife/BirdLifeRanges_BiotimeSubset.rds",sep ="/"))
 #### for loop for every point
 
 sf::sf_use_s2(FALSE)
@@ -585,7 +588,7 @@ bioTIME_points |>
                                      .default = NA_character_)) |> 
   saveRDS(here("output","bioTIME_status_04.rds"))
 
-rm(list = setdiff(ls(),"bioTIME_points"))
+rm(list = setdiff(ls(),c("bioTIME_points","large_data_directory")))
 gc()
 
 ####first round of native status's are complete####
@@ -750,7 +753,7 @@ bioTIME_points <- readRDS(here("output","bioTIME_status_04.rds")) |>
 bioTIME_points <- readRDS(here("output","bioTIME_status_05.rds")) 
 
 
-rm(list = setdiff(ls(),"bioTIME_points"))
+rm(list = setdiff(ls(),c("bioTIME_points","large_data_directory")))
 gc()
 
 #####Check for proximity to polygon's for those found outside the range
@@ -785,9 +788,9 @@ bird_points <- bioTIME_points |>
 ####load in the range maps
 
 #subset for working on workflow-
-#bird_spp <- unique(bird_points$birdlife_accepted_scientific_name[1:50])
-
 bird_spp <- unique(bird_points$birdlife_accepted_scientific_name)
+
+#bird_spp <- unique(bird_points$birdlife_accepted_scientific_name)
 
 layer <- "main.all_species"
 
@@ -805,7 +808,7 @@ query_all <- paste0(
 )
 
 bird_ranges <- st_read(
-  here("data", "BOTW_2025.gpkg"),
+  paste(large_data_directory, "Input/birdLife/BOTW_2025.gpkg", sep = "/"),
   query = query_all,
   quiet = TRUE
 ) |>
@@ -884,21 +887,68 @@ for (i in seq_len(nrow(bird_points))) {
   bird_points$dist_m[i] <- result$dist_m
   bird_points$dist_method[i] <- result$distance_method
   bird_points$nearest_error[i] <- result$error
+  
+  if(i %% 50 == 0) {
+    saveRDS(bird_points,here("output","bird_points_outsiderange.rds"))
+  }
+  
 }
 
+saveRDS(bird_points, here("output","bird_points_outsiderange.rds"))
 
-
-
-
-
-###################
-####concordance between CRIIS check and taxon specific checks
-##################
+bird_points <- readRDS(here("output","bird_points_outsiderange.rds")) |> 
+  select(-birdlife_accepted_scientific_name)|> 
+  mutate(birdLife_status = case_when(birdLife_status %in%  c("1","2")~"Native",
+                                     birdLife_status %in%  c("3","4","6")~"Non-native",
+                                     birdLife_status %in%  c("5")~"Unkown",
+                                     .default = birdLife_status)) 
 
 
 bioTIME_points <- readRDS(here("output","bioTIME_status_05.rds")) |> 
-  mutate(status.wrms = case_when(status.wrms == "unclassified; Non-native"~"Non-Native",
+  filter(birdLife_errors != "outside_range"|is.na(birdLife_errors)) |> 
+  bind_rows(bird_points) |> 
+  saveRDS(here("output","bioTIME_status_06.rds"))
+
+
+bioTIME_points <- readRDS(here("output","bioTIME_status_06.rds"))
+
+rm(list = setdiff(ls(),c("bioTIME_points","large_data_directory")))
+gc()
+
+
+###check and then correct if there are names that are not standardized between CRIIS and bioTIME
+
+CRIIS.spp <- read_csv(paste(large_data_directory,"Input/CRIIS/GRIIS - Country Compendium V1_0.csv",sep = "/")) |> 
+  mutate(CRIIS.check = 1,
+         CRIIS_status = "non-native") |> 
+  select(country,species,CRIIS.check,CRIIS_status) |> 
+  select(species) |> 
+  distinct(species)
+
+bioTIME_spp <- readRDS(here("output","bioTIME_status_06.rds")) |> 
+  ungroup() |> 
+  select(valid_name) |> 
+  anti_join(CRIIS.spp, by = c("valid_name" = "species")) |> 
+  distinct(valid_name)
+
+
+
+##unique()###################
+####concordance between CRIIS check and taxon specific checks
+##################
+
+CRIIS.spp <- read_csv(paste(large_data_directory,"Input/CRIIS/GRIIS - Country Compendium V1_0.csv",sep = "/")) |> 
+  mutate(CRIIS.check = 1,
+         CRIIS_status = "non-native") |> 
+  select(country,species,CRIIS.check,CRIIS_status) |> 
+  pull(species) |> 
+  unique()
+
+
+bioTIME_points <- readRDS(here("output","bioTIME_status_06.rds")) |> 
+  mutate(status.wrms = case_when(status.wrms == "unclassified; Non-Native"~"Non-Native",
                                  status.wrms == "Non-Native; unclassified"~"Non-Native",
+                                 status.wrms == "NA" ~NA_character_,
                                  .default = status.wrms),
     final.status = case_when(CRIIS_status == "non-native" &
                                     fishbase_status == "non-native"~"non-native",
@@ -916,6 +966,11 @@ bioTIME_points <- readRDS(here("output","bioTIME_status_05.rds")) |>
                                     birdLife_status == "Native"~"needs manual review",
                                   CRIIS_status == "non-native" &
                                     status.wrms == "Native"~"needs manual review",
+                             #If in CRIIS checklist but non in taxon databases call it non-native
+                                  CRIIS_status == "non-native" &
+                                    is.na(fishbase_status)&
+                                    is.na(birdLife_status)&
+                                    is.na(status.wrms)~"non-native",
                                   is.na(CRIIS_status) & 
                                     fishbase_status == "non-native"~"non-native",
                                   is.na(CRIIS_status) & 
@@ -932,7 +987,38 @@ bioTIME_points <- readRDS(here("output","bioTIME_status_05.rds")) |>
                                     fishbase_status == "unclear"~"unclassified",
                                   is.na(CRIIS_status) & 
                                     status.wrms == "unclassified"~"unclassified",
-                                  .default = NA_character_))
+                             #if there is a country meaning it should be in the checklist
+                             #but not listed as non-native in CRIIS nor is it found in the 
+                             #taxon databases then list as "native"
+                                  !(is.na(country)) &
+                                    is.na(CRIIS_status) &
+                                    is.na(fishbase_status)&
+                                    is.na(birdLife_status)&
+                                    is.na(status.wrms)~"native",
+                             #if there is not country but the species is a species listed in the
+                             #non-native species checklist
+                                  is.na(country) &
+                                    is.na(CRIIS_status) &
+                                    is.na(fishbase_status)&
+                                    is.na(birdLife_status)&
+                                    is.na(status.wrms)&
+                                    valid_name %in% CRIIS.spp~"needs manual review",
+                                 is.na(country) &
+                                    is.na(CRIIS_status) &
+                                    is.na(fishbase_status)&
+                                    is.na(birdLife_status)&
+                                    is.na(status.wrms)&
+                                    !(valid_name %in% CRIIS.spp)~"native",
+                                  .default = NA_character_)) |> 
+  saveRDS(here("output","bioTIME_status_07.rds"))
 
-table(bioTIME_points$final.status)
+bioTIME_points <- readRDS(here("output","bioTIME_status_07.rds")) 
+
+
 sum(table(bioTIME_points$final.status))
+
+manual_review <- bioTIME_points |> 
+  filter(final.status == "needs manual review")
+
+
+
