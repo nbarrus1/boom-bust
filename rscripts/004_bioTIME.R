@@ -1,3 +1,8 @@
+####this script is dedicated to assigning native and non-native status' to the times series of
+####different species found within the BioTIME dataset, focussing on the fish, birds, and molluscs
+
+
+
 rm(list = ls())
 
 library(tidyverse)
@@ -89,7 +94,7 @@ bioTIME <- bioTIME_raw |>
   select(-LATITUDE,-LONGITUDE) |> 
   filter(resolution == "species") |> 
   filter(taxon %in% c("Birds","Molluscs","Fish")) |> 
-  group_by(STUDY_ID,valid_name,taxon) |> 
+  group_by(STUDY_ID,taxon,valid_name) |> 
   nest() |> 
   left_join(bioTIME_meta,by = "STUDY_ID") |> 
   filter(!(taxon == "Fish" & REALM == "Terrestrial"))
@@ -1012,7 +1017,9 @@ bioTIME_points <- readRDS(here("output","bioTIME_status_06.rds")) |>
                                   .default = NA_character_)) |> 
   saveRDS(here("output","bioTIME_status_07.rds"))
 
-bioTIME_points <- readRDS(here("output","bioTIME_status_07.rds")) 
+#add the time series data
+bioTIME_points <- readRDS(here("output","bioTIME_status_07.rds"))|> 
+  left_join(bioTIME |> select(-STUDY_ID,-CLIMATE), by = c("valid_name","taxon","REALM","CEN_LATITUDE","CEN_LONGITUDE"))
 
 
 sum(table(bioTIME_points$final.status))

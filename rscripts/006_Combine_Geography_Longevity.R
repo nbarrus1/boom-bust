@@ -1,27 +1,94 @@
-###this script is dedicated to combining the geographic and trait information to the plots
-###and obtaining timeseries length, completeness, and performing some first summaries describing
-###the time series
+###this script is dedicated to combining the three sources into one,
+###providing the best biogeographic boundaries and the longevity information to the time series.
+###It also obtaining timeseries length, completeness, and performs some first summaries
+###describing the time series. It finally filters the time series by the criteria that I set
+### for describing the population dynamics. Mostly that they are complete and sufficiently long.
 
 #remove all 
 
 rm(list = ls())
 
 
-
 #libraries
 
 library(tidyverse)
+library(EDIutils)
 library(patchwork)
 library(here)
 
 
 theme_set(theme_bw())
 
-##data
+## read in the data
+large_data_directory <- "C:/Users/nbarr/OneDrive/Pictures/Documents/Career/Journal Publications/Manuscripts/Dissertation/Large_Data_Files/CH_1-Boom-Bust"
+
+#digitized data
 load(here("output","literatrure_timeseries.Rdata"))
+
+#dorn lab data
 load(here("output","MDW_mayan-jewelfish.Rdata"))
 
+#rehage lab data (accessed through EDI)
+
+package_id <- "knb-lter-fce.1164.13"
+
+entity_id <- read_data_entity_names(package_id) |> 
+  pull(entityId)
+
+entity_name <- read_data_entity_names(package_id) |> 
+  pull(entityName)
+
+rehage_raw <- read_data_entity(
+  packageId = package_id,
+  entityId = entity_id
+)
+
+con <- rawConnection(rehage_raw)
+
+rehage_data <- read_csv(
+  con,
+  na = c("", " ", ".", "NA", "-9999", "-9999.0", "-9999.00"),
+  show_col_types = FALSE
+) 
+
+close(con)
+
+
 otherdata <- read_csv(here("data","BoomBust_Review - TimeSeries_Identification.csv"))
+
+rehage_data |> 
+  group_by(across(everything())) |> 
+  summarise(n = n()) |> 
+  filter(n >1)|> 
+  write_csv(file = here("output","duplicates_all.csv"))
+
+rehage_data |> 
+  group_by(ID,Year,Date,Season,River,Creek,Bout,Distance,DOMGL,Salinity,TempC,Catch,CPUE) |> 
+  summarise(n = n()) |> 
+  filter(n >1) |> 
+  write_csv(file = here("output","duplicates_IDtoCPUE.csv"))
+
+rehage_data |> 
+  pivot_longer(14:76,names_to = 'spp',values_to = 'count') |> 
+  group_by(ID,Year,Date,Season,River,Creek,Bout,Distance,DOMGL,Salinity,TempC,Catch,CPUE) |> 
+  summarise(test.total = sum(count)) |> 
+  filter(Catch != test.total)|> 
+  write_csv(file = here("output","SumofSpecies_MismatchCatch.csv"))
+  
+###bioTIME data
+bioTIME_points <- readRDS(here("output","bioTIME_status_07.rds")) 
+
+GPD.metadata <- read_csv(paste(large_data_directory,"Input/GlobalPopulationDynamicsDatabase/LPD_2024_public.csv", sep = "/"))
+
+
+#----------------
+###part one: combine the data sets together###
+#----------------
+
+###boom-bust: search
+
+
+
 
 
 

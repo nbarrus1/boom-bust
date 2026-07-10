@@ -1,3 +1,7 @@
+###this script is dedicated to finding if there are data that overlap between the three main 
+###sources of time series: my literature search of boom-bust studies and the BioTIME and 
+###Global Population Dynamics Database
+
 rm(list = ls())
 
 ###load in the libraries
