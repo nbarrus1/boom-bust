@@ -362,7 +362,7 @@ all_data <- lit_data_tib |>
 
 all_data_summ <- all_data |> 
   filter(species.names != "TOTAL") |> 
-  filter(native.species != "Y") |> 
+ # filter(native.species != "Y") |> 
   mutate(time.series.length = map_dbl(.x = ls, .f = nrow),
          time.series.period = map_chr(.x = ls, .f = function(df) {
                                                         paste0("(",floor(df |> pull(x) |> min()),", ",
