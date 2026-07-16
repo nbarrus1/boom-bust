@@ -17,7 +17,6 @@ library(worrms)
 library(mregions2)
 library(countrycode)
 library(countries)
-library(Rtools())
 library(here)
 
 #load in biotime2 data
@@ -1019,7 +1018,19 @@ bioTIME_points <- readRDS(here("output","bioTIME_status_06.rds")) |>
 
 #add the time series data
 bioTIME_points <- readRDS(here("output","bioTIME_status_07.rds"))|> 
-  left_join(bioTIME |> select(-STUDY_ID,-CLIMATE), by = c("valid_name","taxon","REALM","CEN_LATITUDE","CEN_LONGITUDE"))
+  left_join(bioTIME |> select(-STUDY_ID,-CLIMATE), by = c("valid_name","taxon","REALM","CEN_LATITUDE","CEN_LONGITUDE")) |> 
+  select(country,F_CODE,valid_name,taxon,REALM,CEN_LATITUDE,CEN_LONGITUDE,final.status,STUDY_ID,DATA_POINTS,START_YEAR,END_YEAR,data) |> 
+  unnest(data) |> 
+  group_by(country,F_CODE,valid_name,taxon,REALM,CEN_LATITUDE,CEN_LONGITUDE,final.status,STUDY_ID,DATA_POINTS,START_YEAR,END_YEAR,YEAR,SAMPLE_DESC,DEPTH) |> 
+  summarise(ABUNDANCE = mean(ABUNDANCE,na.rm = T)) |> 
+  group_by(country,F_CODE,valid_name,taxon,REALM,CEN_LATITUDE,CEN_LONGITUDE,final.status,STUDY_ID,DATA_POINTS,START_YEAR,END_YEAR,YEAR) |> 
+  summarise(ABUNDANCE = max(ABUNDANCE,na.rm = T)) |> 
+  group_by(country,F_CODE,valid_name,taxon,REALM,CEN_LATITUDE,CEN_LONGITUDE,final.status,STUDY_ID,DATA_POINTS,START_YEAR,END_YEAR) |> 
+  mutate(x = YEAR,
+         y = ABUNDANCE) |> 
+  select(-YEAR,-ABUNDANCE) |> 
+  nest() |> 
+  select(-DATA_POINTS,-START_YEAR,-END_YEAR)
 
 
 sum(table(bioTIME_points$final.status))
@@ -1027,5 +1038,9 @@ sum(table(bioTIME_points$final.status))
 manual_review <- bioTIME_points |> 
   filter(final.status == "needs manual review")
 
+saveRDS(bioTIME_points,here("output","bioTIME_status_08.rds"))
+
+rm(list = ls())
+gc()
 
 
