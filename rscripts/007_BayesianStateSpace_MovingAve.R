@@ -74,8 +74,7 @@ jags_out
 }
 
 ###set up the checkpoint function and initialization of the for loop
-library(tidyverse)
-library(here)
+
 
 checkpoint_file <- here(
   "output",

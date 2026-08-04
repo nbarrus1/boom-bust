@@ -12,8 +12,7 @@ library(forcats)
 #### Data
 
 load(here("output","all_data.Rdata"))
-load(here("output","regimeclassification.Rdata"))
-
+regimeclassification <- readRDS(here("output","regimeclassification.rds"))
 ##global map for visualizations
 
 worldmap <- st_read(here("data/shapefile/WorldMap_Continents/"))
@@ -115,404 +114,443 @@ all_data_summ |>
   ####taxonomic and geogrpahic summaries###
 #------------------------------------------
 
+classification_summary <- regimeclassification |> 
+  mutate(collapse = case_when(class %in% c("boom &\n sust. unk",
+                                                    "boom &\nbust",
+                                                    "unk rate &\nbust",
+                                                    "unk rate &\nsust. unk")~"90% decline",
+                              class == "\novershoot"~"< 90% decline",
+                              class == "\nestablished" ~ "no decline")) |> 
+  group_by(collapse,native.species)|> 
+  summarise(n = n()) |> 
+  drop_na(collapse) |> 
+  group_by(native.species) |> 
+  mutate(total = sum(n),
+         prop = n/total,
+         low = prop-(1.96*sqrt((prop*(1-prop)/n))),
+         upp = prop+(1.96*sqrt((prop*(1-prop)/n))),
+         low = if_else(low <= 0, true = 0, false = low))
+
+###birds
+classification_summary_birds <- regimeclassification |> 
+  filter(major.group == "Aves") |> 
+  mutate(collapse = case_when(class %in% c("boom &\n sust. unk",
+                                           "boom &\nbust",
+                                           "unk rate &\nbust",
+                                           "unk rate &\nsust. unk")~"90% decline",
+                              class == "\novershoot"~"< 90% decline",
+                              class == "\nestablished" ~ "no decline")) |> 
+  group_by(collapse,native.species)|> 
+  summarise(n = n()) |> 
+  drop_na(collapse) |> 
+  group_by(native.species) |> 
+  mutate(total = sum(n),
+         prop = n/total,
+         low = prop-(1.96*sqrt((prop*(1-prop)/n))),
+         upp = prop+(1.96*sqrt((prop*(1-prop)/n))),
+         low = if_else(low <= 0, true = 0, false = low))
+
+###fish
+classification_summary_fish<- regimeclassification |> 
+  filter(major.group %in% c("Actinopterygii","Elasmobranchii","Dipneusti",
+                            "Myxini")) |> 
+  mutate(collapse = case_when(class %in% c("boom &\n sust. unk",
+                                           "boom &\nbust",
+                                           "unk rate &\nbust",
+                                           "unk rate &\nsust. unk")~"90% decline",
+                              class == "\novershoot"~"< 90% decline",
+                              class == "\nestablished" ~ "no decline")) |> 
+  group_by(collapse,native.species)|> 
+  summarise(n = n()) |> 
+  drop_na(collapse) |> 
+  group_by(native.species) |> 
+  mutate(total = sum(n),
+         prop = n/total,
+         low = prop-(1.96*sqrt((prop*(1-prop)/n))),
+         upp = prop+(1.96*sqrt((prop*(1-prop)/n))),
+         low = if_else(low <= 0, true = 0, false = low))
+
+### marine
+classification_summary_marine<- regimeclassification |> 
+  filter(ecosystem == "Marine") |> 
+  mutate(collapse = case_when(class %in% c("boom &\n sust. unk",
+                                           "boom &\nbust",
+                                           "unk rate &\nbust",
+                                           "unk rate &\nsust. unk")~"90% decline",
+                              class == "\novershoot"~"< 90% decline",
+                              class == "\nestablished" ~ "no decline")) |> 
+  group_by(collapse,native.species)|> 
+  summarise(n = n()) |> 
+  drop_na(collapse) |> 
+  group_by(native.species) |> 
+  mutate(total = sum(n),
+         prop = n/total,
+         low = prop-(1.96*sqrt((prop*(1-prop)/n))),
+         upp = prop+(1.96*sqrt((prop*(1-prop)/n))),
+         low = if_else(low <= 0, true = 0, false = low))
+
+###freshwater
+classification_summary_freshwater<- regimeclassification |> 
+  filter(ecosystem == "Freshwater") |> 
+  mutate(collapse = case_when(class %in% c("boom &\n sust. unk",
+                                           "boom &\nbust",
+                                           "unk rate &\nbust",
+                                           "unk rate &\nsust. unk")~"90% decline",
+                              class == "\novershoot"~"< 90% decline",
+                              class == "\nestablished" ~ "no decline")) |> 
+  group_by(collapse,native.species)|> 
+  summarise(n = n()) |> 
+  drop_na(collapse) |> 
+  group_by(native.species) |> 
+  mutate(total = sum(n),
+         prop = n/total,
+         low = prop-(1.96*sqrt((prop*(1-prop)/n))),
+         upp = prop+(1.96*sqrt((prop*(1-prop)/n))),
+         low = if_else(low <= 0, true = 0, false = low))
+
+
+##terrestrial
+classification_summary_terrestrial<- regimeclassification |> 
+  filter(ecosystem == "Terrestrial") |> 
+  mutate(collapse = case_when(class %in% c("boom &\n sust. unk",
+                                           "boom &\nbust",
+                                           "unk rate &\nbust",
+                                           "unk rate &\nsust. unk")~"90% decline",
+                              class == "\novershoot"~"< 90% decline",
+                              class == "\nestablished" ~ "no decline")) |> 
+  group_by(collapse,native.species)|> 
+  summarise(n = n()) |> 
+  drop_na(collapse) |> 
+  group_by(native.species) |> 
+  mutate(total = sum(n),
+         prop = n/total,
+         low = prop-(1.96*sqrt((prop*(1-prop)/n))),
+         upp = prop+(1.96*sqrt((prop*(1-prop)/n))),
+         low = if_else(low <= 0, true = 0, false = low))
+
+
+###island
+
+classification_summary_island<- regimeclassification |> 
+  filter(island == "Y") |> 
+  mutate(collapse = case_when(class %in% c("boom &\n sust. unk",
+                                           "boom &\nbust",
+                                           "unk rate &\nbust",
+                                           "unk rate &\nsust. unk")~"90% decline",
+                              class == "\novershoot"~"< 90% decline",
+                              class == "\nestablished" ~ "no decline")) |> 
+  group_by(collapse,native.species)|> 
+  summarise(n = n()) |> 
+  drop_na(collapse) |> 
+  group_by(native.species) |> 
+  mutate(total = sum(n),
+         prop = n/total,
+         low = prop-(1.96*sqrt((prop*(1-prop)/n))),
+         upp = prop+(1.96*sqrt((prop*(1-prop)/n))),
+         low = if_else(low <= 0, true = 0, false = low))
+
+classification_summary_mainland<- regimeclassification |> 
+  filter(ecosystem != "Freshwater" & island == "N") |> 
+  mutate(collapse = case_when(class %in% c("boom &\n sust. unk",
+                                           "boom &\nbust",
+                                           "unk rate &\nbust",
+                                           "unk rate &\nsust. unk")~"90% decline",
+                              class == "\novershoot"~"< 90% decline",
+                              class == "\nestablished" ~ "no decline")) |> 
+  group_by(collapse,native.species)|> 
+  summarise(n = n()) |> 
+  drop_na(collapse) |> 
+  group_by(native.species) |> 
+  mutate(total = sum(n),
+         prop = n/total,
+         low = prop-(1.96*sqrt((prop*(1-prop)/n))),
+         upp = prop+(1.96*sqrt((prop*(1-prop)/n))),
+         low = if_else(low <= 0, true = 0, false = low))
+
+#contigency table test
+
+contingency_table <-classification_summary |> 
+  select(n,collapse,native.species) |> 
+  pivot_wider(values_from = n, names_from = native.species) |> 
+  column_to_rownames(var = "collapse") |> 
+  as.matrix() 
+
+contingency_table_birds <-classification_summary_birds |> 
+  select(n,collapse,native.species) |> 
+  pivot_wider(values_from = n, names_from = native.species) |> 
+  column_to_rownames(var = "collapse") |> 
+  as.matrix() 
+
+contingency_table_fish <-classification_summary_fish |> 
+  select(n,collapse,native.species) |> 
+  pivot_wider(values_from = n, names_from = native.species) |> 
+  column_to_rownames(var = "collapse") |> 
+  as.matrix() 
+
+contingency_table_marine <-classification_summary_marine |> 
+  select(n,collapse,native.species) |> 
+  pivot_wider(values_from = n, names_from = native.species) |> 
+  column_to_rownames(var = "collapse") |> 
+  as.matrix() 
+
+contingency_table_freshwater <-classification_summary_freshwater |> 
+  select(n,collapse,native.species) |> 
+  pivot_wider(values_from = n, names_from = native.species) |> 
+  column_to_rownames(var = "collapse") |> 
+  as.matrix() 
+
+contingency_table_terrestrial <-classification_summary_terrestrial |> 
+  select(n,collapse,native.species) |> 
+  pivot_wider(values_from = n, names_from = native.species) |> 
+  column_to_rownames(var = "collapse") |> 
+  as.matrix() 
+
+contingency_table_island <-classification_summary_island |> 
+  select(n,collapse,native.species) |> 
+  pivot_wider(values_from = n, names_from = native.species) |> 
+  column_to_rownames(var = "collapse") |> 
+  as.matrix() 
+
+contingency_table_mainland <-classification_summary_mainland |> 
+  select(n,collapse,native.species) |> 
+  pivot_wider(values_from = n, names_from = native.species) |> 
+  column_to_rownames(var = "collapse") |> 
+  as.matrix() 
+
+##contigency table tests
+chi.test <- chisq.test(contingency_table)
+chi.test.birds <- chisq.test(contingency_table_birds)
+chi.test.fish <- chisq.test(contingency_table_fish)
+chi.test.marine <- chisq.test(contingency_table_marine)
+chi.test.freshwater <- chisq.test(contingency_table_freshwater)
+chi.test.terrestrial <- chisq.test(contingency_table_terrestrial)
+chi.test.mainland <- chisq.test(contingency_table_mainland)
+chi.test.island <- chisq.test(contingency_table_island)
+
+
+
+p1 <- classification_summary |> 
+  mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
+  ggplot(aes(x = collapse,y = prop, color = native.species))+
+  geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,
+                  position = position_dodge(width = 0.4))+
+  scale_color_manual(values = c("#50164aff","cadetblue"),
+                     name = NULL,
+                     labels = c("Non-native",
+                                "Native"))+
+  scale_y_continuous(limits = c(0,0.61), breaks = seq(0,0.6, by = 0.2))+
+  annotate(
+    "text",
+    x = 3.4,
+    y = 0.3,
+    label = expression(chi^2 * "(" * 2 * ")" == 37.51 * "," ~ italic(P) * " < 0.001"),
+  size = 5
+  )+
+  labs(y = "Proportion of Time Series",
+       x = NULL)+
+  theme(axis.text = element_text(size = 20, face = 'bold'),
+        axis.title = element_text(size = 22, face=  "bold")) + 
+  coord_flip()
+
+
+
   
-  ###continent_maps###
-  
-p1 <-  all_data_summ |> 
-    rename(CONTINENT = continent) |> 
-    mutate(CONTINENT = case_when(CONTINENT == "Island" ~ "Oceania",
-                                 CONTINENT == "Antartica"~"Antarctica",
-                                 .default = CONTINENT)) |> 
-  filter(class.index1 == ">90% decline") |> 
-  group_by(CONTINENT) |> 
-    summarise(n_timeseries = n()) |> 
-    #group_by(CONTINENT) |> 
-    #summarise(n_spp = n()) |> 
-    right_join(worldmap |>
-                 mutate(CONTINENT = case_when(CONTINENT == "South America"~"S. America",
-                                              CONTINENT == "North America"~"N. America",
-                                              .default = CONTINENT)), by = "CONTINENT",
-               keep = TRUE) |> 
-    ggplot(aes(geometry = geometry))+
-    geom_sf(aes(fill = n_timeseries), color = "#50164aff")+
-    theme(axis.text = element_blank())+
-    scale_fill_gradient2(low = "#50164a80", mid = "#50164abf", high = "#50164aff",
-                         na.value = "white")+
-    labs(fill = "Count")
-  
- 
-  
-p2 <-  all_data_summ |> 
-  filter(class.index1 == ">90% decline") |> 
-  group_by(kingdom,major.group,ecosystem, species.names) |> 
-    summarise(n_timeseries = n()) |> 
-    ggplot(aes(x = fct_reorder(species.names, n_timeseries, median),
-               y = n_timeseries, fill = ecosystem)) + 
-    geom_segment(aes(xend = species.names), yend = 0, color = "#666666") + 
-    geom_point(size = 2, color = "black", shape = 21)+
-    scale_fill_manual(values = c("#50164aff","#50164abf","#50164a80"))+
-    coord_flip()+
-    labs(y = "Count", x = "Species")+
-    theme(legend.position = c(.6,.2),
-          legend.title = element_blank(),
-          axis.text.y = element_text(face = "italic"),
-          legend.text = element_text(size = 8),
-          legend.background = element_blank(),
-          legend.key = element_blank())
-  
+p2 <-classification_summary_birds |> 
+  mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
+  ggplot(aes(x = collapse,y = prop, color = native.species))+
+  geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,
+                  position = position_dodge(width = 0.4))+
+  scale_color_manual(values = c("#50164aff","cadetblue"),
+                     name = NULL,
+                     labels = c("Non-native",
+                                "Native"))+
+  scale_y_continuous(limits = c(0,0.61), breaks = seq(0,0.6, by = 0.2))+
+  annotate(
+    "text",
+    x = 3.4,
+    y = 0.3,
+    label = expression(chi^2 * "(" * 2 * ")" == "4.70" * "," ~ italic(P) * " = 0.095"),
+    size = 5
+  )+
+  labs(y = "Proportion of Time Series",
+       x = NULL)+
+  theme(axis.text = element_text(size = 20, face = 'bold'),
+        axis.title = element_text(size = 22, face=  "bold")) + 
+  coord_flip()
 
-p3 <-  all_data_summ |> 
-  filter(class.index1 == ">90% decline") |> 
-  group_by(kingdom,major.group) |> 
-    summarise(n_timeseries = n()) |> 
-    ggplot(aes(x = fct_reorder(major.group, n_timeseries, median),
-               y = n_timeseries, fill = kingdom)) + 
-    geom_segment(aes(xend = major.group), yend = 0, color = "#666666") + 
-    geom_point(size = 2, color = "black", shape = 21)+
-    scale_fill_manual(values = c("#50164aff","#50164a80"))+
-    coord_flip()+
-    labs(y = "Count", x = "Order")+
-    theme(legend.position = c(.6,.25),
-          legend.title = element_blank(),
-          legend.text = element_text(size = 8),
-          legend.background = element_blank(),
-          legend.key = element_blank()
-    )
-  
-p4 <-  all_data_summ |> 
-    filter(class.index1 == ">90% decline") |> 
-    group_by(ecosystem) |> 
-    summarise(n_timeseries = n()) |> 
-    ggplot(aes(x = fct_reorder(ecosystem, n_timeseries, median),
-               y = n_timeseries)) + 
-    geom_segment(aes(xend = ecosystem), yend = 0, color = "#666666") + 
-    geom_point(size = 2, color = "black", shape = 21,
-               fill = "#50164aff", show.legend = F)+
-    scale_y_continuous(limits = c(0,60), breaks = c(0,10,20,30,40,50,60))+
-    coord_flip()+
-    labs(y = "Count", x = "System")
-  
-p5 <-  all_data_summ |> 
-  filter(class.index1 == ">90% decline") |> 
-  group_by(kingdom) |> 
-    summarise(n_timeseries = n()) |> 
-    ggplot(aes(x = fct_reorder(kingdom, n_timeseries, median),
-               y = n_timeseries)) + 
-    geom_segment(aes(xend = kingdom), yend = 0, color = "#666666") + 
-    geom_point(size = 2, color = "black", shape = 21, 
-               fill = "#50164aff", show.legend = F)+
-    coord_flip()+
-    labs(y = "Count", x = "Kingdom") 
-
-orders <- tibble(longevity.order = c("< 1","> 30","1-2",
-                                     paste0(seq(2,28, by = 2),"-",seq(4,30, by = 2))),
-                 n_timeseries = rep(0, times = length(c("< 1","> 30","1-2",
-                                                        paste0(seq(2,28, by = 2),"-",seq(4,30, by = 2))))))
+p3 <-classification_summary_fish |> 
+  mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
+  ggplot(aes(x = collapse,y = prop, color = native.species))+
+  geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,
+                  position = position_dodge(width = 0.4))+
+  scale_color_manual(values = c("#50164aff","cadetblue"),
+                     name = NULL,
+                     labels = c("Non-native",
+                                "Native"))+
+  scale_y_continuous(limits = c(0,0.61), breaks = seq(0,0.6, by = 0.2))+
+  annotate(
+    "text",
+    x = 3.4,
+    y = 0.3,
+    label = expression(chi^2 * "(" * 2 * ")" == "27.20" * "," ~ italic(P) * " < 0.001"),
+    size = 5
+  )+
+  labs(y = "Proportion of Time Series",
+       x = NULL)+
+  theme(axis.text = element_text(size = 20, face = 'bold'),
+        axis.title = element_text(size = 22, face=  "bold")) + 
+  coord_flip()
 
 
-p6 <- all_data_summ |> 
-  filter(class.index1 == ">90% decline") |> 
-  mutate(longevity.order= case_when(longevity.yrs < 1 ~ "< 1",
-                                     longevity.yrs >= 1 & longevity.yrs < 2~ "1-2",
-                                     longevity.yrs >= 2 & longevity.yrs < 4~ "2-4",
-                                     longevity.yrs >= 4 & longevity.yrs < 6~ "4-6",
-                                     longevity.yrs >= 6 & longevity.yrs < 8~ "6-8",
-                                     longevity.yrs >= 8 & longevity.yrs < 10~ "8-10",
-                                     longevity.yrs >= 10 & longevity.yrs < 12~ "10-12",
-                                     longevity.yrs >= 12 & longevity.yrs < 14~ "12-14",
-                                     longevity.yrs >= 14 & longevity.yrs < 16~ "14-16",
-                                     longevity.yrs >= 16 & longevity.yrs < 18~ "16-18",
-                                    longevity.yrs >= 18 & longevity.yrs < 20~ "18-20",
-                                    longevity.yrs >= 20 & longevity.yrs < 22~ "20-22",
-                                    longevity.yrs >= 22 & longevity.yrs < 24~ "22-24",
-                                    longevity.yrs >= 24 & longevity.yrs < 26~ "24-26",
-                                    longevity.yrs >= 26 & longevity.yrs < 28~ "26-28",
-                                    longevity.yrs >= 28 & longevity.yrs < 30~ "28-30",
-                                    longevity.yrs >= 30~ "> 30")) |> 
-  group_by(longevity.order) |> 
-  summarise(n_timeseries = n(),.groups = "drop")
+p4 <- classification_summary_marine |> 
+  mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
+  ggplot(aes(x = collapse,y = prop, color = native.species))+
+  geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,
+                  position = position_dodge(width = 0.4))+
+  scale_color_manual(values = c("#50164aff","cadetblue"),
+                     name = NULL,
+                     labels = c("Non-native",
+                                "Native"))+
+  scale_y_continuous(limits = c(-0.1,0.71), breaks = seq(0,0.6, by = 0.2))+
+  annotate(
+    "text",
+    x = 3.4,
+    y = 0.3,
+    label = expression(chi^2 * "(" * 2 * ")" == "0.327" * "," ~ italic(P) * " = 0.849"),
+    size = 5
+  )+
+  labs(y = "Proportion of Time Series",
+       x = NULL,
+       title = "Marine")+
+  theme(axis.text = element_text(size = 20, face = 'bold'),
+        axis.title = element_text(size = 22, face=  "bold"),
+        title = element_text(size = 24, face = "bold")) + 
+  coord_flip()
 
 
-p6.complete <- p6 |> 
-  bind_rows(orders |> filter( !(longevity.order %in% (unique(p6$longevity.order))))) |> 
-  mutate(longevity.order = factor(longevity.order, levels = c("< 1","1-2", paste0(seq(2,28,by = 2),"-",seq(4,30,by = 2)),"> 30"),
-                                  ordered = TRUE),
-         total.timeseries = sum(n_timeseries),
-         prop.timeseries = n_timeseries/total.timeseries) |> 
-  ggplot(aes(x = longevity.order, y = n_timeseries))+
-  geom_segment(aes(xend = longevity.order), yend = 0, color = "#666666") + 
-    geom_point(size = 2, color = "black", shape = 21, 
-             fill = "#50164aff", show.legend = F)+
-  coord_flip()+
-  labs(y = "Count", x = "Longevity (years)")+
-  theme(axis.text.y = element_text(size = 7))
-  
+p5 <- classification_summary_freshwater |> 
+  mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
+  ggplot(aes(x = collapse,y = prop, color = native.species))+
+  geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,
+                  position = position_dodge(width = 0.4))+
+  scale_color_manual(values = c("#50164aff","cadetblue"),
+                     name = NULL,
+                     labels = c("Non-native",
+                                "Native"))+
+  scale_y_continuous(limits = c(-0.1,0.71), breaks = seq(0,0.6, by = 0.2))+
+  annotate(
+    "text",
+    x = 3.4,
+    y = 0.3,
+    label = expression(chi^2 * "(" * 2 * ")" == "41.58" * "," ~ italic(P) * " < 0.001"),
+    size = 5
+  )+
+  labs(y = "Proportion of Time Series",
+       x = NULL,
+       title = "Freshwater")+
+  theme(axis.text = element_text(size = 20, face = 'bold'),
+        axis.title = element_text(size = 22, face=  "bold"),
+        title = element_text(size = 24, face = "bold")) + 
+  coord_flip()
+
+p6 <- classification_summary_terrestrial |> 
+  mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
+  ggplot(aes(x = collapse,y = prop, color = native.species))+
+  geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,
+                  position = position_dodge(width = 0.4))+
+  scale_color_manual(values = c("#50164aff","cadetblue"),
+                     name = NULL,
+                     labels = c("Non-native",
+                                "Native"))+
+  scale_y_continuous(limits = c(-0.1,0.71), breaks = seq(0,0.6, by = 0.2))+
+  annotate(
+    "text",
+    x = 3.4,
+    y = 0.3,
+    label = expression(chi^2 * "(" * 2 * ")" == "31.43" * "," ~ italic(P) * " < 0.001"),
+    size = 5
+  )+
+  labs(y = "Proportion of Time Series",
+       x = NULL,
+       title = "Terrestrial")+
+  theme(axis.text = element_text(size = 20, face = 'bold'),
+        axis.title = element_text(size = 22, face=  "bold"),
+        title = element_text(size = 24, face = "bold")) + 
+  coord_flip()
+
+p7 <- classification_summary_island |> 
+  mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
+  ggplot(aes(x = collapse,y = prop, color = native.species))+
+  geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,
+                  position = position_dodge(width = 0.4))+
+  scale_color_manual(values = c("#50164aff","cadetblue"),
+                     name = NULL,
+                     labels = c("Non-native",
+                                "Native"))+
+  scale_y_continuous(limits = c(0,1), breaks = seq(0,1, by = 0.25))+
+  annotate(
+    "text",
+    x = 3.4,
+    y = 0.3,
+    label = expression(chi^2 * "(" * 2 * ")" == "24.31" * "," ~ italic(P) * " < 0.001"),
+    size = 5
+  )+
+  labs(y = "Proportion of Time Series",
+       x = NULL,
+       title = "Island")+
+  theme(axis.text = element_text(size = 20, face = 'bold'),
+        axis.title = element_text(size = 22, face=  "bold"),
+        title = element_text(size = 24, face = "bold")) + 
+  coord_flip()
+
+p8 <- classification_summary_mainland |> 
+  mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
+  ggplot(aes(x = collapse,y = prop, color = native.species))+
+  geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,
+                  position = position_dodge(width = 0.4))+
+  scale_color_manual(values = c("#50164aff","cadetblue"),
+                     name = NULL,
+                     labels = c("Non-native",
+                                "Native"))+
+  scale_y_continuous(limits = c(0,1), breaks = seq(0,1, by = 0.25))+
+  annotate(
+    "text",
+    x = 3.4,
+    y = 0.3,
+    label = expression(chi^2 * "(" * 2 * ")" == "48.24" * "," ~ italic(P) * " < 0.001"),
+    size = 5
+  )+
+  labs(y = "Proportion of Time Series",
+       x = NULL,
+       title = "Mainland")+
+  theme(axis.text = element_text(size = 20, face = 'bold'),
+        axis.title = element_text(size = 22, face=  "bold"),
+        title = element_text(size = 24, face = "bold")) + 
+  coord_flip()
 
 
-layout <- "
-AAAAAAAA#
-AAAAAAAA#
-AAAAAAAA#
-AAAAAAAA#
-AAAAAAAA#
-#BBBBBBCC
-#BBBBBBCC
-#BBBBBBDD
-#BBBBBBDD
-#BBBBBBEE
-#BBBBBBEE
-"
-
-fig3_characteristics <- p1+p2+p3+p4+p6.complete+plot_layout(design = layout)+
-  plot_annotation(tag_levels = "A", tag_suffix = ")")  
-
-ggsave(filename = here("output/figure_editing","fig3_taxonomygeography.pdf"),
-       plot = fig3_characteristics, device = "pdf", units = "mm",
-       width = 173, height = (173+((3/5)*173)))
+ggsave(filename = here("output/figure_editing","fig4_proportions.png"),
+       plot = p1, device = "png", units = "in",
+       width = 7, height = 5)
 
 
+panel.taxa <- p2 + p3 + plot_layout(guides = "collect")
 
-#--------------------------------------
-###propotions through categories###
-#--------------------------------------
-
-
-class_names <- levels(as.factor(all_data_summ$class.forfigure))
-my_pallette <- c("#d45500ff","#a02c2cff","#50164aff","#501448e5","#50164ab2","#50164acd")
-class_pallette <- setNames(my_pallette, nm = class_names)
+ggsave(filename = here("output/figure_editing","fig4_proportions_taxa.png"),
+       plot = panel.taxa, device = "png", units = "in",
+       width = 15, height = 5.5)
 
 
-p7 <- all_data_summ |> 
-  ggplot(aes(x = forcats::fct_infreq(major.group)))+
-  geom_bar(aes(fill = class.forfigure))+
-  scale_fill_manual(values = class_pallette, na.value = "#666666",
-                    labels = class_names)+
-  coord_flip()+
-  labs(x = "Order")+
-  theme(legend.position = c(.8,.75),
-        legend.title = element_blank(),
-        legend.text = element_text(size = 8),
-        legend.background = element_blank(),
-        legend.key = element_blank(),
-        axis.text = element_text(size = 14),
-        axis.title = element_text(size = 16)
-  )
-
-p8 <-all_data_summ |> 
-  ggplot(aes(x = forcats::fct_infreq(ecosystem)))+
-  geom_bar(aes(fill = class.forfigure))+
-  scale_fill_manual(values = class_pallette, na.value = "#666666",
-                    labels = class_names)+
-  coord_flip()+
-  labs(x = "System")+
-  theme(legend.position = c(.8,.75),
-        legend.title = element_blank(),
-        legend.text = element_text(size = 8),
-        legend.background = element_blank(),
-        legend.key = element_blank(),
-        axis.text = element_text(size = 14),
-        axis.title = element_text(size = 16)
-  )
-
-p9 <-all_data_summ |> 
-  ggplot(aes(x = forcats::fct_infreq(continent)))+
-  geom_bar(aes(fill = class.forfigure))+
-  scale_fill_manual(values = class_pallette, na.value = "#666666",
-                    labels = class_names)+
-  coord_flip()+
-  labs(x = "Continent")+
-  theme(legend.position = c(.8,.75),
-        legend.title = element_blank(),
-        legend.text = element_text(size = 8),
-        legend.background = element_blank(),
-        legend.key = element_blank(),
-        axis.text = element_text(size = 14),
-        axis.title = element_text(size = 16)
-  )
+panel.ecoystem <- p4 + p5 + p6 + plot_layout(guides = "collect")
 
 
+ggsave(filename = here("output/figure_editing","fig4_proportions_ecosystem.png"),
+       plot = panel.ecoystem, device = "png", units = "in",
+       width = 20, height = 5.5)
 
-##summaries
-
-p10 <- all_data_summ |> 
-  ungroup() |> 
-  mutate(classified = as.factor(if_else(is.na(class.forfigure),"no", "yes")),
-         major.group = as.factor(major.group)) |> 
-  select(major.group,classified) |> 
-  count(major.group,classified, .drop = FALSE) |>
-  group_by(major.group) |> 
-  mutate(n_total = sum(n),
-         percent = n/n_total*100) |> 
-  filter(classified == "yes") |> 
-  ungroup() |> 
-  ggplot(aes(x = fct_reorder(major.group, n_total,max, .desc = TRUE),
-             y = percent))+
-  geom_segment(aes(xend = major.group), yend = 0, color = "#666666") + 
-  geom_point(size = 2, color = "black", shape = 21,
-             fill = "white", show.legend = F)+
-  scale_y_continuous(limits = c(0,100), breaks = seq(0,100,by = 20))+
-  coord_flip()+
-  labs(y = "Percent Classifiable",x = "Order")+
-  theme(legend.position = c(.8,.75),
-        legend.title = element_blank(),
-        legend.text = element_text(size = 8),
-        legend.background = element_blank(),
-        legend.key = element_blank(),
-        axis.text = element_text(size = 14),
-        axis.title = element_text(size = 16)
-  )
+panel.island <- p7+p8+ plot_layout(guides = "collect")
 
 
-p11 <- all_data_summ |> 
-  ungroup() |> 
-  mutate(classified = as.factor(if_else(is.na(class.forfigure),"no", "yes")),
-         continent = as.factor(continent)) |> 
-  select(continent,classified) |> 
-  count(continent,classified, .drop = FALSE) |>
-  group_by(continent) |> 
-  mutate(n_total = sum(n),
-         percent = n/n_total*100) |> 
-  filter(classified == "yes") |> 
-  ungroup() |> 
-  ggplot(aes(x = fct_reorder(continent, n_total,max, .desc = TRUE),
-             y = percent))+
-  geom_segment(aes(xend = continent), yend = 0, color = "#666666") + 
-  geom_point(size = 2, color = "black", shape = 21,
-             fill = "white", show.legend = F)+
-  scale_y_continuous(limits = c(0,100), breaks = seq(0,100,by = 20))+
-  coord_flip()+
-  labs(y = "Percent Classifiable",x = "Continent")+
-  theme(legend.position = c(.8,.75),
-        legend.title = element_blank(),
-        legend.text = element_text(size = 8),
-        legend.background = element_blank(),
-        legend.key = element_blank(),
-        axis.text = element_text(size = 14),
-        axis.title = element_text(size = 16)
-  )
-
-p12 <- all_data_summ |> 
-  ungroup() |> 
-  mutate(classified = as.factor(if_else(is.na(class.forfigure),"no", "yes")),
-         ecosystem = as.factor(ecosystem)) |> 
-  select(ecosystem,classified) |> 
-  count(ecosystem,classified, .drop = FALSE) |>
-  group_by(ecosystem) |> 
-  mutate(n_total = sum(n),
-         percent = n/n_total*100) |> 
-  filter(classified == "yes") |> 
-  ungroup() |> 
-  ggplot(aes(x = fct_reorder(ecosystem, n_total,max, .desc = TRUE),
-             y = percent))+
-  geom_segment(aes(xend = ecosystem), yend = 0, color = "#666666") + 
-  geom_point(size = 2, color = "black", shape = 21,
-             fill = "white", show.legend = F)+
-  scale_y_continuous(limits = c(0,100), breaks = seq(0,100,by = 20))+
-  coord_flip()+
-  labs(y = "Percent Classifiable",x = "System")+
-  theme(legend.position = c(.8,.75),
-        legend.title = element_blank(),
-        legend.text = element_text(size = 8),
-        legend.background = element_blank(),
-        legend.key = element_blank(),
-        axis.text = element_text(size = 14),
-        axis.title = element_text(size = 16)
-  )
-
-
-
-
-fig_4.propotions<-p7+p8+p9+p10+p12+p11+
-  plot_annotation(tag_levels = "A", tag_suffix = ")",
-                  theme = theme(plot.title = element_text(size = 16)))+
-  plot_layout(nrow = 3, byrow = FALSE, guides = "collect")&theme(legend.position = "bottom")
-
-ggsave(filename = here("output/figure_editing","fig4_proportions.pdf"),
-       plot = fig_4.propotions, device = "pdf", units = "mm",
-       width = 150*1.6, height = (173*1.6))
-
-
-
-rm(list = ls())
-
-load(here("output","final_plots.Rdata"))
-load(here("output","regimeclassification.Rdata"))
-
-
-
-regimeclassification |> 
-  #filter(str_detect(plot,"Fernandez")) |>
-  #filter(str_detect(plot,"Aagaard")&str_detect(species.names,"Passer")&str_detect(species.names,"Passer")) |> 
-  filter(str_detect(plot, "332_Haubrock")) |> 
-  #filter(str_detect(plot,"Tyler")&str_detect(region,"Alaska")) |> 
-  #filter(str_detect(plot,"002_Sandstrom")) |> 
-  pull(plot)
-
-
-plot1 <- final.plots |> 
-  filter(plot %in% (regimeclassification |> 
-                      filter(str_detect(plot,"Fernandez")) |>
-                      pull(plot)))
-
-
-plot2 <- final.plots |> 
-  filter(plot %in% (regimeclassification |> 
-                      filter(str_detect(plot,"002_Sandstrom")) |> 
-                      pull(plot)))
-
-plot3 <- final.plots |> 
-  filter(plot %in% (regimeclassification |> 
-                      filter(str_detect(plot, "332_Haubrock")) |> 
-                      pull(plot)) )
-
-plot4 <- final.plots |> 
-  filter(plot %in% (regimeclassification |> 
-                      filter(str_detect(plot,"Tyler")&str_detect(region,"Alaska")) |> 
-                      pull(plot)))
-
-
-#fernandez plot sargassum: boom-bust
-#aagard & lockwood passer domesticus: unk rate, bust
-#tyler, rangifer tarandus, alaska; slow rate
-#002_Sandstrom, Pacifastacus:boom-bust unk
-
-rm(final.plots, regimeclassification)
-
-
-pboom.bust<- plot1$timeseries[[1]]+
-  labs(title = "A) Boom-Bust", subtitle = NULL)+
-  theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 12),
-        legend.text = element_text(size = 12),
-        plot.title = element_text(size = 16))
-
-pboom.bustunk<- plot2$timeseries[[1]]+
-  labs(title = "D) Boom-Bust Sust. Unk.", subtitle = NULL)+
-  theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 12),
-        legend.text = element_text(size = 12),
-        plot.title = element_text(size = 16))
-
-pboomunk.bust<-plot3$timeseries[[1]]+
-  labs(title = "C) Boom Unk.-Bust", subtitle = NULL)+
-  theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 12),
-        legend.text = element_text(size = 12),
-        plot.title = element_text(size = 16))
-
-pslowrate <- plot4$timeseries[[1]]+
-  labs(title = "B) Boom-Bust", subtitle = NULL)+
-  theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 12),
-        legend.text = element_text(size = 12),
-        plot.title = element_text(size = 16))
-
-
-fig3_examples <- pboom.bust+pslowrate+pboomunk.bust+pboom.bustunk+
-  plot_layout(guides = "collect")&theme(legend.position = "bottom") 
-
-
-ggsave(filename = here("output/figure_editing","fig3_examples.pdf"),
-       plot = fig3_examples, device = "pdf", units = "mm",
-       width = 180, height = 150)
-
+ggsave(filename = here("output/figure_editing","fig4_proportions_island.png"),
+       plot = panel.island, device = "png", units = "in",
+       width = 15, height = 5.5)

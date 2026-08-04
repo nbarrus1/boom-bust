@@ -2,6 +2,7 @@
 ####in step 4
 
 rm(list = ls())
+gc()
 
 ##load libraries
 
@@ -16,8 +17,8 @@ theme_set(theme_bw())
 
 ##load in the final set of time series for meta-analysis
 
-load(file = here("output","final_set_brks.Rdata"))
-load(here("output","all_data.Rdata"))
+final.set.preds.brks <- readRDS(file = here("output","final_set_brks.rds"))
+#load(here("output","all_data.Rdata"))
 
 
 
@@ -292,6 +293,127 @@ decline_lastposition <- df|>
     
   }
 }
+
+
+##---------------------------------------------------------------
+## Initialize output columns
+##---------------------------------------------------------------
+
+#------------------------------------------------------------------
+#### Initialize the regime-classification output object ############
+#------------------------------------------------------------------
+
+regimeclassification <- final.set.preds.brks |>
+  select(
+    -brks_fit,
+    -brks_fit_summ,
+    -brks_fit_opt
+  ) |>
+  mutate(
+    index4 = NA_integer_,
+    class = NA_character_,
+    classification_error = NA_character_,
+    classification_complete = FALSE
+  )
+
+
+#------------------------------------------------------------------
+#### Run regime classification with tryCatch #######################
+#------------------------------------------------------------------
+
+checkpoint_file <- here(
+  "output",
+  "regimeclassification_checkpoint.rds"
+)
+
+for (i in seq_len(nrow(regimeclassification))) {
+  
+  message(
+    i, "/", nrow(regimeclassification),
+    " | ", regimeclassification$species.names[i]
+  )
+  
+  tryCatch({
+    
+    # Add regime classifications to the nested prediction tibble
+    if (
+      !is.na(regimeclassification$brks_opt_num[i]) &&
+      regimeclassification$brks_opt_num[i] > 0
+    ) {
+      
+      predictions_temp <- regime.means(
+        df.original = regimeclassification$predictions[[i]],
+        df.breaks = regimeclassification$breaks.preds[[i]]
+      )
+      
+      index4_temp <- 1L
+      
+    } else {
+      
+      # Retain the original nested prediction tibble
+      predictions_temp <- regimeclassification$predictions[[i]]
+      
+      index4_temp <- 0L
+    }
+    
+    # Classify the time series
+    class_temp <- classification_scheme(
+      df = predictions_temp,
+      n_breaks = regimeclassification$brks_opt_num[i],
+      longevity = regimeclassification$longevity.yrs[i]
+    )
+    
+    # Store results in the initialized object
+    regimeclassification$predictions[[i]] <- predictions_temp
+    regimeclassification$index4[i] <- index4_temp
+    regimeclassification$class[i] <- class_temp
+    regimeclassification$classification_error[i] <- NA_character_
+    regimeclassification$classification_complete[i] <- TRUE
+    
+  }, error = function(e) {
+    
+    regimeclassification$classification_error[i] <-
+      conditionMessage(e)
+    
+    regimeclassification$classification_complete[i] <- FALSE
+    
+    message(
+      "  ERROR: ",
+      regimeclassification$classification_error[i]
+    )
+  })
+  
+  # Save checkpoint every 100 time series
+  if (i %% 100 == 0) {
+    
+    saveRDS(
+      regimeclassification,
+      checkpoint_file
+    )
+    
+    message("Checkpoint saved at iteration ", i)
+  }
+}
+
+# Save once more after the final iteration
+saveRDS(
+  regimeclassification,
+  here("output", "regimeclassification.rds")
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #------------------------------------------------------------------
