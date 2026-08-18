@@ -295,30 +295,13 @@ decline_lastposition <- df|>
 }
 
 
-##---------------------------------------------------------------
-## Initialize output columns
-##---------------------------------------------------------------
-
+##------------------------------------------------------------------
+#### Updated regime-classification checkpoint workflow ############
 #------------------------------------------------------------------
-#### Initialize the regime-classification output object ############
-#------------------------------------------------------------------
-
-regimeclassification <- final.set.preds.brks |>
-  select(
-    -brks_fit,
-    -brks_fit_summ,
-    -brks_fit_opt
-  ) |>
-  mutate(
-    index4 = NA_integer_,
-    class = NA_character_,
-    classification_error = NA_character_,
-    classification_complete = FALSE
-  )
 
 
 #------------------------------------------------------------------
-#### Run regime classification with tryCatch #######################
+#### File paths
 #------------------------------------------------------------------
 
 checkpoint_file <- here(
@@ -326,121 +309,884 @@ checkpoint_file <- here(
   "regimeclassification_checkpoint.rds"
 )
 
-for (i in seq_len(nrow(regimeclassification))) {
+final_file <- here(
+  "output",
+  "regimeclassification.rds"
+)
+
+checkpoint_every <- 100L
+
+
+#------------------------------------------------------------------
+#### Determine whether previous classification results exist
+#------------------------------------------------------------------
+
+if (file.exists(final_file)) {
+  
+  old_classification_file <- final_file
   
   message(
-    i, "/", nrow(regimeclassification),
-    " | ", regimeclassification$species.names[i]
+    "Loading existing completed regime-classification results."
   )
   
-  tryCatch({
+} else if (file.exists(checkpoint_file)) {
+  
+  old_classification_file <- checkpoint_file
+  
+  message(
+    "Completed classification file not found; ",
+    "loading existing checkpoint."
+  )
+  
+} else {
+  
+  old_classification_file <- NULL
+  
+  message(
+    "No existing regime-classification results found. ",
+    "A new classification object will be initialized."
+  )
+}
+
+
+#------------------------------------------------------------------
+#### Safer checkpoint-saving function
+#------------------------------------------------------------------
+
+save_classification_checkpoint <- function(object, path) {
+  
+  # Write to temporary file first
+  temp_path <- paste0(
+    path,
+    ".tmp"
+  )
+  
+  
+  saveRDS(
+    object,
+    temp_path
+  )
+  
+  
+  # Make sure temporary file can be read successfully
+  test_object <- readRDS(
+    temp_path
+  )
+  
+  
+  if (nrow(test_object) != nrow(object)) {
     
-    # Add regime classifications to the nested prediction tibble
-    if (
-      !is.na(regimeclassification$brks_opt_num[i]) &&
-      regimeclassification$brks_opt_num[i] > 0
-    ) {
+    unlink(
+      temp_path
+    )
+    
+    stop(
+      "Temporary classification checkpoint failed validation. ",
+      "The existing checkpoint has not been overwritten."
+    )
+  }
+  
+  
+  rm(
+    test_object
+  )
+  
+  
+  # Keep immediately preceding checkpoint
+  previous_path <- paste0(
+    path,
+    ".previous"
+  )
+  
+  
+  if (file.exists(path)) {
+    
+    previous_success <- file.copy(
+      from = path,
+      to = previous_path,
+      overwrite = TRUE
+    )
+    
+    
+    if (!previous_success) {
       
-      predictions_temp <- regime.means(
-        df.original = regimeclassification$predictions[[i]],
-        df.breaks = regimeclassification$breaks.preds[[i]]
+      unlink(
+        temp_path
       )
       
-      index4_temp <- 1L
+      stop(
+        "Could not create the .previous classification checkpoint. ",
+        "The active checkpoint was not changed."
+      )
+    }
+  }
+  
+  
+  # Replace active checkpoint only after temp file was validated
+  copied <- file.copy(
+    from = temp_path,
+    to = path,
+    overwrite = TRUE
+  )
+  
+  
+  unlink(
+    temp_path
+  )
+  
+  
+  if (!copied) {
+    
+    stop(
+      "Could not replace the active classification checkpoint."
+    )
+  }
+  
+  
+  invisible(NULL)
+}
+
+
+#------------------------------------------------------------------
+#### Load/update existing regime classifications
+#------------------------------------------------------------------
+
+if (!is.null(old_classification_file)) {
+  
+  
+  #----------------------------------------------------------------
+  # Back up existing classifications BEFORE changing anything
+  #----------------------------------------------------------------
+  
+  backup_file <- here(
+    "output",
+    paste0(
+      "regimeclassification_BACKUP_",
+      format(
+        Sys.time(),
+        "%Y%m%d_%H%M%S"
+      ),
+      ".rds"
+    )
+  )
+  
+  
+  backup_success <- file.copy(
+    from = old_classification_file,
+    to = backup_file,
+    overwrite = FALSE
+  )
+  
+  
+  if (!backup_success) {
+    
+    stop(
+      "Could not create backup of existing classification results. ",
+      "No changes have been made."
+    )
+  }
+  
+  
+  message(
+    "\nExisting classification results backed up to:\n",
+    backup_file
+  )
+  
+  
+  #----------------------------------------------------------------
+  # Load existing classification results
+  #----------------------------------------------------------------
+  
+  old.classification <- readRDS(
+    old_classification_file
+  )
+  
+  
+  message(
+    "Previous classification rows: ",
+    nrow(old.classification)
+  )
+  
+  
+  #----------------------------------------------------------------
+  # Keep only classifications corresponding to time series that
+  # still exist in the CURRENT breakpoint dataset
+  #----------------------------------------------------------------
+  
+  old.classification.current <- old.classification |>
+    semi_join(
+      final.set.preds.brks,
+      by = c(
+        "plot",
+        "group"
+      )
+    )
+  
+  
+  n_removed <- nrow(old.classification) -
+    nrow(old.classification.current)
+  
+  
+  message(
+    "Old classification rows no longer in current dataset: ",
+    n_removed
+  )
+  
+  
+  #----------------------------------------------------------------
+  # Identify new time series that have breakpoint results but
+  # have never been classified
+  #----------------------------------------------------------------
+  
+  newdata <- final.set.preds.brks |>
+    anti_join(
+      old.classification.current,
+      by = c(
+        "plot",
+        "group"
+      )
+    )
+  
+  
+  message(
+    "New time series needing classification: ",
+    nrow(newdata)
+  )
+  
+  
+  #----------------------------------------------------------------
+  # Initialize classification columns ONLY for new rows
+  #----------------------------------------------------------------
+  
+  if (nrow(newdata) > 0) {
+    
+    newdata.classification <- newdata |>
       
-    } else {
+      # These large breakpoint model objects are no longer needed
+      # for classification
+      select(
+        -brks_fit,
+        -brks_fit_summ,
+        -brks_fit_opt
+      ) |>
       
-      # Retain the original nested prediction tibble
-      predictions_temp <- regimeclassification$predictions[[i]]
+      mutate(
+        
+        index4 =
+          NA_integer_,
+        
+        class =
+          NA_character_,
+        
+        classification_error =
+          NA_character_,
+        
+        classification_complete =
+          FALSE,
+        
+        classification_attempted =
+          FALSE
+      )
+    
+    
+    #----------------------------------------------------------------
+    # Make sure old object has classification_attempted
+    #
+    # For old rows:
+    # completed classification = attempted
+    # stored error             = attempted
+    # otherwise                = never attempted
+    #----------------------------------------------------------------
+    
+    if (
+      !"classification_attempted" %in%
+      names(old.classification.current)
+    ) {
       
-      index4_temp <- 0L
+      old.classification.current <-
+        old.classification.current |>
+        mutate(
+          classification_attempted =
+            classification_complete |
+            !is.na(classification_error)
+        )
     }
     
-    # Classify the time series
-    class_temp <- classification_scheme(
-      df = predictions_temp,
-      n_breaks = regimeclassification$brks_opt_num[i],
-      longevity = regimeclassification$longevity.yrs[i]
+    
+    #----------------------------------------------------------------
+    # Combine old completed classifications with new rows
+    #----------------------------------------------------------------
+    
+    regimeclassification <- bind_rows(
+      old.classification.current,
+      newdata.classification
     )
     
-    # Store results in the initialized object
-    regimeclassification$predictions[[i]] <- predictions_temp
-    regimeclassification$index4[i] <- index4_temp
-    regimeclassification$class[i] <- class_temp
-    regimeclassification$classification_error[i] <- NA_character_
-    regimeclassification$classification_complete[i] <- TRUE
     
-  }, error = function(e) {
+  } else {
+    
+    
+    regimeclassification <-
+      old.classification.current
+    
+    
+    if (
+      !"classification_attempted" %in%
+      names(regimeclassification)
+    ) {
+      
+      regimeclassification <-
+        regimeclassification |>
+        mutate(
+          classification_attempted =
+            classification_complete |
+            !is.na(classification_error)
+        )
+    }
+  }
+  
+  
+} else {
+  
+  
+  #----------------------------------------------------------------
+  # No previous classification results exist
+  #----------------------------------------------------------------
+  
+  regimeclassification <- final.set.preds.brks |>
+    
+    select(
+      -brks_fit,
+      -brks_fit_summ,
+      -brks_fit_opt
+    ) |>
+    
+    mutate(
+      
+      index4 =
+        NA_integer_,
+      
+      class =
+        NA_character_,
+      
+      classification_error =
+        NA_character_,
+      
+      classification_complete =
+        FALSE,
+      
+      classification_attempted =
+        FALSE
+    )
+}
+
+
+#------------------------------------------------------------------
+#### Sanity checks
+#------------------------------------------------------------------
+
+
+#------------------------------------------------------------------
+# Check plot/group uniqueness in current breakpoint data
+#------------------------------------------------------------------
+
+duplicate_current_keys <- final.set.preds.brks |>
+  count(
+    plot,
+    group
+  ) |>
+  filter(
+    n > 1
+  )
+
+
+if (nrow(duplicate_current_keys) > 0) {
+  
+  stop(
+    "Duplicate plot/group combinations detected ",
+    "in final.set.preds.brks."
+  )
+}
+
+
+#------------------------------------------------------------------
+# Check plot/group uniqueness in classification object
+#------------------------------------------------------------------
+
+duplicate_classification_keys <- regimeclassification |>
+  count(
+    plot,
+    group
+  ) |>
+  filter(
+    n > 1
+  )
+
+
+if (nrow(duplicate_classification_keys) > 0) {
+  
+  stop(
+    "Duplicate plot/group combinations detected ",
+    "in regimeclassification."
+  )
+}
+
+
+#------------------------------------------------------------------
+# Check total row count
+#------------------------------------------------------------------
+
+if (
+  nrow(regimeclassification) !=
+  nrow(final.set.preds.brks)
+) {
+  
+  stop(
+    "Classification object contains ",
+    nrow(regimeclassification),
+    " rows but the current breakpoint dataset contains ",
+    nrow(final.set.preds.brks),
+    " rows."
+  )
+}
+
+
+#------------------------------------------------------------------
+# Confirm every current time series is represented exactly once
+#------------------------------------------------------------------
+
+missing_from_classification <- final.set.preds.brks |>
+  anti_join(
+    regimeclassification,
+    by = c(
+      "plot",
+      "group"
+    )
+  )
+
+
+if (nrow(missing_from_classification) > 0) {
+  
+  stop(
+    nrow(missing_from_classification),
+    " current time series are missing from regimeclassification."
+  )
+}
+
+
+obsolete_classification <- regimeclassification |>
+  anti_join(
+    final.set.preds.brks,
+    by = c(
+      "plot",
+      "group"
+    )
+  )
+
+
+if (nrow(obsolete_classification) > 0) {
+  
+  stop(
+    nrow(obsolete_classification),
+    " classification rows do not exist in the current breakpoint dataset."
+  )
+}
+
+
+#------------------------------------------------------------------
+#### Summary before running classification
+#------------------------------------------------------------------
+
+message(
+  "\nTotal current time series: ",
+  nrow(regimeclassification)
+)
+
+
+message(
+  "Successful classifications already present: ",
+  sum(
+    regimeclassification$classification_complete,
+    na.rm = TRUE
+  )
+)
+
+
+message(
+  "Previously attempted with errors: ",
+  sum(
+    regimeclassification$classification_attempted &
+      !regimeclassification$classification_complete,
+    na.rm = TRUE
+  )
+)
+
+
+message(
+  "Never attempted: ",
+  sum(
+    !regimeclassification$classification_attempted,
+    na.rm = TRUE
+  )
+)
+
+
+#------------------------------------------------------------------
+#### Save updated object BEFORE running any classifications
+#------------------------------------------------------------------
+
+save_classification_checkpoint(
+  regimeclassification,
+  checkpoint_file
+)
+
+
+message(
+  "\nUpdated classification checkpoint saved before analysis."
+)
+
+
+#------------------------------------------------------------------
+#### Identify exactly which rows have NEVER been attempted
+#------------------------------------------------------------------
+
+rows_to_run <- which(
+  is.na(
+    regimeclassification$classification_attempted
+  ) |
+    regimeclassification$classification_attempted == FALSE
+)
+
+
+n_to_run <- length(
+  rows_to_run
+)
+
+
+message(
+  "\n",
+  n_to_run,
+  " regime classifications need to be run."
+)
+
+
+processed_since_save <- 0L
+
+
+#------------------------------------------------------------------
+#### Run regime classification
+#------------------------------------------------------------------
+
+for (i in rows_to_run) {
+  
+  
+  message(
+    "\n",
+    i,
+    "/",
+    nrow(regimeclassification),
+    " | ",
+    regimeclassification$species.names[i]
+  )
+  
+  
+  error.temp <- tryCatch(
+    
+    {
+      
+      #------------------------------------------------------------
+      # Verify breakpoint analysis was completed successfully
+      #------------------------------------------------------------
+      
+      if (
+        "breakpoint_complete" %in%
+        names(regimeclassification)
+      ) {
+        
+        if (
+          !isTRUE(
+            regimeclassification$breakpoint_complete[i]
+          )
+        ) {
+          
+          stop(
+            "Breakpoint analysis was not completed for this time series."
+          )
+        }
+      }
+      
+      
+      if (
+        "breakpoint_error" %in%
+        names(regimeclassification)
+      ) {
+        
+        if (
+          !is.na(
+            regimeclassification$breakpoint_error[i]
+          )
+        ) {
+          
+          stop(
+            paste0(
+              "Breakpoint analysis contains an error: ",
+              regimeclassification$breakpoint_error[i]
+            )
+          )
+        }
+      }
+      
+      
+      #------------------------------------------------------------
+      # Verify Bayesian predictions exist
+      #------------------------------------------------------------
+      
+      if (
+        is.null(
+          regimeclassification$predictions[[i]]
+        )
+      ) {
+        
+        stop(
+          "Bayesian predictions are NULL."
+        )
+      }
+      
+      
+      #------------------------------------------------------------
+      # Add regime classifications to nested prediction tibble
+      #------------------------------------------------------------
+      
+      if (
+        !is.na(
+          regimeclassification$brks_opt_num[i]
+        ) &&
+        regimeclassification$brks_opt_num[i] > 0
+      ) {
+        
+        
+        predictions_temp <- regime.means(
+          df.original =
+            regimeclassification$predictions[[i]],
+          
+          df.breaks =
+            regimeclassification$breaks.preds[[i]]
+        )
+        
+        
+        index4_temp <- 1L
+        
+        
+      } else {
+        
+        
+        # Retain original nested prediction tibble
+        predictions_temp <-
+          regimeclassification$predictions[[i]]
+        
+        
+        index4_temp <- 0L
+      }
+      
+      
+      #------------------------------------------------------------
+      # Classify the time series
+      #------------------------------------------------------------
+      
+      class_temp <- classification_scheme(
+        df =
+          predictions_temp,
+        
+        n_breaks =
+          regimeclassification$brks_opt_num[i],
+        
+        longevity =
+          regimeclassification$longevity.yrs[i]
+      )
+      
+      
+      #------------------------------------------------------------
+      # Store successful results
+      #------------------------------------------------------------
+      
+      regimeclassification$predictions[[i]] <-
+        predictions_temp
+      
+      
+      regimeclassification$index4[i] <-
+        index4_temp
+      
+      
+      regimeclassification$class[i] <-
+        class_temp
+      
+      
+      regimeclassification$classification_error[i] <-
+        NA_character_
+      
+      
+      regimeclassification$classification_complete[i] <-
+        TRUE
+      
+      
+      regimeclassification$classification_attempted[i] <-
+        TRUE
+      
+      
+      message(
+        "Completed | class: ",
+        if_else(
+          is.na(class_temp),
+          "NA",
+          class_temp
+        )
+      )
+      
+      
+      NA_character_
+      
+      
+    },
+    
+    
+    error = function(e) {
+      
+      conditionMessage(e)
+    }
+  )
+  
+  
+  #----------------------------------------------------------------
+  # Record failed attempt
+  #----------------------------------------------------------------
+  
+  if (!is.na(error.temp)) {
+    
     
     regimeclassification$classification_error[i] <-
-      conditionMessage(e)
+      error.temp
     
-    regimeclassification$classification_complete[i] <- FALSE
+    
+    regimeclassification$classification_complete[i] <-
+      FALSE
+    
+    
+    regimeclassification$classification_attempted[i] <-
+      TRUE
+    
     
     message(
-      "  ERROR: ",
-      regimeclassification$classification_error[i]
+      "ERROR in row ",
+      i,
+      ": ",
+      error.temp
     )
-  })
+  }
   
-  # Save checkpoint every 100 time series
-  if (i %% 100 == 0) {
+  
+  processed_since_save <-
+    processed_since_save + 1L
+  
+  
+  rm(
+    error.temp
+  )
+  
+  
+  #----------------------------------------------------------------
+  # Save every checkpoint_every ATTEMPTS
+  #----------------------------------------------------------------
+  
+  if (
+    processed_since_save >= checkpoint_every
+  ) {
     
-    saveRDS(
+    
+    save_classification_checkpoint(
       regimeclassification,
       checkpoint_file
     )
     
-    message("Checkpoint saved at iteration ", i)
+    
+    message(
+      "\nClassification checkpoint saved: ",
+      sum(
+        regimeclassification$classification_attempted,
+        na.rm = TRUE
+      ),
+      "/",
+      nrow(regimeclassification),
+      " attempted."
+    )
+    
+    
+    processed_since_save <- 0L
+    
+    
+    gc()
   }
 }
 
-# Save once more after the final iteration
-saveRDS(
+
+#------------------------------------------------------------------
+#### Final checkpoint
+#------------------------------------------------------------------
+
+save_classification_checkpoint(
   regimeclassification,
-  here("output", "regimeclassification.rds")
+  checkpoint_file
 )
 
 
+#------------------------------------------------------------------
+#### Save completed classification object
+#------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
+saveRDS(
+  regimeclassification,
+  final_file
+)
 
 
 #------------------------------------------------------------------
-####create the function for dynamic modelling of the break-points###
+#### Final summary
 #------------------------------------------------------------------
 
-regimeclassification <- final.set.preds.brks |> 
-  select(-brks_fit,-brks_fit_summ,-brks_fit_opt) |> 
-  mutate(predictions = if_else(brks_opt_num > 0,
-                      true = map2(.x = predictions, .y = breaks.preds, .f = regime.means),
-                      false = ls),
-         index4 = if_else(brks_opt_num > 0, true = 1, false = 0),
-         class = pmap_chr(list(df = predictions, n_breaks = brks_opt_num, longevity = longevity.yrs),
-                          .f = classification_scheme))
+message(
+  "\nRegime classification complete."
+)
 
 
-save(regimeclassification, file = here("output","regimeclassification.Rdata"))
+message(
+  "Total rows: ",
+  nrow(regimeclassification)
+)
 
 
-table(regimeclassification$brks_opt_num>0,
-      is.na(regimeclassification$class))
+message(
+  "Successfully classified: ",
+  sum(
+    regimeclassification$classification_complete,
+    na.rm = TRUE
+  )
+)
 
-table(regimeclassification$class)
 
-###reading list
+message(
+  "Classification errors: ",
+  sum(
+    regimeclassification$classification_attempted &
+      !regimeclassification$classification_complete,
+    na.rm = TRUE
+  )
+)
 
-reading.list <- regimeclassification |> 
-  filter(class == "boom &\nbust") |> 
-  ungroup() |> 
-  select(title, author,species.names,class)
+
+message(
+  "Still unattempted: ",
+  sum(
+    !regimeclassification$classification_attempted,
+    na.rm = TRUE
+  )
+)
+

@@ -1,9 +1,13 @@
-#### this script is for performing the regime shift analysis using the 
-##strucchange package as one suggested in Anderson et al., 2008-Cell
+#### this script is for performing the regime shift analysis using the
+## strucchange package as one suggested in Anderson et al., 2008-Cell
+
 
 rm(list = ls())
 
-##load libraries
+
+#------------------------------------------------------------
+#### Load libraries
+#------------------------------------------------------------
 
 library(tidyverse)
 library(patchwork)
@@ -13,48 +17,79 @@ library(strucchange)
 theme_set(theme_bw())
 
 
-##load in the final set of time series for meta-analysis
+#------------------------------------------------------------
+#### Load updated Bayesian-model results
+#------------------------------------------------------------
 
-final.set.preds <- readRDS(here("output","bayesian_model_checkpoint.rds"))
+final.set.preds <- readRDS(
+  here(
+    "output",
+    "bayesian_model_checkpoint.rds"
+  )
+)
 
 
-#------------------------------------------------------------------
-####create the function for dynamic modelling of the break-points###
-#------------------------------------------------------------------
+#------------------------------------------------------------
+#### Create the function for dynamic modelling of breakpoints
+#------------------------------------------------------------
 
-fit.breaks <-  function(df, brks = 2) {
+fit.breaks <- function(df, brks = 2) {
   
-  if(nrow(df)*0.15<2) { 
+  if (nrow(df) * 0.15 < 2) {
     
-    BP_fit <- breakpoints(pred~1, data = df, breaks = brks, h = 2)
+    BP_fit <- breakpoints(
+      pred ~ 1,
+      data = df,
+      breaks = brks,
+      h = 2
+    )
+    
     BP_fit
+    
   } else {
-    BP_fit <- breakpoints(pred~1, data = df, breaks = brks)
-    BP_fit  
+    
+    BP_fit <- breakpoints(
+      pred ~ 1,
+      data = df,
+      breaks = brks
+    )
+    
+    BP_fit
   }
 }
 
 
-fix.aagaard <- function (df, plot) {
-  if(str_detect(plot, "Aagaard")) {
+fix.aagaard <- function(df, plot) {
+  
+  if (str_detect(plot, "Aagaard")) {
     
-    df |> 
-      select(-x_pred,-pred) |> 
-      rename(pred = obs,
-             x_pred = x_obs) |> 
-      select(pred,x_pred) |> 
-      drop_na(pred)
+    df |>
+      select(
+        -x_pred,
+        -pred
+      ) |>
+      rename(
+        pred = obs,
+        x_pred = x_obs
+      ) |>
+      select(
+        pred,
+        x_pred
+      ) |>
+      drop_na(
+        pred
+      )
     
   } else {
     
     df
-    
   }
-} 
+}
 
-#------------------------------------------------------------------
-#### Initialize breakpoint-analysis columns ####
-#------------------------------------------------------------------
+
+#------------------------------------------------------------
+#### Breakpoint checkpoint setup
+#------------------------------------------------------------
 
 checkpoint_file <- here(
   "output",
@@ -69,375 +104,839 @@ final_file <- here(
 checkpoint_every <- 100L
 
 
+#------------------------------------------------------------
+#### Determine which existing breakpoint file to use
+#------------------------------------------------------------
 
-
-final.set.preds.brks <- final.set.preds |>
-  mutate(
-    brks_fit      = vector("list", n()),
-    brks_fit_summ = vector("list", n()),
-    brks_opt_num  = NA_integer_,
-    brks_fit_opt  = vector("list", n()),
-    breaks.preds  = vector("list", n()),
-    breakpoint_error = NA_character_,
-    breakpoint_complete = FALSE
-  )
-
-
-#------------------------------------------------------------------
-#### Run breakpoint analysis ####
-#------------------------------------------------------------------
-
-for (i in seq_len(nrow(final.set.preds.brks))){
+if (file.exists(final_file)) {
+  
+  old_breakpoint_file <- final_file
   
   message(
-    i, "/", nrow(final.set.preds.brks),
-    " | ", final.set.preds.brks$plot[i]
+    "Loading existing completed breakpoint results."
   )
   
-  error.temp <- tryCatch({
+} else if (file.exists(checkpoint_file)) {
+  
+  old_breakpoint_file <- checkpoint_file
+  
+  message(
+    "Completed breakpoint file not found; ",
+    "loading existing checkpoint."
+  )
+  
+} else {
+  
+  old_breakpoint_file <- NULL
+  
+  message(
+    "No existing breakpoint results found. ",
+    "A new breakpoint-analysis object will be initialized."
+  )
+}
+
+
+#------------------------------------------------------------
+#### Safe checkpoint-saving function
+#------------------------------------------------------------
+
+save_breakpoint_checkpoint <- function(object, path) {
+  
+  temp_path <- paste0(
+    path,
+    ".tmp"
+  )
+  
+  
+  # Write temporary copy first
+  saveRDS(
+    object,
+    temp_path
+  )
+  
+  
+  # Make sure it can be read successfully
+  test_object <- readRDS(
+    temp_path
+  )
+  
+  
+  if (nrow(test_object) != nrow(object)) {
     
-    #--------------------------------------------------------------
-    # Replace Aagaard predictions with observations when necessary
-    #--------------------------------------------------------------
+    unlink(temp_path)
     
-    predictions.temp <- fix.aagaard(
-      df   = final.set.preds.brks$predictions[[i]],
-      plot = final.set.preds.brks$plot[i]
+    stop(
+      "Temporary breakpoint checkpoint failed validation. ",
+      "The existing checkpoint was not overwritten."
+    )
+  }
+  
+  
+  rm(test_object)
+  
+  
+  # Keep immediately preceding checkpoint
+  previous_path <- paste0(
+    path,
+    ".previous"
+  )
+  
+  
+  if (file.exists(path)) {
+    
+    previous_success <- file.copy(
+      from = path,
+      to = previous_path,
+      overwrite = TRUE
     )
     
-    final.set.preds.brks$predictions[[i]] <- predictions.temp
     
+    if (!previous_success) {
+      
+      unlink(temp_path)
+      
+      stop(
+        "Could not create the .previous breakpoint checkpoint. ",
+        "The active checkpoint was not changed."
+      )
+    }
+  }
+  
+  
+  # Replace active checkpoint
+  copied <- file.copy(
+    from = temp_path,
+    to = path,
+    overwrite = TRUE
+  )
+  
+  
+  unlink(temp_path)
+  
+  
+  if (!copied) {
     
-    #--------------------------------------------------------------
-    # Fit models allowing up to two breakpoints
-    #--------------------------------------------------------------
-    
-    breaks.fit.temp <- fit.breaks(
-      df = predictions.temp,
-      brks = 2
+    stop(
+      "Could not replace breakpoint checkpoint."
     )
+  }
+  
+  
+  invisible(NULL)
+}
+
+
+#------------------------------------------------------------
+#### Load previous breakpoint results or initialize new object
+#------------------------------------------------------------
+
+if (!is.null(old_breakpoint_file)) {
+  
+  
+  #----------------------------------------------------------
+  # Back up existing breakpoint results BEFORE changing them
+  #----------------------------------------------------------
+  
+  backup_file <- here(
+    "output",
+    paste0(
+      "final_set_brks_BACKUP_",
+      format(
+        Sys.time(),
+        "%Y%m%d_%H%M%S"
+      ),
+      ".rds"
+    )
+  )
+  
+  
+  backup_success <- file.copy(
+    from = old_breakpoint_file,
+    to = backup_file,
+    overwrite = FALSE
+  )
+  
+  
+  if (!backup_success) {
     
-    final.set.preds.brks$brks_fit[[i]] <- breaks.fit.temp
+    stop(
+      "Could not create backup of existing breakpoint results. ",
+      "No changes have been made."
+    )
+  }
+  
+  
+  message(
+    "\nExisting breakpoint results backed up to:\n",
+    backup_file
+  )
+  
+  
+  #----------------------------------------------------------
+  # Load previous breakpoint results
+  #----------------------------------------------------------
+  
+  old.brks <- readRDS(
+    old_breakpoint_file
+  )
+  
+  
+  message(
+    "Previous breakpoint rows: ",
+    nrow(old.brks)
+  )
+  
+  
+  #----------------------------------------------------------
+  # Keep only old breakpoint results that still exist in the
+  # updated Bayesian dataset
+  #----------------------------------------------------------
+  
+  old.brks.current <- old.brks |>
+    semi_join(
+      final.set.preds,
+      by = c(
+        "plot",
+        "group"
+      )
+    )
+  
+  
+  n_removed <- nrow(old.brks) -
+    nrow(old.brks.current)
+  
+  
+  message(
+    "Old breakpoint rows no longer in current dataset: ",
+    n_removed
+  )
+  
+  
+  #----------------------------------------------------------
+  # Identify genuinely new Bayesian time series
+  #----------------------------------------------------------
+  
+  newdata <- final.set.preds |>
+    anti_join(
+      old.brks.current,
+      by = c(
+        "plot",
+        "group"
+      )
+    )
+  
+  
+  message(
+    "New time series needing breakpoint analysis: ",
+    nrow(newdata)
+  )
+  
+  
+  #----------------------------------------------------------
+  # Initialize breakpoint columns ONLY for new rows
+  #----------------------------------------------------------
+  
+  if (nrow(newdata) > 0) {
     
-    
-    #--------------------------------------------------------------
-    # Summarize candidate breakpoint models
-    #--------------------------------------------------------------
-    
-    breaks.summary.temp <- summary(breaks.fit.temp)
-    
-    final.set.preds.brks$brks_fit_summ[[i]] <-
-      breaks.summary.temp
-    
-    
-    #--------------------------------------------------------------
-    # Select the optimal number of breakpoints using BIC
-    #--------------------------------------------------------------
-    
-    optimal.breaks.temp <-
-      as_tibble(
-        pluck(breaks.summary.temp, "RSS")
-      ) |>
-      slice(2) |>
-      pivot_longer(
-        cols = everything(),
-        names_to = "position",
-        values_to = "BIC"
-      ) |>
+    newdata.brks <- newdata |>
       mutate(
-        position = as.integer(position)
-      ) |>
-      filter(
-        !is.na(BIC),
-        BIC == min(BIC, na.rm = TRUE)
-      ) |>
-      slice(1) |>
-      pull(position)
+        
+        brks_fit =
+          vector(
+            "list",
+            n()
+          ),
+        
+        brks_fit_summ =
+          vector(
+            "list",
+            n()
+          ),
+        
+        brks_opt_num =
+          NA_integer_,
+        
+        brks_fit_opt =
+          vector(
+            "list",
+            n()
+          ),
+        
+        breaks.preds =
+          vector(
+            "list",
+            n()
+          ),
+        
+        breakpoint_error =
+          NA_character_,
+        
+        breakpoint_complete =
+          FALSE
+      )
     
-    if (length(optimal.breaks.temp) == 0L) {
-      stop("No optimal breakpoint model could be selected.")
-    }
     
-    final.set.preds.brks$brks_opt_num[i] <-
-      optimal.breaks.temp
+    #--------------------------------------------------------
+    # Combine old breakpoint results and new initialized rows
+    #--------------------------------------------------------
     
-    
-    #--------------------------------------------------------------
-    # Refit using the selected number of breakpoints
-    #--------------------------------------------------------------
-    
-    optimal.fit.temp <- fit.breaks(
-      df = predictions.temp,
-      brks = optimal.breaks.temp
+    final.set.preds.brks <- bind_rows(
+      old.brks.current,
+      newdata.brks
     )
     
-    final.set.preds.brks$brks_fit_opt[[i]] <-
-      optimal.fit.temp
     
+  } else {
     
-    #--------------------------------------------------------------
-    # Extract rows corresponding to estimated breakpoints
-    #--------------------------------------------------------------
-    
-    breakpoint.indices.temp <-
-      optimal.fit.temp$breakpoints
-    
-    if (
-      length(breakpoint.indices.temp) == 0L ||
-      all(is.na(breakpoint.indices.temp))
-    ) {
+    final.set.preds.brks <-
+      old.brks.current
+  }
+  
+  
+} else {
+  
+  
+  #----------------------------------------------------------
+  # No previous breakpoint results exist
+  #----------------------------------------------------------
+  
+  final.set.preds.brks <- final.set.preds |>
+    mutate(
       
-      final.set.preds.brks$breaks.preds[[i]] <-
-        predictions.temp[0, , drop = FALSE]
+      brks_fit =
+        vector(
+          "list",
+          n()
+        ),
       
-    } else {
+      brks_fit_summ =
+        vector(
+          "list",
+          n()
+        ),
       
-      final.set.preds.brks$breaks.preds[[i]] <-
-        predictions.temp |>
-        slice(
-          breakpoint.indices.temp[
-            !is.na(breakpoint.indices.temp)
-          ]
+      brks_opt_num =
+        NA_integer_,
+      
+      brks_fit_opt =
+        vector(
+          "list",
+          n()
+        ),
+      
+      breaks.preds =
+        vector(
+          "list",
+          n()
+        ),
+      
+      breakpoint_error =
+        NA_character_,
+      
+      breakpoint_complete =
+        FALSE
+    )
+}
+
+
+#------------------------------------------------------------
+#### Sanity checks before breakpoint analysis
+#------------------------------------------------------------
+
+if (
+  nrow(final.set.preds.brks) !=
+  nrow(final.set.preds)
+) {
+  
+  stop(
+    "Breakpoint object contains ",
+    nrow(final.set.preds.brks),
+    " rows but Bayesian results contain ",
+    nrow(final.set.preds),
+    " rows."
+  )
+}
+
+
+# Check plot/group uniqueness
+
+duplicate_keys <- final.set.preds.brks |>
+  count(
+    plot,
+    group
+  ) |>
+  filter(
+    n > 1
+  )
+
+
+if (nrow(duplicate_keys) > 0) {
+  
+  stop(
+    "Duplicate plot/group combinations detected ",
+    "in breakpoint-analysis object."
+  )
+}
+
+
+# Confirm every breakpoint row corresponds to current data
+
+if (
+  nrow(
+    final.set.preds.brks |>
+    anti_join(
+      final.set.preds,
+      by = c(
+        "plot",
+        "group"
+      )
+    )
+  ) > 0
+) {
+  
+  stop(
+    "Some breakpoint rows do not exist ",
+    "in the current Bayesian dataset."
+  )
+}
+
+
+message(
+  "\nTotal current time series: ",
+  nrow(final.set.preds.brks)
+)
+
+message(
+  "Breakpoint analyses already attempted: ",
+  sum(
+    final.set.preds.brks$breakpoint_complete,
+    na.rm = TRUE
+  )
+)
+
+message(
+  "Breakpoint analyses still needing to run: ",
+  sum(
+    is.na(
+      final.set.preds.brks$breakpoint_complete
+    ) |
+      final.set.preds.brks$breakpoint_complete == FALSE
+  )
+)
+
+
+#------------------------------------------------------------
+#### Save expanded object BEFORE running new analyses
+#------------------------------------------------------------
+
+save_breakpoint_checkpoint(
+  final.set.preds.brks,
+  checkpoint_file
+)
+
+
+message(
+  "\nUpdated breakpoint checkpoint saved before analysis."
+)
+
+
+#------------------------------------------------------------
+#### Identify exactly which rows need breakpoint analysis
+#------------------------------------------------------------
+
+rows_to_run <- which(
+  is.na(
+    final.set.preds.brks$breakpoint_complete
+  ) |
+    final.set.preds.brks$breakpoint_complete == FALSE
+)
+
+
+n_to_run <- length(
+  rows_to_run
+)
+
+
+message(
+  "\n",
+  n_to_run,
+  " breakpoint analyses need to be run."
+)
+
+
+processed_since_save <- 0L
+
+
+#------------------------------------------------------------
+#### Run breakpoint analysis
+#------------------------------------------------------------
+
+for (i in rows_to_run) {
+  
+  
+  message(
+    "\n",
+    i,
+    "/",
+    nrow(final.set.preds.brks),
+    " | ",
+    final.set.preds.brks$plot[i]
+  )
+  
+  
+  error.temp <- tryCatch(
+    
+    {
+      
+      #------------------------------------------------------
+      # Make sure Bayesian predictions exist
+      #------------------------------------------------------
+      
+      if (
+        is.null(
+          final.set.preds.brks$predictions[[i]]
         )
+      ) {
+        
+        stop(
+          "Bayesian predictions are NULL."
+        )
+      }
+      
+      
+      #------------------------------------------------------
+      # Replace Aagaard predictions with observations
+      # when necessary
+      #------------------------------------------------------
+      
+      predictions.temp <- fix.aagaard(
+        df =
+          final.set.preds.brks$predictions[[i]],
+        
+        plot =
+          final.set.preds.brks$plot[i]
+      )
+      
+      
+      final.set.preds.brks$predictions[[i]] <-
+        predictions.temp
+      
+      
+      #------------------------------------------------------
+      # Fit models allowing up to two breakpoints
+      #------------------------------------------------------
+      
+      breaks.fit.temp <- fit.breaks(
+        df =
+          predictions.temp,
+        
+        brks =
+          2
+      )
+      
+      
+      final.set.preds.brks$brks_fit[[i]] <-
+        breaks.fit.temp
+      
+      
+      #------------------------------------------------------
+      # Summarize candidate breakpoint models
+      #------------------------------------------------------
+      
+      breaks.summary.temp <- summary(
+        breaks.fit.temp
+      )
+      
+      
+      final.set.preds.brks$brks_fit_summ[[i]] <-
+        breaks.summary.temp
+      
+      
+      #------------------------------------------------------
+      # Select optimal number of breakpoints using BIC
+      #------------------------------------------------------
+      
+      optimal.breaks.temp <-
+        as_tibble(
+          pluck(
+            breaks.summary.temp,
+            "RSS"
+          )
+        ) |>
+        slice(
+          2
+        ) |>
+        pivot_longer(
+          cols =
+            everything(),
+          
+          names_to =
+            "position",
+          
+          values_to =
+            "BIC"
+        ) |>
+        mutate(
+          position =
+            as.integer(
+              position
+            )
+        ) |>
+        filter(
+          !is.na(BIC),
+          
+          BIC ==
+            min(
+              BIC,
+              na.rm = TRUE
+            )
+        ) |>
+        slice(
+          1
+        ) |>
+        pull(
+          position
+        )
+      
+      
+      if (
+        length(optimal.breaks.temp) == 0L
+      ) {
+        
+        stop(
+          "No optimal breakpoint model could be selected."
+        )
+      }
+      
+      
+      final.set.preds.brks$brks_opt_num[i] <-
+        optimal.breaks.temp
+      
+      
+      #------------------------------------------------------
+      # Refit using selected number of breakpoints
+      #------------------------------------------------------
+      
+      optimal.fit.temp <- fit.breaks(
+        df =
+          predictions.temp,
+        
+        brks =
+          optimal.breaks.temp
+      )
+      
+      
+      final.set.preds.brks$brks_fit_opt[[i]] <-
+        optimal.fit.temp
+      
+      
+      #------------------------------------------------------
+      # Extract rows corresponding to estimated breakpoints
+      #------------------------------------------------------
+      
+      breakpoint.indices.temp <-
+        optimal.fit.temp$breakpoints
+      
+      
+      if (
+        length(
+          breakpoint.indices.temp
+        ) == 0L ||
+        all(
+          is.na(
+            breakpoint.indices.temp
+          )
+        )
+      ) {
+        
+        final.set.preds.brks$breaks.preds[[i]] <-
+          predictions.temp[
+            0,
+            ,
+            drop = FALSE
+          ]
+        
+        
+      } else {
+        
+        final.set.preds.brks$breaks.preds[[i]] <-
+          predictions.temp |>
+          slice(
+            breakpoint.indices.temp[
+              !is.na(
+                breakpoint.indices.temp
+              )
+            ]
+          )
+      }
+      
+      
+      #------------------------------------------------------
+      # Successful completion
+      #------------------------------------------------------
+      
+      final.set.preds.brks$breakpoint_error[i] <-
+        NA_character_
+      
+      
+      final.set.preds.brks$breakpoint_complete[i] <-
+        TRUE
+      
+      
+      message(
+        "Completed | optimal breakpoints: ",
+        optimal.breaks.temp
+      )
+      
+      
+      NA_character_
+      
+    },
+    
+    
+    error = function(e) {
+      
+      conditionMessage(e)
     }
-    
-    
-    #--------------------------------------------------------------
-    # Mark successful completion
-    #--------------------------------------------------------------
-    
-    final.set.preds.brks$breakpoint_complete[i] <- TRUE
-    
-    NA_character_
-    
-  }, error = function(e) {
-    
-    conditionMessage(e)
-    
-  })
+  )
   
   
-  #----------------------------------------------------------------
-  # Store any error from the current iteration
-  #----------------------------------------------------------------
-  
-  final.set.preds.brks$breakpoint_error[i] <-
-    error.temp
+  #----------------------------------------------------------
+  # Store error
+  #----------------------------------------------------------
   
   if (!is.na(error.temp)) {
     
+    final.set.preds.brks$breakpoint_error[i] <-
+      error.temp
+    
+    
+    # Mark this row as attempted so it will not automatically
+    # rerun every time the script resumes.
+    final.set.preds.brks$breakpoint_complete[i] <-
+      TRUE
+    
+    
     message(
-      "  Error in row ", i, ": ",
+      "ERROR in row ",
+      i,
+      ": ",
       error.temp
     )
   }
   
   
-  #----------------------------------------------------------------
-  # Save checkpoint periodically
-  #----------------------------------------------------------------
+  processed_since_save <-
+    processed_since_save + 1L
+  
+  
+  #----------------------------------------------------------
+  # Clean temporary objects
+  #----------------------------------------------------------
+  
+  rm(
+    error.temp
+  )
+  
+  
+  #----------------------------------------------------------
+  # Save checkpoint every checkpoint_every attempts
+  #----------------------------------------------------------
   
   if (
-    i %% checkpoint_every == 0L ||
-    i == nrow(final.set.preds.brks)
+    processed_since_save >= checkpoint_every
   ) {
     
-    saveRDS(
+    save_breakpoint_checkpoint(
       final.set.preds.brks,
-      file = checkpoint_file
+      checkpoint_file
     )
     
+    
     message(
-      "Checkpoint saved at row ",
-      i,
-      "."
+      "\nBreakpoint checkpoint saved: ",
+      sum(
+        final.set.preds.brks$breakpoint_complete,
+        na.rm = TRUE
+      ),
+      "/",
+      nrow(final.set.preds.brks),
+      " attempted."
     )
+    
+    
+    processed_since_save <- 0L
+    
+    
+    gc()
   }
 }
 
 
-#------------------------------------------------------------------
-#### Save completed breakpoint results ####
-#------------------------------------------------------------------
+#------------------------------------------------------------
+#### Save any models completed since last checkpoint
+#------------------------------------------------------------
+
+save_breakpoint_checkpoint(
+  final.set.preds.brks,
+  checkpoint_file
+)
+
+
+#------------------------------------------------------------
+#### Save completed breakpoint results
+#------------------------------------------------------------
 
 saveRDS(
   final.set.preds.brks,
-  file = final_file
+  final_file
 )
 
-message("Breakpoint analysis complete.")
+
+message(
+  "\nBreakpoint analysis complete."
+)
 
 
+message(
+  "Total rows: ",
+  nrow(final.set.preds.brks)
+)
 
 
+message(
+  "Successfully completed: ",
+  sum(
+    final.set.preds.brks$breakpoint_complete &
+      is.na(
+        final.set.preds.brks$breakpoint_error
+      ),
+    na.rm = TRUE
+  )
+)
 
 
+message(
+  "Breakpoint errors: ",
+  sum(
+    final.set.preds.brks$breakpoint_complete &
+      !is.na(
+        final.set.preds.brks$breakpoint_error
+      ),
+    na.rm = TRUE
+  )
+)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-#------------------------------------------------------------------
-####implement the dynamic modelling approach for break-points###
-#---------------------------------------------------------------
-
-final.set.preds.brks <- final.set.preds |>
-  mutate(predictions = map2(.x = predictions,.y = plot, .f = fix.aagaard),
-         brks_fit = map(.x = predictions, .f = fit.breaks),
-         brks_fit_summ = map(.x = brks_fit, .f = summary),
-         brks_opt_num = map_int(.x = brks_fit_summ, .f = function(.x) {
-           temp <- as_tibble(pluck(.x, "RSS")) |> 
-             slice(2)
-           temp |> 
-             pivot_longer(1:ncol(temp), names_to = "position", values_to = "BIC") |> 
-             mutate(position = as.integer(position)) |> 
-             filter(BIC == min(BIC)) |> 
-             pull(position)
-         }),
-         brks_fit_opt = map2(.x = predictions, .y = brks_opt_num, .f = fit.breaks),
-         breaks.preds = map2(.x = predictions, .y = brks_fit_opt, .f = function(.x, .y){
-           .x |> 
-             slice(.y$breakpoints)
-         }))
-
-
-save(final.set.preds.brks,file = here("output","final_set_brks.Rdata"))
-#------------------------------------
-####function for dynamic modelling the plots####
-#------------------------------------
-
-
-plot.brks <- function(df.data, df.breakpoints, plot) {
-  
-  if(str_detect(plot, "Aagaard")) {
-  
-  df.data |> 
-    mutate(lci = if_else(lci < 0, true = 0, false = lci)) |> 
-    ggplot(aes(x = x_pred, y = pred))+
-    geom_vline(data = df.breakpoints,
-               aes(xintercept = x_pred),
-               color = "black", linetype = "dashed")+
-    #geom_ribbon(aes(ymax = lci, ymin = uci, fill = "Predicted"), alpha = 0.3)+
-    geom_line(aes(color = "Predicted"))+
-    #geom_point(aes(x = x_obs, y = obs, shape = "Observed"),size = 2, color = "black",  fill = "#666666")+
-    #geom_line(aes(y = REGIME.AVE), color = "red", linetype = "dashed")+
-    #coord_cartesian(ylim = c(min(if_else(df.data$lci<0,true = 0, false = df.data$lci<0)),max(df.data$uci)))+
-    theme_bw(base_size = 12) +
-    scale_fill_manual(values = "red", name = NULL)+
-    scale_color_manual(values = "red", name = NULL)+
-    scale_shape_manual(values = 21, name = NULL)+
-    theme(
-      axis.ticks.length = unit(.25, "cm"),
-      axis.title.y = element_text(vjust = 2),
-      plot.subtitle = element_text(face = "italic", size = 9),
-      plot.title = element_text(size = 9),
-      axis.title = element_text(size = 8),
-      axis.text = element_text(size = 7)
-      #plot.margin = unit(c(0,0,0,0), "cm")
-    )+
-    labs(x = unique(df.data$x_variable), y = unique(df.data$measure),
-         subtitle = unique(df.data$species.names),
-         title = paste0(unique(df.data$author)))
-  
-  } else {
-    
-    df.data |> 
-      mutate(lci = if_else(lci < 0, true = 0, false = lci)) |> 
-      ggplot(aes(x = x_pred, y = pred))+
-      geom_vline(data = df.breakpoints,
-                 aes(xintercept = x_pred),
-                 color = "black", linetype = "dashed")+
-      geom_ribbon(aes(ymax = lci, ymin = uci, fill = "Predicted"), alpha = 0.3)+
-      geom_line(aes(color = "Predicted"))+
-      geom_point(aes(x = x_obs, y = obs, shape = "Observed"),size = 2, color = "black",  fill = "#666666")+
-      #geom_line(aes(y = REGIME.AVE), color = "red", linetype = "dashed")+
-      coord_cartesian(ylim = c(min(if_else(df.data$lci<0,true = 0, false = df.data$lci<0)),max(df.data$uci)))+
-      theme_bw(base_size = 12) +
-      scale_fill_manual(values = "red", name = NULL)+
-      scale_color_manual(values = "red", name = NULL)+
-      scale_shape_manual(values = 21, name = NULL)+
-      theme(
-        axis.ticks.length = unit(.25, "cm"),
-        axis.title.y = element_text(vjust = 2),
-        plot.subtitle = element_text(face = "italic", size = 9),
-        plot.title = element_text(size = 9),
-        axis.title = element_text(size = 8),
-        axis.text = element_text(size = 7)
-        #plot.margin = unit(c(0,0,0,0), "cm")
-      )+
-      labs(x = unique(df.data$x_variable), y = unique(df.data$measure),
-           subtitle = unique(df.data$species.names),
-           title = paste0(unique(df.data$author)))  
-    
-    
-  }
-  
-  
-  }
-
-
-final.plots <- final.set.preds.brks |>
-  unnest(cols = predictions) |> 
-  group_by(plot,group, breaks.preds) |> 
-  nest(.key = "predictions") |> 
-  mutate(timeseries = pmap(list(df.data = predictions,df.breakpoints = breaks.preds, plot = plot),
-                           .f = plot.brks)) 
-
-
-final.plots$timeseries[1:21]
-
-save(final.plots,file = here("output","final_plots.Rdata"))
-
-
-#---------------------------------------------
-###for loop to save my ggplot pannels###
-#---------------------------------------------
-
-
-nrow(final.plots)/9
-
-pdf(here("output","timeseriespanels_Strucchange.pdf"), width = 11, height = 8)
-
-
-for(i in 1:(ceiling((nrow(final.plots)/9)-1))) {
-  
-  
-  if (i == 1) {
-    
-    timeseries.panel <- reduce(final.plots$timeseries[i:(i*9)],`+`)+
-      plot_layout(ncol = 3, nrow = 3)
-    print(timeseries.panel)
-    
-  } else {
-    
-    timeseries.panel <- reduce(final.plots$timeseries[((i*9)+1):((i+1)*9)],`+`)+
-      plot_layout(ncol = 3, nrow = 3)
-    print(timeseries.panel)
-    
-  }
-  
-}
-
-
-dev.off()
-
-
-
-
-
-
-
+message(
+  "Still unattempted: ",
+  sum(
+    is.na(
+      final.set.preds.brks$breakpoint_complete
+    ) |
+      final.set.preds.brks$breakpoint_complete == FALSE
+  )
+)
 
 
 

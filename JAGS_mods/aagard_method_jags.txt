@@ -1,4 +1,5 @@
 model {
+  
   # Prior for process variance
   tau <- 1 / (sigma * sigma)
   sigma ~ dunif(0, 100)
@@ -8,22 +9,29 @@ model {
     b[k] ~ dnorm(0, 1.0E-6)
   }
 
-#first value
-mu[1] ~ dnorm(first_vals[1], 0.01)
+  # First value
+  mu[1] ~ dnorm(first_vals[1], 0.01)
 
-# For early time points with partial lag sums
+  # For early time points with partial lag sums
   for (i in 2:(L+1)) {
-    mu[i] <- inprod(b[1:(i-1)], y[(i-(i-1)):(i-1)])
+    mu[i] <- inprod(
+      b[1:(i-1)],
+      y[(i-(i-1)):(i-1)]
+    )
   }
 
   # Likelihood and internal lag handling
   for (i in (L+2):M) {
-  
-  mu[i] <- inprod(b[1:(L+1)], y[(i-(L+1)):(i-1)])
-  
+    
+    mu[i] <- inprod(
+      b[1:(L+1)],
+      y[(i-(L+1)):(i-1)]
+    )
+    
   }
+
   # Observation model
-  for (i in 1:M) {  
+  for (i in 1:M) {
     y[i] ~ dnorm(mu[i], tau)
   }
 }

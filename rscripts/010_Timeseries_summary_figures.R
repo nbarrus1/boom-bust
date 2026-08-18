@@ -170,6 +170,25 @@ classification_summary_fish<- regimeclassification |>
          upp = prop+(1.96*sqrt((prop*(1-prop)/n))),
          low = if_else(low <= 0, true = 0, false = low))
 
+###molluscs
+classification_summary_mollusc<- regimeclassification |> 
+  filter(major.group %in% c("Molluscs","Bivalvia","Gastropoda")) |> 
+  mutate(collapse = case_when(class %in% c("boom &\n sust. unk",
+                                           "boom &\nbust",
+                                           "unk rate &\nbust",
+                                           "unk rate &\nsust. unk")~"90% decline",
+                              class == "\novershoot"~"< 90% decline",
+                              class == "\nestablished" ~ "no decline")) |> 
+  group_by(collapse,native.species)|> 
+  summarise(n = n()) |> 
+  drop_na(collapse) |> 
+  group_by(native.species) |> 
+  mutate(total = sum(n),
+         prop = n/total,
+         low = prop-(1.96*sqrt((prop*(1-prop)/n))),
+         upp = prop+(1.96*sqrt((prop*(1-prop)/n))),
+         low = if_else(low <= 0, true = 0, false = low))
+
 ### marine
 classification_summary_marine<- regimeclassification |> 
   filter(ecosystem == "Marine") |> 
@@ -287,6 +306,13 @@ contingency_table_fish <-classification_summary_fish |>
   column_to_rownames(var = "collapse") |> 
   as.matrix() 
 
+contingency_table_mollusc <-classification_summary_mollusc |> 
+  select(n,collapse,native.species) |> 
+  pivot_wider(values_from = n, names_from = native.species) |> 
+  column_to_rownames(var = "collapse") |> 
+  as.matrix() 
+
+
 contingency_table_marine <-classification_summary_marine |> 
   select(n,collapse,native.species) |> 
   pivot_wider(values_from = n, names_from = native.species) |> 
@@ -321,6 +347,7 @@ contingency_table_mainland <-classification_summary_mainland |>
 chi.test <- chisq.test(contingency_table)
 chi.test.birds <- chisq.test(contingency_table_birds)
 chi.test.fish <- chisq.test(contingency_table_fish)
+chi.test.mollusc <- chisq.test(contingency_table_mollusc)
 chi.test.marine <- chisq.test(contingency_table_marine)
 chi.test.freshwater <- chisq.test(contingency_table_freshwater)
 chi.test.terrestrial <- chisq.test(contingency_table_terrestrial)
@@ -343,7 +370,7 @@ p1 <- classification_summary |>
     "text",
     x = 3.4,
     y = 0.3,
-    label = expression(chi^2 * "(" * 2 * ")" == 37.51 * "," ~ italic(P) * " < 0.001"),
+    label = expression(chi^2 * "(" * 2 * ")" == 38.95 * "," ~ italic(P) * " < 0.001"),
   size = 5
   )+
   labs(y = "Proportion of Time Series",
@@ -392,7 +419,7 @@ p3 <-classification_summary_fish |>
     "text",
     x = 3.4,
     y = 0.3,
-    label = expression(chi^2 * "(" * 2 * ")" == "27.20" * "," ~ italic(P) * " < 0.001"),
+    label = expression(chi^2 * "(" * 2 * ")" == "32.82" * "," ~ italic(P) * " < 0.001"),
     size = 5
   )+
   labs(y = "Proportion of Time Series",
@@ -401,8 +428,30 @@ p3 <-classification_summary_fish |>
         axis.title = element_text(size = 22, face=  "bold")) + 
   coord_flip()
 
+p4 <-classification_summary_mollusc |> 
+  mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
+  ggplot(aes(x = collapse,y = prop, color = native.species))+
+  geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,
+                  position = position_dodge(width = 0.4))+
+  scale_color_manual(values = c("#50164aff","cadetblue"),
+                     name = NULL,
+                     labels = c("Non-native",
+                                "Native"))+
+  scale_y_continuous(limits = c(0,0.81), breaks = seq(0,0.8, by = 0.2))+
+  annotate(
+    "text",
+    x = 3.4,
+    y = 0.3,
+    label = expression(chi^2 * "(" * 2 * ")" == "21.02" * "," ~ italic(P) * " < 0.001"),
+    size = 5
+  )+
+  labs(y = "Proportion of Time Series",
+       x = NULL)+
+  theme(axis.text = element_text(size = 20, face = 'bold'),
+        axis.title = element_text(size = 22, face=  "bold")) + 
+  coord_flip()
 
-p4 <- classification_summary_marine |> 
+p5 <- classification_summary_marine |> 
   mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
   ggplot(aes(x = collapse,y = prop, color = native.species))+
   geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,
@@ -428,7 +477,7 @@ p4 <- classification_summary_marine |>
   coord_flip()
 
 
-p5 <- classification_summary_freshwater |> 
+p6 <- classification_summary_freshwater |> 
   mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
   ggplot(aes(x = collapse,y = prop, color = native.species))+
   geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,
@@ -453,7 +502,7 @@ p5 <- classification_summary_freshwater |>
         title = element_text(size = 24, face = "bold")) + 
   coord_flip()
 
-p6 <- classification_summary_terrestrial |> 
+p7 <- classification_summary_terrestrial |> 
   mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
   ggplot(aes(x = collapse,y = prop, color = native.species))+
   geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,
@@ -478,7 +527,7 @@ p6 <- classification_summary_terrestrial |>
         title = element_text(size = 24, face = "bold")) + 
   coord_flip()
 
-p7 <- classification_summary_island |> 
+p8 <- classification_summary_island |> 
   mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
   ggplot(aes(x = collapse,y = prop, color = native.species))+
   geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,
@@ -503,7 +552,7 @@ p7 <- classification_summary_island |>
         title = element_text(size = 24, face = "bold")) + 
   coord_flip()
 
-p8 <- classification_summary_mainland |> 
+p9 <- classification_summary_mainland |> 
   mutate(collapse = factor(collapse, levels = c("90% decline","< 90% decline","no decline"))) |> 
   ggplot(aes(x = collapse,y = prop, color = native.species))+
   geom_pointrange(aes(ymax = upp, ymin = low), size = 0.8, linewidth = 1,

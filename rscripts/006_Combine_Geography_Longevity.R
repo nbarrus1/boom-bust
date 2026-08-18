@@ -12,7 +12,6 @@ rm(list = ls())
 #libraries
 
 library(tidyverse)
-library(EDIutils)
 library(patchwork)
 library(fuzzyjoin)
 library(rfishbase)
@@ -36,26 +35,25 @@ load(here("output","MDW_mayan-jewelfish.Rdata"))
 
 #rehage lab data (accessed through EDI)
 
-#package_id <- "knb-lter-fce.1164.13"
+eel.rehage <- read_csv(here("data","peacock_eel_map-year1thru20-zerofilled.csv")) |> 
+  group_by(calendar_year) |> 
+  summarise(distance = sum(distance),
+            catch = sum(catch_number)) |> 
+  mutate(cpue = catch/distance) |> 
+  rename(x = calendar_year,
+         y = cpue) |> 
+  mutate(measure = "CPUE",
+         x_variable = "Mon-Year",
+         group = 1,
+         plot = "Kahmannetal_BiologicalInvasions_2024_peacockeels",
+         id = "Everglades Coastal Creeks",
+         scale = "catch/m electrofished")|> 
+  select(-catch,-distance) |> 
+  ungroup() |> 
+  group_by(plot,group,measure,x_variable) |> 
+  nest(.key = "ls")
+ 
 
-#entity_id <- read_data_entity_names(package_id) |> 
-#  pull(entityId)
-
-#entity_name <- read_data_entity_names(package_id) |> 
-#  pull(entityName)
-
-#rehage_raw <- read_data_entity(
-#  packageId = package_id,
-#  entityId = entity_id
-#)
-
-#con <- rawConnection(rehage_raw)
-
-#rehage_data <- read_csv(
-#  con,
-#  na = c("", " ", ".", "NA", "-9999", "-9999.0", "-9999.00"),
-#  show_col_types = FALSE
-#) 
 
 bioTIME.metadata <- read_csv(paste(large_data_directory,"Input/bioTIME_2.0/biotime_v2_metadata_2025.csv", sep = "/"))
 matches.final <- read_csv(here("output","study_matches_v2.csv"))
@@ -74,7 +72,7 @@ countries <- read_csv(here("data","country_continent_island.csv"))
 #  col_match_checklist()
 
 #saveRDS(bird_longevity_lookup,here("output","COL_bird_longevity_lookup.rds"))
-readRDS(here("output","COL_bird_longevity_lookup.rds"))
+bird_longevity_lookup <- readRDS(here("output","COL_bird_longevity_lookup.rds"))
 
 bird_longevity <- read_excel(here("data","cobi13486-sup-0004-tables4.xlsx")) |> 
   rename(verbatim_name = `Scientific name`) |> 
@@ -156,24 +154,7 @@ fill.seq <- function(df,x) {
   
 }
 
-#rehage_data |> 
-#  group_by(across(everything())) |> 
-#  summarise(n = n()) |> 
-#  filter(n >1)|> 
-#  write_csv(file = here("output","duplicates_all.csv"))
 
-#rehage_data |> 
-#  group_by(ID,Year,Date,Season,River,Creek,Bout,Distance,DOMGL,Salinity,TempC,Catch,CPUE) |> 
-#  summarise(n = n()) |> 
-#  filter(n >1) |> 
-#  write_csv(file = here("output","duplicates_IDtoCPUE.csv"))
-
-#rehage_data |> 
-#  pivot_longer(14:76,names_to = 'spp',values_to = 'count') |> 
-#  group_by(ID,Year,Date,Season,River,Creek,Bout,Distance,DOMGL,Salinity,TempC,Catch,CPUE) |> 
-#  summarise(test.total = sum(count)) |> 
-#  filter(Catch != test.total)|> 
-#  write_csv(file = here("output","SumofSpecies_MismatchCatch.csv"))
   
 ###bioTIME data
 bioTIME_points <- readRDS(here("output","bioTIME_status_08.rds")) |>
@@ -222,6 +203,10 @@ bioTIME_points <- readRDS(here("output","bioTIME_status_08.rds")) |>
          region,time.series,native.species,major.group,survey.freq,ecosystem,kingdom,species.names,
          common.name,continent,digitized)
 
+
+unique(bioTIME_points$major.group)
+
+
 ##get longevity for all unique species to bioTIME data
 
 
@@ -250,7 +235,6 @@ bioTIME_bird <- bioTIME_points |>
   rename(sci_name = name) |> 
   left_join(bird_longevity |> select(COL_name,`Maximum longevity`), by = c("sci_name" = "COL_name")) |> 
   mutate(longevity.yrs = `Maximum longevity`)
-
 
 bioTIME_points <- bioTIME_points |> 
   ungroup() |> 
@@ -454,7 +438,7 @@ LPI.data <- read_csv(paste(large_data_directory,"Input/LivingPlanetIndex/LPD_202
          digitized = "LPI",
          native.species = if_else(Native==1,"Y","N"),
          survey.freq = "yearly",
-         region = NA_character_,
+         region = Location,
          scale = Units,
          time.series = "Y",
          group = 1) |> 
@@ -470,12 +454,12 @@ LPI.data <- read_csv(paste(large_data_directory,"Input/LivingPlanetIndex/LPD_202
   group_by(plot,group,measure,x_variable,title,author,journal,search,population,region,time.series,native.species,survey.freq,ecosystem,continent,kingdom,major.group,species.names,
            common.name,digitized) |> 
   nest(.key = "ls") |> 
-  filter(measure %in% c("Abundance","Biomas","CPUE","Density","Encounter Rate","N")) |> 
+  filter(measure %in% c("Abundance","Biomass","CPUE","Density","Encounter Rate","N")) |> 
   mutate(ls = map(.x = ls,.f = ~.x |> 
                     drop_na(y))) 
 
 
-
+unique(LPI.data$major.group)
 
 ##get longevity for all unique species to bioTIME data
 
@@ -504,8 +488,12 @@ LPI_bird <- LPI.data |>
   left_join(LPI_bird_lookup |> select(verbatim_name,name), by = c("species.names"="verbatim_name")) |> 
   rename(sci_name = name) |> 
   left_join(bird_longevity |> select(COL_name,`Maximum longevity`), by = c("sci_name" = "COL_name")) |> 
-  mutate(longevity.yrs = `Maximum longevity`)
-
+  mutate(longevity.yrs = `Maximum longevity`,
+         #manual fix an error in maximum longevity
+         longevity.yrs = case_when(species.names == "Alopecoenas xanthonurus"~13.804713,
+                                   species.names == "Torgos tracheliotos"~28.906544,
+                                   species.names == "Passerculus bairdii"~6.997048,
+                                   .default = longevity.yrs))
 
 
 
@@ -518,16 +506,6 @@ LPI.data <- LPI.data |>
 
 
 
-
-
-
-
-
-
-unique(LPI.data$Class)
-
-table(LPI.data$major.group,LPI.data$measure)
-
 #----------------
 ###part one: combine the data sets together###
 #----------------
@@ -536,20 +514,16 @@ table(LPI.data$major.group,LPI.data$measure)
 
 
 
-
-
-
-
 ####combine data###
 
 all_data <- lit_data_tib |> 
   bind_rows(MDW) |> 
+  bind_rows(eel.rehage) |> 
   left_join(otherdata, by = c("plot","group"))|> 
   mutate(fuzzy.title = fuzzy_title(title)) |> 
   filter(!(fuzzy.title %in% matches.final$boombust.fuzzy.title)) |> 
   bind_rows(LPI.data) |> 
-  bind_rows(bioTIME_points) |> 
-  drop_na(longevity.yrs)
+  bind_rows(bioTIME_points)
 
 ####all_data summary
 
@@ -586,10 +560,75 @@ all_data_summ <- all_data |>
                       false = ls))
 
 
+unique(all_data$major.group)
 
+
+mollusk_lookup <- all_data_summ |> 
+  ungroup() |> 
+  filter(major.group %in% c("Molluscs","Gastropoda","Bivalvia")) |> 
+  filter(time.series.length >= 7) |> 
+  filter(completeness.10yrs>=0.75) |> 
+  filter(!(str_detect(plot,"Haubrock"))) |> 
+  pull(species.names) |> 
+  unique() |> 
+  col_match_checklist()
+
+###function to help get the each level of taxonomy
+
+
+get_taxon_rank <- function(classification, target_rank) {
+  
+  
+  # Find the taxon with the requested rank
+  match <- keep(
+    classification,
+    ~ identical(.x$rank, target_rank)
+  )
+  
+  # Return NA when that rank is absent
+  if (length(match) == 0) {
+    return(NA_character_)
+  }
+  
+  match[[1]]$name
+}
+
+
+mollusk_longevity <- mollusk_lookup |> 
+  select(verbatim_name,name,classification) |> 
+  rename(species.names = verbatim_name,
+         col_name = name) |> 
+  mutate(
+    domain = map_chr(classification, get_taxon_rank, "domain"),
+    kingdom = map_chr(classification, get_taxon_rank, "kingdom"),
+    phylum = map_chr(classification, get_taxon_rank, "phylum"),
+    class = map_chr(classification, get_taxon_rank, "class"),
+    subclass = map_chr(classification, get_taxon_rank, "subclass"),
+    infraclass = map_chr(classification, get_taxon_rank, "infraclass"),
+    subterclass = map_chr(classification, get_taxon_rank, "subterclass"),
+    superorder = map_chr(classification, get_taxon_rank, "superorder"),
+    order = map_chr(classification, get_taxon_rank, "order"),
+    superfamily = map_chr(classification, get_taxon_rank, "superfamily"),
+    family = map_chr(classification, get_taxon_rank, "family"),
+    subfamily = map_chr(classification, get_taxon_rank, "subfamily"),
+    genus = map_chr(classification, get_taxon_rank, "genus"),
+    family_lower = case_when(is.na(family)&!is.na(subfamily)~subfamily,
+                             is.na(family)&is.na(subfamily)~genus,
+                             .default = family)
+  )
+  
+
+  write_csv(mollusk_longevity, file = here("output","mollusk_longevity_v1.csv"))
+  
+mollusk_longevity <- read_csv(file = here("output","mollusk_longevity_v2.csv"))
 
 
 final.set <- all_data_summ |> 
+  left_join(mollusk_longevity |> select(species.names,longevity.yrs), by = "species.names") |> 
+  mutate(longevity.yrs = if_else(species.names %in% mollusk_longevity$species.names,
+                                 true = longevity.yrs.y, false = longevity.yrs.x)) |> 
+  select(-longevity.yrs.y, -longevity.yrs.x)|> 
+  drop_na(longevity.yrs) |> 
   filter(time.series.length<300) |> 
   mutate(tsl.scaled = time.series.length/longevity.yrs) |> 
   filter((tsl.scaled >10| years.surveyed > 10)&years.surveyed > 7) |> 
@@ -597,24 +636,9 @@ final.set <- all_data_summ |>
   filter(completeness.10yrs >= 0.75) |> 
   filter(measure != "Harvest") 
 
+
+  
 save(final.set,file = here("output","final_set.Rdata"))
 save(all_data_summ, file = here("output","all_data.Rdata"))
 #
-
-
-#-------------------------------
-###visualizations###
-#-------------------------------
-
-
-
-#genus lists
-species_list <- readRDS(file = here("output","wms_specieslist.rds")) |> 
-  select(Class,Order,Family) |> 
-  distinct() #|> 
-  write_csv(file = here("output","genus_list.csv"))
-  
-  
-
-
 

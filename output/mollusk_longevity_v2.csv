@@ -1,0 +1,402 @@
+species.names,col_name,classification,domain,kingdom,phylum,class,subclass,infraclass,subterclass,superorder,order,superfamily,family,subfamily,genus,family_lower,longevity.yrs,notes
+Acanthochitona crinita,Acanthochitona crinita,,Eukaryota,Animalia,Mollusca,Polyplacophora,Neoloricata,NA,NA,NA,Chitonida,Cryptoplacoidea,Acanthochitonidae,Acanthochitoninae,Acanthochitona,Acanthochitonidae,,
+Acanthochitona pygmaea,Acanthochitona pygmaea,,Eukaryota,Animalia,Mollusca,Polyplacophora,Neoloricata,NA,NA,NA,Chitonida,Cryptoplacoidea,Acanthochitonidae,Acanthochitoninae,Acanthochitona,Acanthochitonidae,,
+Stenogyra terebraster,Stenogyra terebraster,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Eupulmonata,NA,Achatinoidea,Achatinidae,Stenogyrinae,Stenogyra,Achatinidae,8,
+Acroloxus lacustris,Acroloxus lacustris,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Acroloxidae,NA,Acroloxus,Acroloxidae,1,
+Japonactaeon punctostriatus,Japonactaeon punctostriatus,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Acteonimorpha,NA,NA,Acteonoidea,Acteonidae,NA,Japonactaeon,Acteonidae,2,SL-Heller 1990
+Gaeotis nigrolineata,Gaeotis nigrolineata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Eupulmonata,NA,NA,Amphibulimidae,NA,Gaeotis,Amphibulimidae,,not found
+Anomia simplex,Anomia simplex,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Pectinida,Anomioidea,Anomiidae,NA,Anomia,Anomiidae,2,
+Heteranomia squamula,Heteranomia squamula,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Pectinida,Anomioidea,Anomiidae,NA,Heteranomia,Anomiidae,2,
+Pododesmus patelliformis,Pododesmus patelliformis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Pectinida,Anomioidea,Anomiidae,NA,Pododesmus,Anomiidae,2,SL-Heller 1990
+Bullina lineata,Bullina lineata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Acteonimorpha,NA,NA,Acteonoidea,Aplustridae,NA,Bullina,Aplustridae,2,
+Aplysia californica,Aplysia californica,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,NA,Aplysiida,Aplysioidea,Aplysiidae,Aplysiinae,Aplysia,Aplysiidae,1.139726,
+Aporrhais pespelecani,Aporrhais pespelecani,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Stromboidea,Aporrhaidae,NA,Aporrhais,Aporrhaidae,,not found
+Arrhoges occidentalis,Arrhoges occidentalis,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Stromboidea,Aporrhaidae,NA,Arrhoges,Aporrhaidae,,not found
+Anadara transversa,Anadara transversa,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Arcida,Arcoidea,Arcidae,NA,Anadara,Arcidae,9.8888889,
+Bathyarca pectunculoides,Bathyarca pectunculoides,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Arcida,Arcoidea,Arcidae,NA,Bathyarca,Arcidae,9.25963,
+Lunarca ovalis,Lunarca ovalis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Arcida,Arcoidea,Arcidae,NA,Lunarca,Arcidae,3,
+Arctica islandica,Arctica islandica,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Arcticoidea,Arcticidae,NA,Arctica,Arcticidae,507,not found
+Arene tricarinata,Arene tricarinata,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Areneidae,NA,Marevalvata,Areneidae,,not found
+Astarte elliptica,Astarte elliptica,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Archiheterodonta,NA,NA,Crassatelloidea,Astartidae,NA,Tridonta,Astartidae,20,
+Astarte quadrans,Astarte quadrans,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Archiheterodonta,NA,NA,Crassatelloidea,Astartidae,Astartinae,Astarte,Astartidae,8.9,
+Astarte undata,Astarte undata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Archiheterodonta,NA,NA,Crassatelloidea,Astartidae,Astartinae,Astarte,Astartidae,8.9,Asymptotic age of growth
+Kelletia kelletii,Kelletia kelletii,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Austrosiphonidae,NA,Kelletia,Austrosiphonidae,40,
+Barleeia unifasciata,Barleeia unifasciata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Barleeiidae,NA,Barleeia,Barleeiidae,2,
+Bithynia leachii,Bithynia leachii,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Truncatelloidea,Bithyniidae,Bithyniinae,Bithynia,Bithyniidae,2,
+Buccinum undatum,Buccinum undatum,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Buccinidae,Buccininae,Buccinum,Buccinidae,10,
+Neptunea antiqua,Neptunea antiqua,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Buccinidae,Neptuneinae,Neptunea,Buccinidae,10,
+Neptunea decemcostata,Neptunea decemcostata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Buccinidae,Neptuneinae,Neptunea,Buccinidae,10,
+Bulla striata,Bulla striata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,NA,NA,Bulloidea,Bullidae,NA,Bulla,Bullidae,,not found
+Caecum floridanum,Caecum floridanum,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Truncatelloidea,Caecidae,Caecinae,Caecum,Caecidae,2,SL-Heller 1990
+Caecum glabrum,Caecum glabrum,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Truncatelloidea,Caecidae,Caecinae,Caecum,Caecidae,2,SL-Heller 1990
+Caecum imbricatum,Caecum imbricatum,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Truncatelloidea,Caecidae,Caecinae,Caecum,Caecidae,2,SL-Heller 1990
+Caecum johnsoni,Caecum johnsoni,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Truncatelloidea,Caecidae,Caecinae,Caecum,Caecidae,2,SL-Heller 1990
+Caecum pulchellum,Caecum pulchellum,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Truncatelloidea,Caecidae,Caecinae,Caecum,Caecidae,2,SL-Heller 1990
+Meioceras nitidum,Meioceras nitidum,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Truncatelloidea,Caecidae,Caecinae,Meioceras,Caecidae,2,SL-Heller 1990
+Callochiton septemvalvis,Callochiton septemvalvis,,Eukaryota,Animalia,Mollusca,Polyplacophora,Neoloricata,NA,NA,NA,Callochitonida,NA,Callochitonidae,NA,Callochiton,Callochitonidae,,
+Diaphorodoris luteocincta,Diaphorodoris luteocincta,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,NA,Calycidorididae,NA,Diaphorodoris,Calycidorididae,1.33333,
+Calyptraea centralis,Calyptraea centralis,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Calyptraeoidea,Calyptraeidae,NA,Calyptraea,Calyptraeidae,5,
+Calyptraea chinensis,Calyptraea chinensis,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Calyptraeoidea,Calyptraeidae,NA,Calyptraea,Calyptraeidae,5,
+Crepidula convexa,Crepidula convexa,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Calyptraeoidea,Calyptraeidae,NA,Crepidula,Calyptraeidae,5,
+Crepidula fornicata,Crepidula fornicata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Calyptraeoidea,Calyptraeidae,NA,Crepidula,Calyptraeidae,5,
+Crepidula maculosa,Crepidula maculosa,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Calyptraeoidea,Calyptraeidae,NA,Crepidula,Calyptraeidae,5,
+Crepidula plana,Crepidula plana,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Calyptraeoidea,Calyptraeidae,NA,Crepidula,Calyptraeidae,5,
+Campanile symbolicum,Campanile symbolicum,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,NA,Campaniloidea,Campanilidae,NA,Campanile,Campanilidae,,not found
+Capulus ungaricus,Capulus ungaricus,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Capuloidea,Capulidae,Capulinae,Capulus,Capulidae,,not found
+Cerastoderma glaucum,Cerastoderma glaucum,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Cardioidea,Cardiidae,Lymnocardiinae,Cerastoderma,Cardiidae,4,
+Fulvia laevigata,Fulvia laevigata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Cardioidea,Cardiidae,Cardiinae,Fulvia,Cardiidae,14.38323,
+Laevicardium mortoni,Laevicardium mortoni,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Cardioidea,Cardiidae,Laevicardiinae,Laevicardium,Cardiidae,14.38323,
+Parvicardium pinnulatum,Parvicardium pinnulatum,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Cardioidea,Cardiidae,Lymnocardiinae,Parvicardium,Cardiidae,1,
+Parvicardium scabrum,Parvicardium scabrum,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Cardioidea,Cardiidae,Lymnocardiinae,Parvicardium,Cardiidae,1,
+Parvicardium scriptum,Parvicardium scriptum,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Cardioidea,Cardiidae,Lymnocardiinae,Parvicardium,Cardiidae,1,
+Cardites floridanus,Cardites floridanus,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Archiheterodonta,NA,NA,NA,NA,Carditamerinae,Carditamera,Carditamerinae,13.23,
+Cardiapoda richardi,Cardiapoda richardi,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Pterotracheoidea,Carinariidae,NA,Cardiapoda,Carinariidae,,not found
+Cepolis squamosa,Cepolis squamosa,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Eupulmonata,NA,NA,Cepolidae,NA,Cepolis,Cepolidae,2.778082,
+Bittiolum varium,Bittiolum varium,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,NA,Cerithioidea,Cerithiidae,Bittiinae,Bittiolum,Cerithiidae,1.5,
+Bittium reticulatum,Bittium reticulatum,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,NA,Cerithioidea,Cerithiidae,Bittiinae,Bittium,Cerithiidae,2,
+Cerithiopsis tubercularis,Cerithiopsis tubercularis,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,NA,Triphoroidea,Cerithiopsidae,NA,Cerithiopsis,Cerithiopsidae,,not found
+Chaetoderma nitidulum,Chaetoderma nitidulum,,Eukaryota,Animalia,Mollusca,Caudofoveata,NA,NA,NA,NA,Chaetodermatida,NA,Chaetodermatidae,NA,Chaetoderma,Chaetodermatidae,,
+Ceratosoma amoenum,Ceratosoma amoenum,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Chromodoridoidea,Chromodorididae,Miamirinae,Ceratosoma,Chromodorididae,,not found
+Ceratosoma brevicaudatum,Ceratosoma brevicaudatum,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Chromodoridoidea,Chromodorididae,Miamirinae,Ceratosoma,Chromodorididae,,not found
+Chromodoris westraliensis,Chromodoris westraliensis,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Chromodoridoidea,Chromodorididae,Chromodoridinae,Chromodoris,Chromodorididae,,not found
+Doriprismatica atromarginata,Doriprismatica atromarginata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Chromodoridoidea,Chromodorididae,Chromodoridinae,Doriprismatica,Chromodorididae,,not found
+Goniobranchus daphne,Goniobranchus daphne,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Chromodoridoidea,Chromodorididae,Chromodoridinae,Goniobranchus,Chromodorididae,,not found
+Goniobranchus splendidus,Goniobranchus splendidus,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Chromodoridoidea,Chromodorididae,Chromodoridinae,Goniobranchus,Chromodorididae,,not found
+Hypselodoris bennetti,Hypselodoris bennetti,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Chromodoridoidea,Chromodorididae,Miamirinae,Hypselodoris,Chromodorididae,,not found
+Texadina sphinctostoma,Texadina sphinctostoma,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Truncatelloidea,Cochliopidae,Semisalsinae,Texadina,Cochliopidae,3,
+Colus gracilis,Colus gracilis,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Colidae,NA,Colus,Colidae,21,
+Colus stimpsoni,Colus stimpsonii,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Colidae,NA,Colus,Colidae,21,
+Astyris lunata,Astyris lunata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Columbellidae,NA,Astyris,Columbellidae,,not found
+Costoanachis avara,Costoanachis avara,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Columbellidae,Atiliinae,Costoanachis,Columbellidae,,not found
+Costoanachis translirata,Costoanachis translirata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Columbellidae,Atiliinae,Costoanachis,Columbellidae,,not found
+Cotonopsis lafresnayi,Cotonopsis lafresnayi,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Columbellidae,NA,Cotonopsis,Columbellidae,,not found
+Parvanachis obesa,Parvanachis obesa,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Columbellidae,NA,Parvanachis,Columbellidae,,not found
+Californiconus californicus,Californiconus californicus,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Conoidea,Conidae,NA,Californiconus,Conidae,14.5,
+Corambe obscura,Corambe obscura,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,NA,Corambidae,NA,Corambe,Corambidae,0.10411,
+Caryocorbula contracta,Caryocorbula contracta,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,NA,Corbulidae,NA,Caryocorbula,Corbulidae,1.57,
+Varicorbula gibba,Varicorbula gibba,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,NA,Corbulidae,NA,Varicorbula,Corbulidae,1.57,
+Crassinella lunulata,Crassinella lunulata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Archiheterodonta,NA,NA,Crassatelloidea,Crassatellidae,Scambulinae,Crassinella,Crassatellidae,41,
+Crassinella martinicensis,Crassinella martinicensis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Archiheterodonta,NA,NA,Crassatelloidea,Crassatellidae,Scambulinae,Crassinella,Crassatellidae,41,not found
+Cuthonella concinna,Cuthonella concinna,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Fionoidea,Cuthonellidae,NA,Fiocuthona,Cuthonellidae,,not found
+Cylichnella bidentata,Cylichnella bidentata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,NA,NA,Philinoidea,Cylichnidae,NA,Cylichnella,Cylichnidae,,not found
+Cylindrobulla beauii,Cylindrobulla beauii,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Sacoglossa,NA,Oxynooidea,Cylindrobullidae,NA,Cylindrobulla,Cylindrobullidae,,not found
+Cabestana spengleri,Cabestana spengleri,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Tonnoidea,Cymatiidae,NA,Cabestana,Cymatiidae,,not found
+Fusitriton oregonensis,Fusitriton oregonensis,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Tonnoidea,Cymatiidae,NA,Fusitriton,Cymatiidae,,not found
+Monoplex parthenopeus,Monoplex parthenopeus,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Tonnoidea,Cymatiidae,NA,Monoplex,Cymatiidae,,not found
+Neobernaya spadicea,Neobernaya spadicea,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Cypraeoidea,Cypraeidae,Zonariinae,Neobernaya,Cypraeidae,,not found
+Corbicula fluminea,Corbicula fluminea,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Cyrenoidea,Cyrenidae,NA,Corbicula,Cyrenidae,4,
+Polymesoda caroliniana,Polymesoda caroliniana,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Cyrenoidea,Cyrenoididae,NA,Polymesoda,Cyrenoididae,3.5,not found
+Gibberula lavalleeana,Gibberula lavalleeana,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Volutoidea,Cystiscidae,Cystiscinae,Gibberula,Cystiscidae,,not found
+Dendrodoris krusensternii,Dendrodoris krusensternii,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Phyllidioidea,Dendrodorididae,NA,Dendrodoris,Dendrodorididae,,not found
+Antalis antillarum,Antalis antillarum,,Eukaryota,Animalia,Mollusca,Scaphopoda,NA,NA,NA,NA,Dentaliida,NA,Dentaliidae,NA,Antalis,Dentaliidae,,
+Antalis entalis,Antalis entalis,,Eukaryota,Animalia,Mollusca,Scaphopoda,NA,NA,NA,NA,Dentaliida,NA,Dentaliidae,NA,Antalis,Dentaliidae,,
+Paradentalium americanum,Paradentalium americanum,,Eukaryota,Animalia,Mollusca,Scaphopoda,NA,NA,NA,NA,Dentaliida,NA,Dentaliidae,NA,Paradentalium,Dentaliidae,,
+Diaphana minuta,Diaphana minuta,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,NA,NA,NA,Diaphanidae,NA,Diaphana,Diaphanidae,,not found
+Aphelodoris varia,Aphelodoris varia,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Doridoidea,Discodorididae,NA,Aphelodoris,Discodorididae,,not found
+Jorunna tomentosa,Jorunna tomentosa,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Doridoidea,Discodorididae,NA,Jorunna,Discodorididae,,not found
+Doris chrysoderma,Doris chrysoderma,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Doridoidea,Dorididae,NA,Doris,Dorididae,,not found
+Doris pseudoargus,Doris pseudoargus,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Doridoidea,Dorididae,NA,Archidoris,Dorididae,,not found
+Doto fragilis,Doto fragilis,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Dendronotoidea,Dotidae,NA,Doto,Dotidae,,not found
+Dreissena polymorpha,Dreissena polymorpha,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,Dreissenoidea,Dreissenidae,Dreisseninae,Dreissena,Dreissenidae,9,
+Mytilopsis leucophaeata,Mytilopsis leucophaeata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,Dreissenoidea,Dreissenidae,Congeriinae,Mytilopsis,Dreissenidae,4.5,
+Abralia veranyi,Abralia veranyi,,Eukaryota,Animalia,Mollusca,Cephalopoda,Coleoidea,NA,NA,Decapodiformes,Oegopsida,Enoploteuthoidea,Enoploteuthidae,NA,Abralia,Enoploteuthidae,,
+Watasenia scintillans,Watasenia scintillans,,Eukaryota,Animalia,Mollusca,Cephalopoda,Coleoidea,NA,NA,Decapodiformes,Oegopsida,Enoploteuthoidea,Enoploteuthidae,NA,Watasenia,Enoploteuthidae,,
+Gyroscala rupicola,Gyroscala rupicola,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,NA,Epitonioidea,Epitoniidae,NA,Gyroscala,Epitoniidae,,not found
+Amphorina farrani,Amphorina farrani,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Fionoidea,Eubranchidae,NA,Amphorina,Eubranchidae,,not found
+Amphorina pallida,Amphorina pallida,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Fionoidea,Eubranchidae,NA,Amphorina,Eubranchidae,,not found
+Eubranchus vittatus,Eubranchus vittatus,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Fionoidea,Eubranchidae,NA,Capellinia,Eubranchidae,,not found
+Aclis hendersoni,Aclis hendersoni,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Vanikoroidea,Eulimidae,NA,Aclis,Eulimidae,1.66667,
+Eulima bilineata,Eulima bilineata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Vanikoroidea,Eulimidae,NA,Eulima,Eulimidae,1.66667,
+Facelina auriculata,Facelina auriculata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Aeolidioidea,Facelinidae,NA,Facelina,Facelinidae,2,SL-Heller 1990
+Pteraeolidia ianthina,Pteraeolidia ianthina,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Aeolidioidea,Facelinidae,Pteraeolidiinae,Pteraeolidia,Facelinidae,2,SL-Heller 1990
+Diodora graeca,Diodora graeca,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Lepetellida,Fissurelloidea,Fissurellidae,Fissurellideinae,Diodora,Fissurellidae,5.33333,
+Emarginula fissura,Emarginula fissura,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Lepetellida,Fissurelloidea,Fissurellidae,Emarginulinae,Emarginula,Fissurellidae,5.33333,
+Megathura crenulata,Megathura crenulata,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Lepetellida,Fissurelloidea,Fissurellidae,Fissurellideinae,Megathura,Fissurellidae,5.33333,
+Carronella pellucida,Carronella pellucida,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Fionoidea,Flabellinidae,NA,Flabellina,Flabellinidae,,not found
+Coryphellina rubrolineata,Coryphellina rubrolineata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Fionoidea,Flabellinidae,NA,Coryphellina,Flabellinidae,,not found
+Edmundsella pedata,Edmundsella pedata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Fionoidea,Flabellinidae,NA,Edmundsella,Flabellinidae,,not found
+Lamychaena hians,Lamychaena hians,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Gastrochaenida,Gastrochaenoidea,Gastrochaenidae,NA,Lamychaena,Gastrochaenidae,,not found
+Granulina ovuliformis,Granulina ovuliformis,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Volutoidea,Granulinidae,NA,Granulina,Granulinidae,,not found
+Haliotis corrugata,Haliotis corrugata,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Lepetellida,Haliotoidea,Haliotidae,NA,Haliotis,Haliotidae,16.66667,
+Haliotis kamtschatkana,Haliotis kamtschatkana,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Lepetellida,Haliotoidea,Haliotidae,NA,Haliotis,Haliotidae,16.66667,
+Haminella solitaria,Haminella solitaria,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,NA,NA,Haminoeoidea,Haminoeidae,NA,Haminella,Haminoeidae,1.583333,
+Haminoea succinea,Haminoea succinea,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,NA,NA,Haminoeoidea,Haminoeidae,NA,Haminoea,Haminoeidae,1.583333,
+Austroselenites alticola,Austroselenites alticola,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Eupulmonata,NA,Haplotrematoidea,Haplotrematidae,NA,Zophos,Haplotrematidae,,not found
+Alcadia alta,Alcadia alta,,Eukaryota,Animalia,Mollusca,Gastropoda,Neritimorpha,NA,NA,NA,Cycloneritida,Helicinoidea,Helicinidae,Helicininae,Alcadia,Helicinidae,,not found
+Helicina striata,Helicina striata,,Eukaryota,Animalia,Mollusca,Gastropoda,Neritimorpha,NA,NA,NA,Cycloneritida,Helicinoidea,Helicinidae,Helicininae,Helicina,Helicinidae,,not found
+Hiatella arctica,Hiatella arctica,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Adapedonta,Hiatelloidea,Hiatellidae,NA,Hiatella,Hiatellidae,38.5,
+Hydrobia spp.,Hydrobia,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Truncatelloidea,Hydrobiidae,Hydrobiinae,NA,Hydrobiidae,1.25,
+Probythinella protera,Probythinella protera,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Truncatelloidea,Hydrobiidae,NA,Probythinella,Hydrobiidae,1.25,
+Antiopella cristata,Antiopella cristata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Proctonotoidea,Janolidae,NA,Antiopella,Janolidae,,not found
+Laona quadrata,Laona quadrata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,NA,NA,Philinoidea,Laonidae,NA,Laona,Laonidae,,not found
+Lasaea adansoni,Lasaea adansoni,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,NA,Lasaeidae,NA,Lasaea,Lasaeidae,4,
+Leptochiton asellus,Leptochiton asellus,,Eukaryota,Animalia,Mollusca,Polyplacophora,Neoloricata,NA,NA,NA,Lepidopleurida,NA,Leptochitonidae,NA,Leptochiton,Leptochitonidae,,
+Leptochiton cancellatus,Leptochiton cancellatus,,Eukaryota,Animalia,Mollusca,Polyplacophora,Neoloricata,NA,NA,NA,Lepidopleurida,NA,Leptochitonidae,NA,Leptochiton,Leptochitonidae,,
+Limacina helicina,Limacina helicina,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,NA,Pteropoda,Limacinoidea,Limacinidae,NA,Limacina,Limacinidae,2,
+Limaria pellucida,Limaria pellucida,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Limida,Limoidea,Limidae,NA,Limaria,Limidae,10,
+Lacuna pallidula,Lacuna pallidula,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Littorinoidea,Littorinidae,Lacuninae,Lacuna,Littorinidae,1.166667,
+Lacuna parva,Lacuna parva,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Littorinoidea,Littorinidae,Lacuninae,Lacuna,Littorinidae,1.166667,
+Littorina fabalis,Littorina fabalis,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Littorinoidea,Littorinidae,Littorininae,Littorina,Littorinidae,2.083333,
+Littorina saxatilis,Littorina saxatilis,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Littorinoidea,Littorinidae,Littorininae,Littorina,Littorinidae,2.083333,
+Melarhaphe neritoides,Melarhaphe neritoides,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Littorinoidea,Littorinidae,Littorininae,Melarhaphe,Littorinidae,3.416667,
+Doryteuthis opalescens,Doryteuthis opalescens,,Eukaryota,Animalia,Mollusca,Cephalopoda,Coleoidea,NA,NA,Decapodiformes,Myopsida,NA,Loliginidae,NA,Doryteuthis,Loliginidae,,
+Doryteuthis pealeii,Doryteuthis pealeii,,Eukaryota,Animalia,Mollusca,Cephalopoda,Coleoidea,NA,NA,Decapodiformes,Myopsida,NA,Loliginidae,NA,Doryteuthis,Loliginidae,,
+Sepioteuthis australis,Sepioteuthis australis,,Eukaryota,Animalia,Mollusca,Cephalopoda,Coleoidea,NA,NA,Decapodiformes,Myopsida,NA,Loliginidae,NA,Sepioteuthis,Loliginidae,,
+Tectura virginea,Tectura virginea,,Eukaryota,Animalia,Mollusca,Gastropoda,Patellogastropoda,NA,NA,NA,Nacellida,Lottioidea,Lottiidae,Tecturinae,Tectura,Lottiidae,8.5,
+Testudinalia testudinalis,Testudinalia testudinalis,,Eukaryota,Animalia,Mollusca,Gastropoda,Patellogastropoda,NA,NA,NA,Nacellida,Lottioidea,Lottiidae,NA,Testudinalia,Lottiidae,7,
+Lucina radians,Lucina radians,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Lucinida,Lucinoidea,Lucinidae,Leucosphaerinae,Callucina,Lucinidae,2.08,
+Myrtea spinifera,Myrtea spinifera,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Lucinida,Lucinoidea,Lucinidae,Myrteinae,Myrtea,Lucinidae,2.08,
+Parvilucina crenella,Parvilucina crenella,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Lucinida,Lucinoidea,Lucinidae,Lucininae,Parvilucina,Lucinidae,2.08,
+Radiolucina amianta,Radiolucina amianta,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Lucinida,Lucinoidea,Lucinidae,Lucininae,Radiolucina,Lucinidae,2.08,
+Lymnaea stagnalis,Lymnaea stagnalis,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Lymnaeidae,NA,Lymnaea,Lymnaea,1.843836,
+Hinkleyia caperata,Hinkleyia caperata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Lymnaeidae,NA,Hinkleyia,Lymnaeidae,1.152668,
+Ladislavella elodes,Ladislavella elodes,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Lymnaeidae,NA,Ladislavella,Lymnaeidae,1.152668,
+Pseudosuccinea columella,Pseudosuccinea columella,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Lymnaeidae,NA,Pseudosuccinea,Lymnaeidae,0.4615,
+Lyonsia hyalina,Lyonsia hyalina,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Anomalodesmata,NA,Pandoroidea,Lyonsiidae,NA,Lyonsia,Lyonsiidae,8.5,
+Mulinia lateralis,Mulinia lateralis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Mactroidea,Mactridae,Mactrinae,Mulinia,Mactridae,37.666667,
+Rangia cuneata,Rangia cuneata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Mactroidea,Mactridae,Mactrinae,Rangia,Mactridae,37.666667,
+Spisula solidissima,Spisula solidissima,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Mactroidea,Mactridae,Mactrinae,Spisula,Mactridae,37,
+Kurtziella cerina,Kurtziella cerina,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Conoidea,Mangeliidae,NA,Kurtziella,Mangeliidae,,not found
+Margarites helicinus,Margarites helicinus,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Margaritesidae,NA,Margarites,Margaritesidae,4,
+Dentimargo aureocincta,Dentimargo aureocincta,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Volutoidea,Marginellidae,Marginellinae,Dentimargo,Marginellidae,,not found
+Prunum apicinum,Prunum apicinum,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Volutoidea,Marginellidae,Pruninae,Prunum,Marginellidae,,not found
+Neopupina crocea,Neopupina crocea,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Architaenioglossa,Cyclophoroidea,Megalomastomatidae,NA,Neopupina,Megalomastomatidae,,not found
+Pleuromeris tridentata,Pleuromeris tridentata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Archiheterodonta,NA,NA,NA,NA,Miodomeridinae,Pleuromeris,Miodomeridinae,,not found
+Pteromeris perplana,Pteromeris perplana,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Archiheterodonta,NA,NA,NA,NA,Miodomeridinae,Pteromeris,Miodomeridinae,,not found
+Atrimitra idae,Atrimitra idae,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Mitroidea,Mitridae,NA,Atrimitra,Mitridae,6,
+Bathymodiolus septemdierum,Bathymodiolus septemdierum,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Modiolidae,Bathymodiolinae,Bathymodiolus,Modiolidae,100,
+Gigantidas platifrons,Gigantidas platifrons,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Modiolidae,Bathymodiolinae,Gigantidas,Modiolidae,100,
+Lioberus castanea,Lioberus castanea,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Modiolidae,Limnoperninae,Lioberus,Modiolidae,14.52773,
+Modiolus modiolus,Modiolus modiolus,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Modiolidae,Modiolinae,Modiolus,Modiolidae,48,
+Devonia perrieri,Devonia perrieri,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,NA,NA,Montacutinae,Devonia,Montacutinae,5.5,
+Kelliopsis elevata,Kelliopsis elevata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,NA,NA,Montacutinae,Kelliopsis,Montacutinae,5.5,
+Kelliopsis texasiana,Kelliopsis texasiana,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,NA,NA,Montacutinae,Kelliopsis,Montacutinae,5.5,
+Kurtiella bidentata,Kurtiella bidentata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,NA,NA,Montacutinae,Kurtiella,Montacutinae,7,
+Kurtiella planulata,Kurtiella planulata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,NA,NA,Montacutinae,Kurtiella,Montacutinae,4,
+Agnewia tritoniformis,Agnewia tritoniformis,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Muricoidea,Muricidae,Rapaninae,Agnewia,Muricidae,10,
+Cronia aurantiaca,Cronia aurantiaca,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Muricoidea,Muricidae,Ergalataxinae,Cronia,Muricidae,10,
+Dicathais orbita,Dicathais orbita,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Muricoidea,Muricidae,Rapaninae,Dicathais,Muricidae,19,
+Eupleura caudata,Eupleura caudata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Muricoidea,Muricidae,Ocenebrinae,Eupleura,Muricidae,10,
+Nucella lapillus,Nucella lapillus,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Muricoidea,Muricidae,Ocenebrinae,Nucella,Muricidae,6,
+Pteropurpura trialata,Pteropurpura trialata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Muricoidea,Muricidae,Ocenebrinae,Pteropurpura,Muricidae,10,
+Urosalpinx cinerea,Urosalpinx cinerea,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Muricoidea,Muricidae,Ocenebrinae,Urosalpinx,Muricidae,5,
+Mya arenaria,Mya arenaria,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,NA,Myidae,Myinae,Mya,Myidae,28,
+Mya truncata,Mya truncata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,NA,Myidae,Myinae,Mya,Myidae,50,
+Sphenia binghami,Sphenia binghami,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,NA,Myidae,Cryptomyinae,Sphenia,Myidae,3,
+Sphenia fragilis,Sphenia fragilis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,NA,Myidae,Cryptomyinae,Sphenia,Myidae,3,
+Phyllodesmium serratum,Phyllodesmium serratum,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Aeolidioidea,Myrrhinidae,NA,Phyllodesmium,Myrrhinidae,0.906849,
+Arcuatula papyria,Arcuatula papyria,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Mytilidae,Crenellinae,Arcuatula,Mytilidae,16,
+Brachidontes exustus,Brachidontes exustus,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Mytilidae,Brachidontinae,Brachidontes,Mytilidae,16,
+Crenella decussata,Crenella decussata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Mytilidae,Crenellinae,Crenella,Mytilidae,16,
+Crenella divaricata,Crenella divaricata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Mytilidae,Crenellinae,Crenella,Mytilidae,16,
+Geukensia demissa,Geukensia demissa,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Mytilidae,Brachidontinae,Geukensia,Mytilidae,24,
+Ischadium recurvum,Ischadium recurvum,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Mytilidae,Brachidontinae,Ischadium,Mytilidae,16,
+Musculus discors,Musculus discors,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Mytilidae,Crenellinae,Musculus,Mytilidae,16,
+Musculus lateralis,Musculus lateralis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Mytilidae,Crenellinae,Musculus,Mytilidae,16,
+Musculus subpictus,Musculus subpictus,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Mytilidae,Crenellinae,Musculus,Mytilidae,16,
+Mytilus californianus,Mytilus californianus,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Mytilidae,Mytilinae,Mytilus,Mytilidae,3,
+Mytilus edulis,Mytilus edulis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Mytilidae,Mytilinae,Mytilus,Mytilidae,24,
+Solamen glandula,Solamen glandula,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Mytilida,Mytiloidea,Mytilidae,Crenellinae,Solamen,Mytilidae,16,
+Ilyanassa obsoleta,Ilyanassa obsoleta,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Nassariidae,Nassariinae,Ilyanassa,Nassariidae,70,
+Ilyanassa trivittata,Ilyanassa trivittata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Nassariidae,Nassariinae,Ilyanassa,Nassariidae,70,
+Nassarius acutus,Nassarius acutus,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Nassariidae,Nassariinae,Nassarius,Nassariidae,4.5,
+Phrontis alba,Phrontis alba,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Nassariidae,Nassariinae,Phrontis,Nassariidae,3.52,
+Phrontis vibex,Phrontis vibex,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Nassariidae,Nassariinae,Phrontis,Nassariidae,3.52,
+Tritia incrassata,Tritia incrassata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Nassariidae,Nassariinae,Tritia,Nassariidae,15,
+Tritia pygmaea,Tritia pygmaea,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Nassariidae,Nassariinae,Tritia,Nassariidae,15,
+Tritia reticulata,Tritia reticulata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Buccinoidea,Nassariidae,Nassariinae,Tritia,Nassariidae,15,
+Euspira catena,Euspira catena,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Naticoidea,Naticidae,Polinicinae,Euspira,Naticidae,4.5,
+Euspira nitida,Euspira nitida,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Naticoidea,Naticidae,Polinicinae,Euspira,Naticidae,4.5,
+Neverita duplicata,Neverita duplicata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Naticoidea,Naticidae,Polinicinae,Neverita,Naticidae,4,
+Neverita lewisii,Neverita lewisii,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Naticoidea,Naticidae,Polinicinae,Neverita,Naticidae,4.5,
+Polinices immaculatus,Polinices immaculatus,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Naticoidea,Naticidae,Polinicinae,Polinices,Naticidae,4.5,
+Tectonatica pusilla,Tectonatica pusilla,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Naticoidea,Naticidae,Naticinae,Tectonatica,Naticidae,4.5,
+Nenia tridens,Nenia tridens,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Eupulmonata,NA,NA,Clausiliidae,Neniinae,Nenia,Neniinae,4.5,
+Vitta usnea,Vitta usnea,,Eukaryota,Animalia,Mollusca,Gastropoda,Neritimorpha,NA,NA,NA,Cycloneritida,Neritoidea,Neritidae,Neritininae,Vitta,Neritidae,4.5,
+Nuculana acuta,Nuculana acuta,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Nuculanida,Nuculanoidea,Nuculanidae,Nuculaninae,Saccella,Nuculanidae,11,
+Nuculana concentrica,Nuculana concentrica,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Nuculanida,Nuculanoidea,Nuculanidae,Nuculaninae,Nuculana,Nuculanidae,11,
+Nuculana pernula,Nuculana pernula,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Nuculanida,Nuculanoidea,Nuculanidae,Nuculaninae,Nuculana,Nuculanidae,11,
+Ennucula aegeensis,Ennucula aegeensis,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Nuculida,Nuculoidea,Nuculidae,NA,Ennucula,Nuculidae,5.5,
+Ennucula delphinodonta,Ennucula delphinodonta,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Nuculida,Nuculoidea,Nuculidae,NA,Ennucula,Nuculidae,5.5,
+Ennucula tenuis,Ennucula tenuis,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Nuculida,Nuculoidea,Nuculidae,NA,Ennucula,Nuculidae,5.5,
+Nucula nitidosa,Nucula nitidosa,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Nuculida,Nuculoidea,Nuculidae,NA,Nucula,Nuculidae,5.5,
+Nucula nucleus,Nucula nucleus,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Nuculida,Nuculoidea,Nuculidae,NA,Nucula,Nuculidae,5.5,
+Nucula proxima,Nucula proxima,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Nuculida,Nuculoidea,Nuculidae,NA,Nucula,Nuculidae,5.5,
+Nucula sulcata,Nucula sulcata,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Nuculida,Nuculoidea,Nuculidae,NA,Nucula,Nuculidae,5.5,
+Octopus tetricus,Octopus tetricus,,Eukaryota,Animalia,Mollusca,Cephalopoda,Coleoidea,NA,NA,Octopodiformes,NA,NA,Octopodidae,NA,Octopus,Octopodidae,,
+Oleacina glabra,Oleacina glabra,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Eupulmonata,NA,Oleacinoidea,Oleacinidae,Varicellinae,Laevaricella,Oleacinidae,1.33333,
+Oleacina playa,Oleacina,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Eupulmonata,NA,Oleacinoidea,Oleacinidae,Oleacininae,NA,Oleacinidae,1.33333,
+Olivella mica,Olivella mica,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Olivoidea,Olividae,Olivellinae,Olivella,Olividae,3.99,
+Omalogyra atomus,Omalogyra atomus,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,"""Lower Heterobranchia""",NA,NA,NA,Omalogyroidea,Omalogyridae,Omalogyrinae,Omalogyra,Omalogyridae,1,
+Illex illecebrosus,Illex illecebrosus,,Eukaryota,Animalia,Mollusca,Cephalopoda,Coleoidea,NA,NA,Decapodiformes,Oegopsida,Cranchioidea,Ommastrephidae,Illicinae,Illex,Ommastrephidae,,
+Idaliadoris depressa,Idaliadoris depressa,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,NA,Onchidorididae,NA,Idaliadoris,Onchidorididae,1,
+Onchidoris muricata,Onchidoris muricata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,NA,Onchidorididae,NA,Onchidoris,Onchidorididae,1,
+Moroteuthopsis ingens,Moroteuthopsis ingens,,Eukaryota,Animalia,Mollusca,Cephalopoda,Coleoidea,NA,NA,Decapodiformes,Oegopsida,NA,Onychoteuthidae,NA,Moroteuthopsis,Onychoteuthidae,,
+Onykia robsoni,Onykia robsoni,,Eukaryota,Animalia,Mollusca,Cephalopoda,Coleoidea,NA,NA,Decapodiformes,Oegopsida,NA,Onychoteuthidae,NA,Onykia,Onychoteuthidae,,
+Onykia robusta,Onykia robusta,,Eukaryota,Animalia,Mollusca,Cephalopoda,Coleoidea,NA,NA,Decapodiformes,Oegopsida,NA,Onychoteuthidae,NA,Onykia,Onychoteuthidae,,
+Crassostrea gigas,Crassostrea gigas,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Ostreida,Ostreoidea,Ostreidae,Crassostreinae,Magallana,Ostreidae,7,
+Crassostrea virginica,Crassostrea virginica,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Ostreida,Ostreoidea,Ostreidae,Crassostreinae,Crassostrea,Ostreidae,5,
+Pandora gouldiana,Pandora gouldiana,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Anomalodesmata,NA,Pandoroidea,Pandoridae,NA,Pandora,Pandoridae,11,
+Pandora inflata,Pandora inflata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Anomalodesmata,NA,Pandoroidea,Pandoridae,NA,Pandora,Pandoridae,11,
+Pandora trilineata,Pandora trilineata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Anomalodesmata,NA,Pandoroidea,Pandoridae,NA,Pandora,Pandoridae,11,
+Patella depressa,Patella depressa,,Eukaryota,Animalia,Mollusca,Gastropoda,Patellogastropoda,NA,NA,NA,Patellida,Patelloidea,Patellidae,NA,Patella,Patellidae,12.14286,
+Patella pellucida,Patella pellucida,,Eukaryota,Animalia,Mollusca,Gastropoda,Patellogastropoda,NA,NA,NA,Patellida,Patelloidea,Patellidae,NA,Patella,Patellidae,12.14286,
+Patella ulyssiponensis,Patella ulyssiponensis,,Eukaryota,Animalia,Mollusca,Gastropoda,Patellogastropoda,NA,NA,NA,Patellida,Patelloidea,Patellidae,NA,Patella,Patellidae,12.142865,
+Patella vulgata,Patella vulgata,,Eukaryota,Animalia,Mollusca,Gastropoda,Patellogastropoda,NA,NA,NA,Patellida,Patelloidea,Patellidae,NA,Patella,Patellidae,15,
+Chlamys islandica,Chlamys islandica,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Pectinida,Pectinoidea,Pectinidae,Pedinae,Chlamys,Pectinidae,35,
+Crassadoma gigantea,Crassadoma gigantea,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Pectinida,Pectinoidea,Pectinidae,Pedinae,Crassadoma,Pectinidae,12.27,
+Mimachlamys varia,Mimachlamys varia,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Pectinida,Pectinoidea,Pectinidae,Pedinae,Mimachlamys,Pectinidae,6,
+Pecten novaezelandiae,Pecten novaezelandiae,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Pectinida,Pectinoidea,Pectinidae,Pectininae,Pecten,Pectinidae,11.61538,
+Talochlamys pusio,Talochlamys pusio,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Pteriomorphia,NA,NA,Pectinida,Pectinoidea,Pectinidae,Pedinae,Talochlamys,Pectinidae,12.27,
+Bathyacmaea nipponica,Bathyacmaea nipponica,,Eukaryota,Animalia,Mollusca,Gastropoda,Patellogastropoda,NA,NA,NA,Nacellida,Lepetoidea,Pectinodontidae,NA,Bathyacmaea,Pectinodontidae,,not found
+Cochlodesma leanum,Cochlodesma leanum,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Anomalodesmata,NA,Thracioidea,Periplomatidae,NA,Cochlodesma,Periplomatidae,5,
+Cochlodesma praetenue,Cochlodesma praetenue,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Anomalodesmata,NA,Thracioidea,Periplomatidae,NA,Cochlodesma,Periplomatidae,5,
+Periploma margaritaceum,Periploma margaritaceum,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Anomalodesmata,NA,Thracioidea,Periplomatidae,NA,Periploma,Periplomatidae,5,
+Ensis directus,Ensis directus,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Adapedonta,Solenoidea,Pharidae,Cultellinae,Ensis,Pharidae,8.5,
+Ensis magnus,Ensis magnus,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Adapedonta,Solenoidea,Pharidae,Cultellinae,Ensis,Pharidae,18,
+Ensis minor,Ensis minor,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Adapedonta,Solenoidea,Pharidae,Cultellinae,Ensis,Pharidae,8.59375,
+Tricolia pullus,Tricolia pullus,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Phasianellidae,Tricoliinae,Tricolia,Phasianellidae,1,
+Philine aperta,Philine aperta,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,NA,NA,Philinoidea,Philinidae,Philininae,Philine,Philinidae,4,
+Chaceia ovoidea,Chaceia ovoidea,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,Pholadoidea,Pholadidae,Martesiinae,Chaceia,Pholadidae,7.333333,
+Parapholas californica,Parapholas californica,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,NA,Pholadoidea,Pholadidae,Martesiinae,Parapholas,Pholadidae,7.333333,
+Phyllidiella pustulosa,Phyllidiella pustulosa,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Phyllidioidea,Phyllidiidae,NA,Phyllidiella,Phyllidiidae,,not found
+Aplexa hypnorum,Aplexa hypnorum,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Physidae,Aplexinae,Aplexa,Physidae,0.8333333,
+Physa jennessi,Physa jennessi,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Physidae,Physinae,Physa,Physidae,1.333333,
+Physella gyrina,Physella gyrina,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Physidae,Physinae,Physella,Physidae,1.833333,
+Ancylus fluviatilis,Ancylus fluviatilis,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Planorbidae,Ancylinae,Ancylus,Planorbidae,1,
+Anisus vortex,Anisus vortex,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Planorbidae,Planorbinae,Anisus,Planorbidae,1.5,
+Armiger crista,Armiger crista,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Planorbidae,Planorbinae,Armiger,Planorbidae,1,
+Gyraulus albus,Gyraulus albus,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Planorbidae,Planorbinae,Gyraulus,Planorbidae,1.5,
+Gyraulus circumstriatus,Gyraulus circumstriatus,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Planorbidae,Planorbinae,Gyraulus,Planorbidae,1.25,
+Gyraulus parvus,Gyraulus parvus,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Planorbidae,Planorbinae,Gyraulus,Planorbidae,1,
+Planorbella trivolvis,Planorbella trivolvis,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Planorbidae,Planorbinae,Planorbella,Planorbidae,2,
+Promenetus exacuous,Promenetus exacuous,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Planorbidae,Planorbinae,Promenetus,Planorbidae,1,
+Promenetus umbilicatellus,Promenetus umbilicatellus,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Hygrophila,NA,NA,Planorbidae,Planorbinae,Promenetus,Planorbidae,1,
+Elimia livescens,Elimia livescens,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,NA,Cerithioidea,Pleuroceridae,NA,Elimia,Pleuroceridae,4,
+Crimora papillata,Crimora papillata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Polyceroidea,Polyceridae,Triophinae,Crimora,Polyceridae,1,
+Polycera capensis,Polycera capensis,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Polyceroidea,Polyceridae,Polycerinae,Polycera,Polyceridae,1,
+Thecacera pennigera,Thecacera pennigera,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,NA,Polyceroidea,Polyceridae,Polycerinae,Thecacera,Polyceridae,1,
+Provanna glabra,Provanna glabra,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,NA,Abyssochrysoidea,Provannidae,NA,Provanna,Provannidae,,not found
+Boonea bisuturalis,Boonea bisuturalis,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Pylopulmonata,NA,Pyramidelloidea,Pyramidellidae,Odostomiinae,Boonea,Pyramidellidae,1,
+Boonea impressa,Boonea impressa,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Pylopulmonata,NA,Pyramidelloidea,Pyramidellidae,Odostomiinae,Boonea,Pyramidellidae,1,
+Boonea seminuda,Boonea seminuda,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Pylopulmonata,NA,Pyramidelloidea,Pyramidellidae,Odostomiinae,Boonea,Pyramidellidae,1,
+Brachystomia eulimoides,Brachystomia eulimoides,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Pylopulmonata,NA,Pyramidelloidea,Pyramidellidae,Odostomiinae,Brachystomia,Pyramidellidae,1.5,
+Brachystomia scalaris,Brachystomia scalaris,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Pylopulmonata,NA,Pyramidelloidea,Pyramidellidae,Odostomiinae,Brachystomia,Pyramidellidae,1.5,
+Chrysallida indistincta,Chrysallida indistincta,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Pylopulmonata,NA,Pyramidelloidea,Pyramidellidae,Odostomiinae,Chrysallida,Pyramidellidae,0.930555567,
+Eulimastoma engonium,Eulimastoma engonium,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Pylopulmonata,NA,Pyramidelloidea,Pyramidellidae,NA,Eulimastoma,Pyramidellidae,0.930555567,
+Eulimastoma weberi,Eulimastoma weberi,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Pylopulmonata,NA,Pyramidelloidea,Pyramidellidae,NA,Eulimastoma,Pyramidellidae,0.930555567,
+Fargoa gibbosa,Fargoa gibbosa,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Pylopulmonata,NA,Pyramidelloidea,Pyramidellidae,Odostomiinae,Fargoa,Pyramidellidae,0.930555567,
+Longchaeus suturalis,Longchaeus suturalis,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Pylopulmonata,NA,Pyramidelloidea,Pyramidellidae,NA,Longchaeus,Pyramidellidae,0.930555567,
+Odostomia plicata,Odostomia plicata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Pylopulmonata,NA,Pyramidelloidea,Pyramidellidae,Odostomiinae,Odostomia,Pyramidellidae,0.930555567,
+Turbonilla elegantula,Turbonilla elegantula,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Pylopulmonata,NA,Pyramidelloidea,Pyramidellidae,Turbonillinae,Turbonilla,Pyramidellidae,0.291667,
+Turbonilla interrupta,Turbonilla interrupta,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Pylopulmonata,NA,Pyramidelloidea,Pyramidellidae,Turbonillinae,Turbonilla,Pyramidellidae,0.291667,
+Ranella australasia,Ranella australasia,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Tonnoidea,Ranellidae,NA,Ranella,Ranellidae,5.4,
+Volvulella persimilis,Volvulella persimilis,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,NA,NA,Bulloidea,Rhizoridae,NA,Volvulella,Rhizoridae,,not found
+Rissoella diaphana,Rissoella diaphana,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Acteonimorpha,NA,NA,Rissoelloidea,Rissoellidae,NA,Rissoella,Rissoellidae,1,
+Rissoella globularis,Rissoella globularis,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Acteonimorpha,NA,NA,Rissoelloidea,Rissoellidae,NA,Rissoella,Rissoellidae,1,
+Rissoella opalina,Rissoella opalina,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Acteonimorpha,NA,NA,Rissoelloidea,Rissoellidae,NA,Rissoella,Rissoellidae,1,
+Alvania auberiana,Alvania auberiana,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Rissoidae,NA,Alvania,Rissoidae,1.875,
+Alvania carinata,Alvania carinata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Rissoidae,NA,Alvania,Rissoidae,1.875,
+Alvania punctura,Alvania punctura,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Rissoidae,NA,Alvania,Rissoidae,1.875,
+Cingula trifasciata,Cingula trifasciata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Rissoidae,NA,Cingula,Rissoidae,1.875,
+Crisilla semistriata,Crisilla semistriata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Rissoidae,NA,Crisilla,Rissoidae,1.875,
+Frigidoalvania carinata,Frigidoalvania carinata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Rissoidae,NA,Frigidoalvania,Rissoidae,1.875,
+Onoba aculeus,Onoba aculeus,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Rissoidae,NA,Onoba,Rissoidae,3,
+Pusillina inconspicua,Pusillina inconspicua,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Rissoidae,NA,Pusillina,Rissoidae,1.875,
+Pusillina sarsii,Pusillina sarsii,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Rissoidae,NA,Pusillina,Rissoidae,1.875,
+Rissoa lilacina,Rissoa lilacina,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Rissoidae,NA,Rissoa,Rissoidae,0.75,
+Rissoa membranacea,Rissoa membranacea,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Rissoidae,NA,Rissoa,Rissoidae,0.75,
+Rissoa parva,Rissoa parva,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Rissoidae,NA,Rissoa,Rissoidae,0.75,
+Parthena acutangula,Parthena acutangula,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Eupulmonata,NA,Sagdoidea,Sagdidae,Polydontinae,Parthena,Sagdidae,,not found
+Platysuccinea portoricensis,Platysuccinea portoricensis,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Eupulmonata,NA,Sagdoidea,Sagdidae,Platysuccineinae,Platysuccinea,Sagdidae,,not found
+Cyclocardia borealis,Cyclocardia borealis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Archiheterodonta,NA,NA,NA,NA,Scalaricarditinae,Cyclocardia,Scalaricarditinae,35,
+Scaphander lignarius,Scaphander lignarius,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,NA,NA,Philinoidea,Scaphandridae,NA,Scaphander,Scaphandridae,,not found
+Abra aequalis,Abra aequalis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Semelidae,NA,Abra,Semelidae,2.906923,
+Cumingia sinuosa,Cumingia sinuosa,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Semelidae,NA,Cumingia,Semelidae,4,
+Ervilia nitens,Ervilia nitens,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Semelidae,NA,Ervilia,Semelidae,4.849643,
+Semele bellastriata,Semele bellastriata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Semelidae,NA,Semele,Semelidae,9.75,
+Semele proficua,Semele proficua,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Semelidae,NA,Semele,Semelidae,9.75,
+Semelina nuculoides,Semelina nuculoides,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Semelidae,NA,Semelina,Semelidae,4.849643,
+Sepia apama,Sepia apama,,Eukaryota,Animalia,Mollusca,Cephalopoda,Coleoidea,NA,NA,Decapodiformes,Sepiida,Sepioidea,Sepiidae,NA,Ascarosepion,Sepiidae,,
+Sepia plangon,Sepia plangon,,Eukaryota,Animalia,Mollusca,Cephalopoda,Coleoidea,NA,NA,Decapodiformes,Sepiida,Sepioidea,Sepiidae,NA,Ascarosepion,Sepiidae,,
+Rossia pacifica,Rossia pacifica,,Eukaryota,Animalia,Mollusca,Cephalopoda,Coleoidea,NA,NA,Decapodiformes,Sepiolida,Sepioloidea,Sepiolidae,Rossiinae,Rossia,Sepiolidae,,
+Skeneopsis planorbis,Skeneopsis planorbis,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Littorinoidea,Skeneopsidae,NA,Skeneopsis,Skeneopsidae,1,
+Caracolus carocolla,Caracolus carocolla,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Eupulmonata,NA,Sagdoidea,Solaropsidae,Caracolinae,Caracolus,Solaropsidae,10,
+Tagelus divisus,Tagelus divisus,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Solecurtidae,NA,Tagelus,Solecurtidae,2.5,
+Tagelus plebeius,Tagelus plebeius,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Solecurtidae,NA,Tagelus,Solecurtidae,2.58,
+Acharax johnsoni,Acharax johnsoni,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Solemyida,Solemyoidea,Solemyidae,Acharacinae,Acharax,Solemyidae,1,
+Solemya occidentalis,Solemya occidentalis,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Solemyida,Solemyoidea,Solemyidae,Solemyinae,Solemya,Solemyidae,1,
+Solemya velum,Solemya velum,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Solemyida,Solemyoidea,Solemyidae,Solemyinae,Solemya,Solemyidae,1,
+Musculium transversum,Musculium transversum,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,NA,Sphaeriidae,NA,Sphaerium,Sphaeriidae,0.5,
+Sphaerium striatinum,Sphaerium striatinum,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,NA,Sphaeriidae,NA,Sphaerium,Sphaeriidae,0.5,
+Stenosemus albus,Stenosemus albus,,Eukaryota,Animalia,Mollusca,Polyplacophora,Neoloricata,NA,NA,NA,Chitonida,Chitonoidea,Stenosemusidae,NA,Stenosemus,Stenosemusidae,,
+Potamopyrgus antipodarum,Potamopyrgus antipodarum,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Truncatelloidea,Tateidae,NA,Potamopyrgus,Tateidae,0.583333,
+Norrisia norrisii,Norrisia norrisii,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Tegulidae,NA,Norrisia,Tegulidae,21.66667,
+Rochia nilotica,Rochia nilotica,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Tegulidae,NA,Rochia,Tegulidae,15,
+Teinostoma biscaynense,Teinostoma biscaynense,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Truncatelloidea,Teinostomatidae,NA,Teinostoma,Teinostomatidae,,not found
+Ameritella agilis,Ameritella agilis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Tellinidae,Tellininae,Ameritella,Tellinidae,9.453226,
+Ameritella mitchelli,Ameritella mitchelli,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Tellinidae,Tellininae,Ameritella,Tellinidae,9.453226,
+Ameritella sybaritica,Ameritella sybaritica,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Tellinidae,Tellininae,Ameritella,Tellinidae,9.453226,
+Ameritella versicolor,Ameritella versicolor,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Tellinidae,Tellininae,Ameritella,Tellinidae,9.453226,
+Asbjornsenia pygmaea,Asbjornsenia pygmaea,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Tellinidae,Moerellinae,Asbjornsenia,Tellinidae,9.453226,
+Eurytellina alternata,Eurytellina alternata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Tellinidae,Tellininae,Eurytellina,Tellinidae,9.453226,
+Macoma balthica,Macoma balthica,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Tellinidae,Macominae,Macoma,Tellinidae,33,
+Macomangulus tenuis,Macomangulus tenuis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Tellinidae,Tellininae,Macomangulus,Tellinidae,9.453226,
+Macoploma tenta,Macoploma tenta,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Tellinidae,Macominae,Macoploma,Tellinidae,9.453226,
+Oudardia iris,Oudardia iris,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Tellinidae,Tellininae,Oudardia,Tellinidae,9.453226,
+Scissula similis,Scissula similis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Tellinidae,Tellininae,Scissula,Tellinidae,9.453226,
+Tampaella tampaensis,Tampaella tampaensis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Cardiida,Tellinoidea,Tellinidae,Tellininae,Tampaella,Tellinidae,9.453226,
+Neoterebra dislocata,Neoterebra dislocata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Neogastropoda,Conoidea,Terebridae,Terebrinae,Neoterebra,Terebridae,10,
+Asthenothaerus hemphilli,Asthenothaerus hemphilli,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Anomalodesmata,NA,Thracioidea,Thraciidae,NA,Asthenothaerus,Thraciidae,11,
+Mendicula pygmaea,Mendicula pygmaea,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Lucinida,Thyasiroidea,Thyasiridae,NA,Mendicula,Thyasiridae,2.733333,
+Thyasira flexuosa,Thyasira flexuosa,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Lucinida,Thyasiroidea,Thyasiridae,NA,Thyasira,Thyasiridae,3.2,
+Boreochiton ruber,Boreochiton ruber,,Eukaryota,Animalia,Mollusca,Polyplacophora,Neoloricata,NA,NA,NA,Chitonida,Mopalioidea,Tonicellidae,Tonicellinae,Boreochiton,Tonicellidae,,
+Acteocina canaliculata,Acteocina canaliculata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,NA,NA,Bulloidea,Tornatinidae,NA,Acteocina,Tornatinidae,,not found
+Acteocina lepta,Acteocina lepta,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,NA,NA,Bulloidea,Tornatinidae,NA,Acteocina,Tornatinidae,,not found
+Rubramoena rubescens,Rubramoena rubescens,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Fionoidea,Trinchesiidae,NA,Rubramoena,Trinchesiidae,0.109589041,
+Trinchesia foliata,Trinchesia foliata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Fionoidea,Trinchesiidae,NA,Tenellia,Trinchesiidae,0.109589041,
+Duvaucelia lineata,Duvaucelia lineata,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Tritonioidea,Tritoniidae,Tritoniinae,Candiella,Tritoniidae,1,
+Duvaucelia plebeia,Duvaucelia plebeia,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Tritonioidea,Tritoniidae,Tritoniinae,Candiella,Tritoniidae,1,
+Tritonia hombergii,Tritonia hombergii,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Ringipleura,Nudipleura,Nudibranchia,Tritonioidea,Tritoniidae,Tritoniinae,Tritonia,Tritoniidae,1,
+Trivia arctica,Trivia arctica,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Velutinoidea,Triviidae,NA,Trivia,Triviidae,,not found
+Clelandella miliaris,Clelandella miliaris,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Trochidae,Cantharidinae,Clelandella,Trochidae,11.41667,
+Phorcus lineatus,Phorcus lineatus,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Trochidae,Cantharidinae,Phorcus,Trochidae,15,
+Phorcus turbinatus,Phorcus turbinatus,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Trochidae,Cantharidinae,Phorcus,Trochidae,15,
+Steromphala cineraria,Steromphala cineraria,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Trochidae,Cantharidinae,Steromphala,Trochidae,11.41667,
+Steromphala tumida,Steromphala tumida,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Trochidae,Cantharidinae,Steromphala,Trochidae,11.41667,
+Steromphala umbilicalis,Steromphala umbilicalis,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Trochidae,Cantharidinae,Steromphala,Trochidae,11.41667,
+Astralium tentoriiformis,Astralium tentoriiforme,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Turbinidae,Turbininae,Astralium,Turbinidae,10.05,
+Astralium tentorium,Astralium tentorium,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Turbinidae,Turbininae,Astralium,Turbinidae,10.05,
+Lunella torquata,Lunella torquata,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Turbinidae,Turbininae,Lunella,Turbinidae,11.2,
+Megastraea undosa,Megastraea undosa,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Turbinidae,Turbininae,Megastraea,Turbinidae,12,
+Pomaulax gibberosus,Pomaulax gibberosus,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Turbinidae,Turbininae,Pomaulax,Turbinidae,10.05,
+Turbo haraldi,Turbo haraldi,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Turbinidae,Turbininae,Turbo,Turbinidae,3,
+Turbo imperialis,Turbo imperialis,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Turbinidae,Turbininae,Turbo,Turbinidae,10.05,
+Turbo jourdani,Turbo jourdani,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Turbinidae,Turbininae,Turbo,Turbinidae,10.05,
+Turbo marmoratus,Turbo marmoratus,,Eukaryota,Animalia,Mollusca,Gastropoda,Vetigastropoda,NA,NA,NA,Trochida,Trochoidea,Turbinidae,Turbininae,Turbo,Turbinidae,14,
+Turritellinella tricarinata,Turritellinella tricarinata,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,NA,Cerithioidea,Turritellidae,Turritellinae,Turritellinella,Turritellidae,10,
+Diplodonta punctata,Diplodonta punctata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Ungulinoidea,Ungulinidae,NA,Diplodonta,Ungulinidae,6,
+Phlyctiderma semiasperum,Phlyctiderma semiasperum,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Ungulinoidea,Ungulinidae,NA,Phlyctiderma,Ungulinidae,55.33333333,
+Anodonta anatina,Anodonta anatina,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Palaeoheterodonta,NA,NA,NA,NA,Unioninae,Anodonta,Unioninae,10,
+Marsenia perspicua,Marsenia perspicua,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Velutinoidea,Velutinidae,Lamellariinae,Marsenia,Velutinidae,,not found
+Agriopoma morrhuanum,Agriopoma morrhuanum,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Callocardiinae,Agriopoma,Veneridae,36.75,
+Anomalocardia puella,Anomalocardia puella,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Venerinae,Anomalocardia,Veneridae,36.75,
+Chamelea gallina,Chamelea gallina,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Venerinae,Chamelea,Veneridae,36.75,
+Chione cancellata,Chione cancellata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Venerinae,Chione,Veneridae,36.75,
+Chioneryx grus,Chioneryx grus,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Venerinae,Chioneryx,Veneridae,36.75,
+Dosinia discus,Dosinia discus,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Dosiniinae,Dosinia,Veneridae,36.75,
+Gemma gemma,Gemma gemma,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Gemminae,Gemma,Veneridae,16,
+Gouldia cerina,Gouldia cerina,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Gouldiinae,Gouldia,Veneridae,36.75,
+Mercenaria mercenaria,Mercenaria mercenaria,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Venerinae,Mercenaria,Veneridae,106,
+Petricolaria pholadiformis,Petricolaria pholadiformis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Petricolinae,Petricolaria,Veneridae,36.75,
+Pitar fulminatus,Pitar fulminatus,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Callocardiinae,Jasypitar,Veneridae,36.75,
+Polititapes rhomboides,Polititapes rhomboides,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Tapetinae,Polititapes,Veneridae,36.75,
+Ruditapes decussatus,Ruditapes decussatus,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Tapetinae,Ruditapes,Veneridae,36.75,
+Venerupis corrugata,Venerupis corrugata,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Tapetinae,Venerupis,Veneridae,36.75,
+Venus casina,Venus casina,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Veneroidea,Veneridae,Venerinae,Venus,Veneridae,36.75,
+Thylacodes squamigerus,Thylacodes squamigerus,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Vermetoidea,Vermetidae,NA,Thylacodes,Vermetidae,1.186301,
+Diplosolenodes occidentalis,Diplosolenodes occidentalis,,Eukaryota,Animalia,Mollusca,Gastropoda,Heterobranchia,Euthyneura,Tectipleura,Eupulmonata,Systellommatophora,Veronicelloidea,Veronicellidae,NA,Diplosolenodes,Veronicellidae,2.75,
+Abyssogena phaseoliformis,Abyssogena phaseoliformis,,Eukaryota,Animalia,Mollusca,Bivalvia,Autobranchia,Heteroconchia,Euheterodonta,Imparidentia,Venerida,Glossoidea,Vesicomyidae,Pliocardiinae,Abyssogena,Vesicomyidae,10,
+Yoldia limatula,Yoldia limatula,,Eukaryota,Animalia,Mollusca,Bivalvia,Protobranchia,NA,NA,NA,Nuculanida,Nuculanoidea,Yoldiidae,Yoldiinae,Yoldia,Yoldiidae,4,
+Schwartziella catesbyana,Schwartziella catesbyana,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Zebinidae,NA,Schwartziella,Zebinidae,,not found
+Zebina browniana,Zebina browniana,,Eukaryota,Animalia,Mollusca,Gastropoda,Caenogastropoda,NA,NA,NA,Littorinimorpha,Rissooidea,Zebinidae,NA,Zebina,Zebinidae,,not found
